@@ -1,4 +1,6 @@
 !.gitignore
-
+#no push
 *.iml
 .idea
+conf/nginx/conf.d/*.conf
+
