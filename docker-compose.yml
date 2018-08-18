@@ -107,7 +107,7 @@ services:
 
 
   rabbitmq:
-    image: rabbitmq:3.6.11-management
+    image: rabbitmq:3.7-alpine
     ports:
           - "5762:5762" #client端
           - "15672:15672" #web管理端
@@ -119,7 +119,7 @@ services:
       RABBITMQ_DEFAULT_PASS: 123456
 #zookeeper
   zoo1:
-    image: zookeeper
+    image: zookeeper:latest
     container_name: zoo1
     restart: always
     hostname: zoo1
@@ -133,7 +133,7 @@ services:
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
 
   zoo2:
-    image: zookeeper
+    image: zookeeper:latest
     container_name: zoo2
     restart: always
     hostname: zoo2
@@ -147,7 +147,7 @@ services:
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
 
   zoo3:
-    image: zookeeper
+    image: zookeeper:latest
     container_name: zoo3
     restart: always
     hostname: zoo3
@@ -168,7 +168,7 @@ services:
       - 9300:9300
 
   kibana:
-    image: kibana
+    image: kibana:latest
     container_name: kibana
     ports:
       - 5601:5601
