@@ -3,6 +3,8 @@
 
 #服务启动   docker-compose -f docker-compose-redash.yml up -d
 
+
+# 演示sql: SELECT count(*),sex,category from `user` as t GROUP BY category,sex
 ##
 
 version: '2'
@@ -53,3 +55,13 @@ services:
     links:
       - server:redash
     restart: always
+  mysql:
+      image: mysql:5.6
+      ports:
+        - "3306:3306"
+      volumes:
+        - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
+        - ./data/mysql/:/var/lib/mysql/:rw
+        - ./log/mysql/:/var/log/mysql/:rw
+      environment:
+        MYSQL_ROOT_PASSWORD: 123456
