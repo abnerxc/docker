@@ -99,7 +99,7 @@ RUN apt-get update \
     #&& docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
     #&& docker-php-ext-install ldap \
 
-# Composer
+# Composer  export COMPOSER_ALLOW_SUPERUSER=1; composer show;   解决root不可用问题
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
 # Install extension using pecl
