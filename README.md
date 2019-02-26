@@ -28,17 +28,17 @@ Docker 一键部署 Nginx MySQL PHP7, 支持全功能特性,多种服务合集
     ```
     $ git clone https://github.com/abner-xu/docker
     ```
-4. 启动 docker-compose:
+3. 启动 docker-compose:
     ```
     $ docker-compose up
     ```
-5. 浏览器打开 `localhost`, 可以看见:
+4. 浏览器打开 `localhost`, 可以看见:
 
 ![Demo Image](snapshot.png)
 
 文件所在位置 `./www/site1/`.
 
-多版本PHP版本运行:
+5. 多版本PHP版本运行:
 ```angular2html
 location ~ \.php$ {
         fastcgi_pass   php72:9000;
