@@ -6,7 +6,7 @@ Docker 一键部署 Nginx MySQL PHP7, 支持全功能特性,多种服务合集
 
 ### 特点
 1. 完全开放源代码
-2. 支持多个PHP版本（php5.4，php5.6，php7.2）开关。
+2. 支持多个PHP版本（php5.6，php7.0，php7.2）开关，并按照了主流的PHP扩展和插件
 3. 支持多域名
 4. 支持 HTTPS 和 HTTP/2.
 5. PHP项目宿主机挂载.
@@ -14,6 +14,8 @@ Docker 一键部署 Nginx MySQL PHP7, 支持全功能特性,多种服务合集
 7. 所有配置文件宿主机挂载.
 8. 所有日志宿主机挂载.
 9. 内置PHP扩展安装命令.
+10. 增加对redis，mongodb,ES等的支持
+
 
 
 ### 用法
@@ -25,7 +27,7 @@ Docker 一键部署 Nginx MySQL PHP7, 支持全功能特性,多种服务合集
     ```
 2. 克隆项目:
     ```
-    $ git clone https://github.com/yeszao/dnmp.git
+    $ git clone https://github.com/abner-xu/docker
     ```
 4. 启动 docker-compose:
     ```
@@ -37,19 +39,23 @@ Docker 一键部署 Nginx MySQL PHP7, 支持全功能特性,多种服务合集
 
 文件所在位置 `./www/site1/`.
 
-### 其他版本PHP?
-默认使用PHP版本:
+服务启动:
 ```
-$ docker-compose up
+$ docker-compose up 
 ```
-使用其他版本PHP:
+多版本PHP版本运行:
+```angular2html
+location ~ \.php$ {
+        try_files $uri = 404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        include        fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+        fastcgi_index index.php;
+        fastcgi_pass   php72:9000;
+    }
 ```
-$ docker-compose -f docker-compose54.yml up
-$ docker-compose -f docker-compose56.yml up
-```
-我们不需要改变任何其他文件，如Nginx的配置文件或php.ini，一切将在当前环境下精细的工作（除了代码兼容性错误）。
-
-> Notice: We can only start one php version, for they using same port. We must STOP the running project then START the other one.
+php72即7.2版本容器名称，可以针对不同的域名配置不同的运行版本
 
 ### HTTPS and HTTP/2
 默认站点配置:
