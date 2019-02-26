@@ -1,4 +1,3 @@
-项目引用自github[1:]https://github.com/yeszao/dnmp dnmp 
 # dnmp
 Docker 一键部署 Nginx MySQL PHP7, 支持全功能特性,多种服务合集
 
@@ -39,20 +38,13 @@ Docker 一键部署 Nginx MySQL PHP7, 支持全功能特性,多种服务合集
 
 文件所在位置 `./www/site1/`.
 
-服务启动:
-```
-$ docker-compose up 
-```
 多版本PHP版本运行:
 ```angular2html
 location ~ \.php$ {
-        try_files $uri = 404;
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        include        fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-        fastcgi_param SCRIPT_NAME $fastcgi_script_name;
-        fastcgi_index index.php;
         fastcgi_pass   php72:9000;
+        fastcgi_index  index.php;
+        include        fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
     }
 ```
 php72即7.2版本容器名称，可以针对不同的域名配置不同的运行版本
@@ -68,11 +60,4 @@ php72即7.2版本容器名称，可以针对不同的域名配置不同的运行
 127.0.0.1 www.site2.com
 ```
 
-
-
-
-
-## linux极限内存系统技巧说明
-1.  安装系统实用了boot2docker.ios 内存系统
-2.  系统自带了docker环境但是没有安装docker-compose，使用本git目录下的docker-compose即可实现
-3.  系统没有root密码无法使用ssh登陆，可切换到docker/tcuser 账号密码登陆
+项目引用自github用户yeszao  https://github.com/yeszao/dnmp 在此基础上进行升级和扩展
