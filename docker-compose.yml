@@ -108,6 +108,16 @@ services:
     restart: always
     command: mongod --smallfiles --logpath=/dev/null #windows挂载报错解决方案
 
+  etcd:
+    build: ./etcd/
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+      - "4001:4001"
+      - "7001:7001"
+    volumes:
+      - ./data/etcd/:/data/:rw
+    container_name: etcd
 
 
 
