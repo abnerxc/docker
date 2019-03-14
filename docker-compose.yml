@@ -95,6 +95,7 @@ services:
       - ./data/mysql/:/var/lib/mysql/:rw
       - ./log/mysql/:/var/log/mysql/:rw
     container_name: mysql
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 123456
 
@@ -109,7 +110,7 @@ services:
     command: mongod --smallfiles --logpath=/dev/null #windows挂载报错解决方案
 
   etcd:
-    build: ./etcd/
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/etcd
     ports:
       - "2379:2379"
       - "2380:2380"
@@ -118,6 +119,7 @@ services:
     volumes:
       - ./data/etcd/:/data/:rw
     container_name: etcd
+    restart: always
 
 
 
@@ -175,12 +177,13 @@ services:
 #      ZOO_MY_ID: 3
 #      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
 
-  elasticsearch:
-    image: elasticsearch:5.6.12-alpine
-    container_name: es
-    ports:
-      - 9200:9200
-      - 9300:9300
+#  elasticsearch:
+#    image: elasticsearch:5.6.12-alpine
+#    container_name: es
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+#    restart: always
 
 
 #  kibana:
