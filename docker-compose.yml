@@ -109,17 +109,15 @@ services:
     restart: always
     command: mongod --smallfiles --logpath=/dev/null #windows挂载报错解决方案
 
-  etcd:
+  etcd-1:
+    container_name: etcd1
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/etcd
     ports:
-      - "2379:2379"
-      - "2380:2380"
-      - "4001:4001"
-      - "7001:7001"
+        - "2379:2379"
     volumes:
-      - ./data/etcd/:/data/:rw
-    container_name: etcd
+        - ./data/etcd/etcd_1/:/data/:rw
     restart: always
+    command: etcd --name etcd1 --data-dir=/data/ --listen-client-urls 'http://0.0.0.0:2379' --advertise-client-urls 'http://127.0.0.1:2379'
 
 
 
