@@ -1,6 +1,6 @@
 FROM php:5.4-fpm
 
-COPY ./sources.list.jessie /etc/apt/sources.list
+#COPY ./sources.list.jessie /etc/apt/sources.list
 
 # Extensions: ctype, dom, fileinfo, ftp, hash, iconv, json, pdo, pdo_sqlite, session,
 # tokenizer, simplexml, xml, xmlreader, xmlwriter and phar are bundled and compiled into
