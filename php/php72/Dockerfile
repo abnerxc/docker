@@ -173,7 +173,6 @@ RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.6.0.tgz' -o xdebug.tar.gz \
     && rm swoole.tar.gz \
     && docker-php-ext-configure /tmp/swoole --enable-swoole  \
     && docker-php-ext-install /tmp/swoole  \
-
     #RPC 通讯协议protobuf
     && curl -fsSL 'http://pecl.php.net/get/protobuf-3.5.1.tgz' -o protobuf.tar.gz  \
     && mkdir -p /tmp/protobuf \
@@ -181,7 +180,6 @@ RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.6.0.tgz' -o xdebug.tar.gz \
     && rm protobuf.tar.gz \
     && docker-php-ext-configure /tmp/protobuf --enable-protobuf  \
     && docker-php-ext-install /tmp/protobuf  \
-
     #xhprof进行线上PHP性能追踪及分析
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/v4.1.5.tar.gz' -o xhprof.tar.gz  \
     && mkdir -p /tmp/xhprof \
@@ -189,6 +187,5 @@ RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.6.0.tgz' -o xdebug.tar.gz \
     && rm xhprof.tar.gz \
     && docker-php-ext-configure /tmp/xhprof --enable-xhprof  \
     && docker-php-ext-install /tmp/xhprof  \
-
     #删除无用包
     && rm -rf /tmp/*

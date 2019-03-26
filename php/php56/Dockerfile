@@ -129,7 +129,6 @@ RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.5.5.tgz' -o xdebug.tar.gz \
     && rm xdebug.tar.gz  \
     && docker-php-ext-configure /tmp/xdebug --enable-xdebug  \
     && docker-php-ext-install /tmp/xdebug  \
-
     #redis
     && curl -fsSL 'http://pecl.php.net/get/redis-3.1.5.tgz' -o redis.tar.gz  \
     && mkdir -p /tmp/redis \
@@ -187,7 +186,6 @@ RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.5.5.tgz' -o xdebug.tar.gz \
     && rm swoole.tar.gz \
     && docker-php-ext-configure /tmp/swoole --enable-swoole  \
     && docker-php-ext-install /tmp/swoole  \
-
     #RPC通讯协议protobuf
     && curl -fsSL 'http://pecl.php.net/get/protobuf-3.5.1.tgz' -o protobuf.tar.gz  \
     && mkdir -p /tmp/protobuf \
@@ -195,7 +193,6 @@ RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.5.5.tgz' -o xdebug.tar.gz \
     && rm protobuf.tar.gz \
     && docker-php-ext-configure /tmp/protobuf --enable-protobuf  \
     && docker-php-ext-install /tmp/protobuf  \
-
     #xhprof
     && curl -fsSL 'http://pecl.php.net/get/xhprof-0.9.4.tgz' -o xhprof.tar.gz  \
     && mkdir -p /tmp/xhprof \
@@ -203,7 +200,5 @@ RUN curl -fsSL 'https://xdebug.org/files/xdebug-2.5.5.tgz' -o xdebug.tar.gz \
     && rm xhprof.tar.gz \
     && docker-php-ext-configure /tmp/xhprof/extension --enable-xhprof  \
     && docker-php-ext-install /tmp/xhprof/extension  \
-
-
     #删除无用包
     && rm -rf /tmp/*
