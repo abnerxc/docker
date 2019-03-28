@@ -119,6 +119,7 @@ COPY ./sources.list.jessie /etc/apt/sources.list
 # or
 #    `Package "xxx" does not have REST xml available`
 # Please turn on proxy (The proxy IP may be docker host IP or others):
+#  pecl install http://pecl.php.net/get/xdebug-2.2.1.tgz  或者使用这种方式
 #RUN pear config-set http_proxy http://10.0.75.1:1080
 #RUN pecl install redis-3.1.4 \
 #    && docker-php-ext-enable redis \
@@ -135,31 +136,31 @@ COPY ./sources.list.jessie /etc/apt/sources.list
 #    && docker-php-ext-enable memcached
 
 ###=======这个版本不知道什么尿性不能用====##
-RUN pecl install xdebug-2.7.0 \
+RUN pecl install http://pecl.php.net/get/xdebug-2.2.7.tgz \
     && docker-php-ext-enable xdebug \
-    && pecl install redis-3.1.5 \
+    && pecl install http://pecl.php.net/get/redis-3.1.5.tgz \
     && docker-php-ext-enable redis \
-    && pecl install memcache-2.2.7 \
+    && pecl install http://pecl.php.net/get/memcache-2.2.3.tgz \
     && docker-php-ext-enable memcache \
     && apt-get install -y libmemcached-dev zlib1g-dev  \
-    && pecl install memcached-2.2.0 \
+    && pecl install http://pecl.php.net/get/memcached-2.2.0.tgz \
     && docker-php-ext-enable memcached \
     && apt-get install -y openssl libssl-dev  \
-    && pecl install mongo-1.6.16 \
+    && pecl install http://pecl.php.net/get/mongo-1.6.0.tgz \
     && docker-php-ext-enable mongo \
     && apt-get install -y openssl libssl-dev  \
-    && pecl install mongodb-1.3.0 \
+    && pecl install http://pecl.php.net/get/mongodb-1.3.0.tgz \
     && docker-php-ext-enable mongodb \
-    && pecl install yaf-2.3.5 \
+    && pecl install http://pecl.php.net/get/yaf-2.3.5.tgz \
     && docker-php-ext-enable yaf \
     && apt-get install -y git \
     && cd /tmp && git clone --depth 1 git://github.com/phalcon/cphalcon.git \
     && cd cphalcon/build &&  ./install \
     && docker-php-ext-enable phalcon \
-    && pecl install swoole-1.10.1 \
+    && pecl install http://pecl.php.net/get/swoole-1.10.1.tgz \
     && docker-php-ext-enable swoole \
-    && pecl install protobuf-3.5.1 \
+    && pecl install http://pecl.php.net/get/protobuf-3.3.0.tgz \
     && docker-php-ext-enable protobuf \
-    && pecl install xhprof-0.9.4 \
+    && pecl install http://pecl.php.net/get/xhprof-0.9.4.tgz \
     && docker-php-ext-enable xhprof \
     && rm -rf /tmp/*
