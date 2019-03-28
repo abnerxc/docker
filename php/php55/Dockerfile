@@ -20,7 +20,7 @@ RUN pecl channel-update pecl.php.net \
     && apt-get install -y openssl libssl-dev  \
     && pecl install mongodb-1.3.0 \
     && docker-php-ext-enable mongodb \
-    && pecl install yaf-2.3.5 \
+    && pecl install yaf-3.0.3 \
     && docker-php-ext-enable yaf \
     && apt-get install -y git \
     && cd /tmp && git clone --depth 1 git://github.com/phalcon/cphalcon.git \
