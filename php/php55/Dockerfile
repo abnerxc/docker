@@ -9,13 +9,13 @@ RUN pecl channel-update pecl.php.net \
     && docker-php-ext-enable redis \
 #    && pecl install memcache-2.2.1 \
 #    && docker-php-ext-enable memcache \
-    && apt-get install -y libmemcached-dev zlib1g-dev  \
+#    && apt-get install -y libmemcached-dev zlib1g-dev  \
     && pecl install memcached-2.2.0 \
     && docker-php-ext-enable memcached \
-    && apt-get install -y openssl libssl-dev  \
+#    && apt-get install -y openssl libssl-dev  \
     && pecl install mongo-1.6.16 \
     && docker-php-ext-enable mongo \
-    && apt-get install -y openssl libssl-dev  \
+#    && apt-get install -y openssl libssl-dev  \
     && pecl install mongodb-1.3.0 \
     && docker-php-ext-enable mongodb \
     && pecl install yaf-2.3.5 \
