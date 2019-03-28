@@ -7,8 +7,8 @@ RUN pecl channel-update pecl.php.net \
     && docker-php-ext-enable xdebug \
     && pecl install redis-3.1.5 \
     && docker-php-ext-enable redis \
-    && pecl install memcache-2.2.1 \
-    && docker-php-ext-enable memcache \
+#    && pecl install memcache-2.2.1 \
+#    && docker-php-ext-enable memcache \
     && apt-get install -y libmemcached-dev zlib1g-dev  \
     && pecl install memcached-2.2.0 \
     && docker-php-ext-enable memcached \
