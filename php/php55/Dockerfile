@@ -9,8 +9,8 @@ RUN pecl channel-update pecl.php.net \
 #    && docker-php-ext-enable xdebug \
 #    && pecl install redis-3.1.5 \
 #    && docker-php-ext-enable redis \
-#--    && pecl install memcache-2.2.1 \
-#--    && docker-php-ext-enable memcache \
+#-err-    && pecl install memcache-2.2.1 \
+#-err-    && docker-php-ext-enable memcache \
 #    && apt-get install -y libmemcached-dev zlib1g-dev  \
 #    && pecl install memcached-2.2.0 \
 #    && docker-php-ext-enable memcached \
@@ -20,7 +20,7 @@ RUN pecl channel-update pecl.php.net \
 #    && apt-get install -y openssl libssl-dev  \
 #    && pecl install mongodb-1.3.0 \
 #    && docker-php-ext-enable mongodb \
-    && pecl install yaf-3.0.3 \
+    && pecl install yaf-2.1.7 \
     && docker-php-ext-enable yaf \
     && apt-get install -y git \
     && cd /tmp && git clone --depth 1 git://github.com/phalcon/cphalcon.git \
