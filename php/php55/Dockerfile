@@ -125,6 +125,6 @@ RUN apt-get clean && apt-get update \
     && pecl install xhprof-0.9.4 \
     && docker-php-ext-enable xhprof \
     # Composer
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/*
