@@ -136,9 +136,9 @@ COPY ./sources.list.jessie /etc/apt/sources.list
 #    && docker-php-ext-enable memcached
 
 ###=======这个版本不知道什么尿性不能用====##
-RUN pecl install http://pecl.php.net/get/xdebug-2.2.7.tgz \
-    && docker-php-ext-enable xdebug \
-    && pecl install http://pecl.php.net/get/redis-3.1.5.tgz \
+#RUN pecl install http://pecl.php.net/get/xdebug-2.2.7.tgz \
+#    && docker-php-ext-enable xdebug \
+RUN pecl install http://pecl.php.net/get/redis-3.1.5.tgz \
     && docker-php-ext-enable redis \
     && pecl install http://pecl.php.net/get/memcache-2.2.3.tgz \
     && docker-php-ext-enable memcache \
