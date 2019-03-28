@@ -1,6 +1,8 @@
 FROM registry.cn-hangzhou.aliyuncs.com/xuchen/nphp:5.5
 
+COPY ./sources.list.jessie /etc/apt/sources.list
 
+RUN apt-get clean && apt-get update
 
 RUN pecl channel-update pecl.php.net \
     && pecl install xdebug-2.2.7 \
@@ -9,13 +11,13 @@ RUN pecl channel-update pecl.php.net \
     && docker-php-ext-enable redis \
 #    && pecl install memcache-2.2.1 \
 #    && docker-php-ext-enable memcache \
-#    && apt-get install -y libmemcached-dev zlib1g-dev  \
+    && apt-get install -y libmemcached-dev zlib1g-dev  \
     && pecl install memcached-2.2.0 \
     && docker-php-ext-enable memcached \
-#    && apt-get install -y openssl libssl-dev  \
+    && apt-get install -y openssl libssl-dev  \
     && pecl install mongo-1.6.16 \
     && docker-php-ext-enable mongo \
-#    && apt-get install -y openssl libssl-dev  \
+    && apt-get install -y openssl libssl-dev  \
     && pecl install mongodb-1.3.0 \
     && docker-php-ext-enable mongodb \
     && pecl install yaf-2.3.5 \
