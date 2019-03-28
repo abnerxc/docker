@@ -22,10 +22,10 @@ RUN pecl channel-update pecl.php.net \
 #    && docker-php-ext-enable mongodb \
     && pecl install yaf-2.2.5 \
     && docker-php-ext-enable yaf \
-    && apt-get install -y git \
-    && cd /tmp && git clone --depth 1 git://github.com/phalcon/cphalcon.git \
-    && cd cphalcon/build &&  ./install \
-    && docker-php-ext-enable phalcon \
+#-no-sup-    && apt-get install -y git \
+#-no-sup-    && cd /tmp && git clone --depth 1 git://github.com/phalcon/cphalcon.git \
+#-no-sup-    && cd cphalcon/build &&  ./install \
+#-no-sup-    && docker-php-ext-enable phalcon \
     && pecl install swoole-1.10.1 \
     && docker-php-ext-enable swoole \
     && pecl install protobuf-3.3.0 \
