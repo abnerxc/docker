@@ -112,11 +112,8 @@ RUN apt-get clean && apt-get update \
 #    && apt-get install -y openssl libssl-dev  \
 #    && pecl install mongodb-1.3.0 \
 #    && docker-php-ext-enable mongodb \
-    #yaf pecl安装有bug,只能用源码安装
-    && curl -fsSL 'http://pecl.php.net/get/yaf-2.3.5.tgz' -o yaf.tar.gz  \
-    && mkdir -p /tmp/yaf  \
-    && tar -xf yaf.tar.gz -C /tmp/yaf --strip-components=1  \
-    && rm yaf.tar.gz  \
+    && pecl install yaf-2.2.5 \
+    && docker-php-ext-enable yaf \
 #    && apt-get install -y git \
 #    && cd /tmp && git clone --depth 1 git://github.com/phalcon/cphalcon.git \
 #    && cd cphalcon/build &&  ./install \
