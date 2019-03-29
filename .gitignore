@@ -5,3 +5,4 @@
 conf/nginx/conf.d/*.conf
 www
 data
+log
