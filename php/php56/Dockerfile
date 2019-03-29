@@ -119,10 +119,10 @@ RUN apt-get clean && apt-get update \
     && rm yaf.tar.gz  \
     && docker-php-ext-configure /tmp/yaf --enable-yaf  \
     && docker-php-ext-install /tmp/yaf \
-    && apt-get install -y git \
-    && cd /tmp && git clone --depth 1 git://github.com/phalcon/cphalcon.git \
-    && cd cphalcon/build &&  ./install \
-    && docker-php-ext-enable phalcon \
+#    && apt-get install -y git \
+#    && cd /tmp && git clone --depth 1 git://github.com/phalcon/cphalcon.git \
+#    && cd cphalcon/build &&  ./install \
+#    && docker-php-ext-enable phalcon \
     && pecl install swoole-1.10.1 \
     && docker-php-ext-enable swoole \
     && pecl install protobuf-3.3.0 \
