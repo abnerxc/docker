@@ -28,15 +28,19 @@ services:
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
       - ./log/php-fpm/:/var/log/php-fpm/:rw
       - ./log/ekt/:/var/log/ekt/:rw #ztth log
+      - ./log/ekt/:/var/log/e-platform/:rw #ztth log
     container_name: php72
     privileged: true
     links:
-          - redis:redis
-          - memcached:memcached
+      - redis:redis
+      - memcached:memcached
 #          - mysql:mysql
     extra_hosts:
       - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
       - "dzcx-dev.icsoc.net:172.18.0.50"
+      - "e-dev.icsoc.net:172.18.0.50"
+      - "e-platform-dev.icsoc.net:172.18.0.50"
+      - "platform-dev.icsoc.net:172.18.0.50"
     networks:
       default:
         ipv4_address: 172.18.0.72
@@ -52,6 +56,7 @@ services:
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
       - ./log/php-fpm/:/var/log/php-fpm/:rw
       - ./log/ekt/:/var/log/ekt/:rw #ztth log
+      - ./log/ekt/:/var/log/e-platform/:rw #ztth log
     container_name: php56
     privileged: true
     links:
@@ -61,6 +66,9 @@ services:
     extra_hosts:
       - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
       - "dzcx-dev.icsoc.net:172.18.0.50"
+      - "e-dev.icsoc.net:172.18.0.50"
+      - "e-platform-dev.icsoc.net:172.18.0.50"
+      - "platform-dev.icsoc.net:172.18.0.50"
     networks:
       default:
         ipv4_address: 172.18.0.56
@@ -75,6 +83,7 @@ services:
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
       - ./log/php-fpm/:/var/log/php-fpm/:rw
       - ./log/ekt/:/var/log/ekt/:rw #ztth log
+      - ./log/ekt/:/var/log/e-platform/:rw #ztth log
     container_name: php55
     privileged: true
     links:
@@ -84,6 +93,9 @@ services:
     extra_hosts:
       - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
       - "dzcx-dev.icsoc.net:172.18.0.50"
+      - "e-dev.icsoc.net:172.18.0.50"
+      - "e-platform-dev.icsoc.net:172.18.0.50"
+      - "platform-dev.icsoc.net:172.18.0.50"
     networks:
       default:
         ipv4_address: 172.18.0.55
