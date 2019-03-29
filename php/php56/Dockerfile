@@ -117,8 +117,6 @@ RUN apt-get clean && apt-get update \
     && mkdir -p /tmp/yaf  \
     && tar -xf yaf.tar.gz -C /tmp/yaf --strip-components=1  \
     && rm yaf.tar.gz  \
-    && docker-php-ext-configure /tmp/yaf --enable-yaf  \
-    && docker-php-ext-install /tmp/yaf \
 #    && apt-get install -y git \
 #    && cd /tmp && git clone --depth 1 git://github.com/phalcon/cphalcon.git \
 #    && cd cphalcon/build &&  ./install \
