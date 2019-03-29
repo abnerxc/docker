@@ -44,7 +44,7 @@ RUN apt-get update \
     && docker-php-ext-install sysvmsg \
     && docker-php-ext-install sysvsem \
     && docker-php-ext-install sysvshm \
-    && docker-php-ext-install opcache
+    && docker-php-ext-install opcache \
     && :\
     #pecl扩展开始开始
     && pecl channel-update pecl.php.net \
