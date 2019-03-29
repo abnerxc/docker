@@ -2,7 +2,7 @@
 #no push
 *.iml
 .idea
-conf/nginx/conf.d/*.conf
+conf/nginx/conf.d/
 www
 data
 log
