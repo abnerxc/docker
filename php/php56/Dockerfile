@@ -96,7 +96,7 @@ RUN apt-get clean && apt-get update \
 #    && docker-php-ext-configure mssql && docker-php-ext-install mssql \
 #    && :\
 #    #pecl扩展开始开始
-#    && pecl channel-update pecl.php.net \
+    && pecl channel-update pecl.php.net \
 #    && pecl install xdebug-2.5.5 \
 #    && docker-php-ext-enable xdebug \
 #    && pecl install redis-3.1.5 \
@@ -112,7 +112,7 @@ RUN apt-get clean && apt-get update \
 #    && apt-get install -y openssl libssl-dev  \
 #    && pecl install mongodb-1.3.0 \
 #    && docker-php-ext-enable mongodb \
-    && pecl install yaf-3.0.3 \
+    && pecl install yaf-2.3.4 \
     && docker-php-ext-enable yaf \
     && apt-get install -y git \
     && cd /tmp && git clone --depth 1 git://github.com/phalcon/cphalcon.git \
