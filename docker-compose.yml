@@ -13,11 +13,12 @@ services:
     container_name: nginx
     links:
       - php72:fpm72
-      - php56:fpm56
       - php70:fpm70
+      - php56:fpm56
+      - php55:fpm55
+
 
   php72:
-    #build: ./php/php72/
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
     expose:
       - 9000
@@ -31,7 +32,6 @@ services:
     links:
       - redis:redis
       - memcached:memcached
-#      - mysql:mysql
 
   php70:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.0
@@ -47,10 +47,8 @@ services:
     links:
       - redis:redis
       - memcached:memcached
-#      - mysql:mysql
 
   php56:
-    #build: ./php/php56/
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:5.6
     expose:
       - "9000"
@@ -64,9 +62,21 @@ services:
     links:
       - redis:redis
       - memcached:memcached
-#      - mysql:mysql
 
-
+  php55:
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:5.5
+    expose:
+      - "9000"
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php-fpm/:/var/log/php-fpm/:rw
+    container_name: php55
+    privileged: true
+    links:
+      - redis:redis
+      - memcached:memcached
 
   redis:
     image: redis:alpine
