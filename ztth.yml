@@ -14,11 +14,68 @@ services:
       - ./log/nginx/:/var/log/nginx/
     container_name: nginx
     privileged: true
+    environment:
+      - TZ=Asia/Shanghai
     extra_hosts:
       - "e-platform-dev.icsoc.net:127.0.0.1"
     networks:
       default:
         ipv4_address: 172.18.0.50
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    container_name: redis
+    networks:
+      default:
+        ipv4_address: 172.18.0.100
+
+  memcached:
+    image: memcached:alpine
+    ports:
+      - "11211:11211"
+    container_name: memcached
+    networks:
+      default:
+        ipv4_address: 172.18.0.101
+
+  mysql:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
+      - ./data/mysql/:/var/lib/mysql/:rw
+      - ./log/mysql/:/var/log/mysql/:rw
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      default:
+        ipv4_address: 172.18.0.102
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongodb/:/data/db/:rw
+    command: mongod --smallfiles --logpath=/dev/null #windows挂载报错解决方案
+    networks:
+      default:
+        ipv4_address: 172.18.0.103
+
+  elasticsearch:
+    image: elasticsearch:5.6.12-alpine
+    container_name: es
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      default:
+        ipv4_address: 172.18.0.104
 
   php72:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
@@ -33,10 +90,6 @@ services:
       - ./log/ekt/:/var/log/e-platform/:rw #ztth log
     container_name: php72
     privileged: true
-    links:
-      - redis:redis
-      - memcached:memcached
-#          - mysql:mysql
     extra_hosts:
       - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
       - "dzcx-dev.icsoc.net:172.18.0.50"
@@ -61,10 +114,6 @@ services:
       - ./log/ekt/:/var/log/e-platform/:rw #ztth log
     container_name: php56
     privileged: true
-    links:
-      - redis:redis
-      - memcached:memcached
-#      - mysql:mysql
     extra_hosts:
       - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
       - "dzcx-dev.icsoc.net:172.18.0.50"
@@ -88,10 +137,6 @@ services:
       - ./log/ekt/:/var/log/e-platform/:rw #ztth log
     container_name: php55
     privileged: true
-    links:
-      - redis:redis
-      - memcached:memcached
-#      - mysql:mysql
     extra_hosts:
       - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
       - "dzcx-dev.icsoc.net:172.18.0.50"
@@ -101,49 +146,6 @@ services:
     networks:
       default:
         ipv4_address: 172.18.0.55
-
-
-
-  redis:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
-    container_name: redis
-
-  memcached:
-    image: memcached:alpine
-    ports:
-      - "11211:11211"
-    container_name: memcached
-
-  mysql:
-    image: mysql:5.6
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
-      - ./data/mysql/:/var/lib/mysql/:rw
-      - ./log/mysql/:/var/log/mysql/:rw
-    container_name: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./data/mongodb/:/data/db/:rw
-    command: mongod --smallfiles --logpath=/dev/null #windows挂载报错解决方案
-
-  elasticsearch:
-    image: elasticsearch:5.6.12-alpine
-    container_name: es
-    ports:
-      - 9200:9200
-      - 9300:9300
-
 
 
 networks:
