@@ -60,9 +60,9 @@ services:
     container_name: mongodb
     ports:
       - "27017:27017"
-    volumes:
-      - ./data/mongodb/:/data/db/:rw
-    command: mongod --smallfiles --logpath=/dev/null #windows挂载报错解决方案
+#    volumes:
+#      - ./data/mongodb/:/data/db/:rw
+#    command: mongod --smallfiles --logpath=/dev/null #windows挂载报错解决方案
     networks:
       default:
         ipv4_address: 172.18.0.103
