@@ -58,6 +58,8 @@ RUN apt-get update \
     && apt-get install -y openssl libssl-dev  \
     && pecl install mongodb-1.5.2 \
     && docker-php-ext-enable mongodb \
+    && pecl install amqp-1.9.4 \
+    && docker-php-ext-enable amqp \
     #yaf pecl安装有bug,只能用源码安装
     && curl -fsSL 'http://pecl.php.net/get/yaf-3.0.6.tgz' -o yaf.tar.gz  \
     && mkdir -p /tmp/yaf  \
