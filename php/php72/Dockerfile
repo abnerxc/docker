@@ -56,7 +56,7 @@ RUN apt-get update \
     && pecl install memcached-3.0.4 \
     && docker-php-ext-enable memcached \
     && apt-get install -y openssl libssl-dev  \
-    && pecl install mongodb-1.3.4 \
+    && pecl install mongodb-1.5.2 \
     && docker-php-ext-enable mongodb \
     #yaf pecl安装有bug,只能用源码安装
     && curl -fsSL 'http://pecl.php.net/get/yaf-3.0.6.tgz' -o yaf.tar.gz  \
