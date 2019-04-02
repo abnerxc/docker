@@ -1,6 +1,6 @@
 FROM php:7.2-fpm
 
-#COPY ./sources.list.stretch /etc/apt/sources.list
+COPY ./sources.list.stretch /etc/apt/sources.list
 
 # Extensions: ctype, dom, fileinfo, ftp, hash, iconv, json, pdo, pdo_sqlite, session,
 # tokenizer, simplexml, xml, xmlreader, xmlwriter and phar are bundled and compiled into
@@ -58,6 +58,7 @@ RUN apt-get update \
     && apt-get install -y openssl libssl-dev  \
     && pecl install mongodb-1.5.2 \
     && docker-php-ext-enable mongodb \
+    && apt-get install -y librabbitmq-dev libssh-dev  \
     && pecl install amqp-1.9.4 \
     && docker-php-ext-enable amqp \
     #yaf pecl安装有bug,只能用源码安装
