@@ -63,7 +63,7 @@ services:
       - "27017:27017"
 #    volumes:
 #      - ./data/mongodb/:/data/db/:rw
-#    command: mongod --smallfiles --logpath=/dev/null #windows挂载报错解决方案
+#    command: mongod --smallfiles --logpath=/dev/null #windows挂载报错
     networks:
       default:
         ipv4_address: 172.18.0.103
