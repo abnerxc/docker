@@ -38,12 +38,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && apk add libmemcached-dev \
     && pecl install -o -f memcached-2.2.0 \
     && docker-php-ext-enable memcached \
-    && curl -fsSL 'http://pecl.php.net/get/mongodb-1.5.2.tgz' -o mongodb.tar.gz  \
-    && mkdir -p /tmp/mongodb  \
-    && tar -xf mongodb.tar.gz -C /tmp/mongodb --strip-components=1  \
-    && rm mongodb.tar.gz  \
-    && docker-php-ext-configure /tmp/mongodb --enable-mongodb  \
-    && docker-php-ext-install /tmp/mongodb \
+    && pecl install -o -f mongodb-1.5.2 \
+    && docker-php-ext-enable mongodb \
     && pecl install -o -f amqp-1.9.4 \
     && docker-php-ext-enable amqp \
     #yaf pecl安装有bug,只能用源码安装
