@@ -1,22 +1,15 @@
 FROM php:7.2-fpm-alpine
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && apk update \
-    && apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev curl \
+    && apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev curl icu-dev libxml2-dev libxslt-dev bzip2-dev gettext-dev openssl-dev rabbitmq-c-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
-    && :\
-    && apk add icu-dev \
     && docker-php-ext-install intl \
-    && :\
-    && apk add libxml2-dev libxslt-dev \
     && docker-php-ext-install soap \
     && docker-php-ext-install xsl \
     && docker-php-ext-install xmlrpc \
     && docker-php-ext-install wddx \
-    && :\
-    && apk add bzip2-dev \
     && docker-php-ext-install bz2 \
-    && :\
     && docker-php-ext-install zip \
     && docker-php-ext-install pcntl \
     && docker-php-ext-install pdo_mysql \
@@ -26,7 +19,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && docker-php-ext-install bcmath \
     && docker-php-ext-install calendar \
     && docker-php-ext-install sockets \
-    && apk add gettext-dev \
     && docker-php-ext-install gettext \
     && docker-php-ext-install shmop \
     && docker-php-ext-install sysvmsg \
@@ -43,10 +35,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && apk add libmemcached-dev \
     && pecl install memcached-3.0.4 \
     && docker-php-ext-enable memcached \
-    && apk add openssl-dev  \
     && pecl install mongodb-1.5.2 \
     && docker-php-ext-enable mongodb \
-    && apk add rabbitmq-c-dev  \
     && pecl install amqp-1.9.4 \
     && docker-php-ext-enable amqp \
     #yaf pecl安装有bug,只能用源码安装
