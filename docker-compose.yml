@@ -53,7 +53,7 @@ services:
         ipv4_address: 172.18.0.102
 
   mongodb:
-    image: mongo:latest
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/mongo:4.0
     container_name: mongodb
     ports:
       - "27017:27017"
