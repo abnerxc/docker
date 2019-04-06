@@ -45,6 +45,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && mkdir -p /tmp/yaf  \
     && tar -xf yaf.tar.gz -C /tmp/yaf --strip-components=1  \
     && rm yaf.tar.gz  \
+    && docker-php-ext-configure /tmp/yaf --enable-yaf  \
+    && docker-php-ext-install /tmp/yaf \
     && apk add linux-headers \
     && pecl install -o -f swoole-2.1.0 \
     && docker-php-ext-enable swoole \
