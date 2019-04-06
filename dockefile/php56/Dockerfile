@@ -38,7 +38,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && apk add libmemcached-dev \
     && pecl install -o -f memcached-2.2.0 \
     && docker-php-ext-enable memcached \
-    && pecl install -o -f mongodb-1.5.2 \
+    && pecl install -o -f mongodb-1.3.0 \
     && docker-php-ext-enable mongodb \
     && pecl install -o -f amqp-1.9.4 \
     && docker-php-ext-enable amqp \
