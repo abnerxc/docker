@@ -1,7 +1,7 @@
 FROM php:5.6-fpm-alpine
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && apk update \
-    && apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev curl icu-dev libxml2-dev libxslt-dev bzip2-dev gettext-dev libressl-dev rabbitmq-c-dev openssl-dev \
+    && apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev curl icu-dev libxml2-dev libxslt-dev bzip2-dev gettext-dev libressl-dev rabbitmq-c-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
     && docker-php-ext-install intl \
@@ -38,9 +38,12 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && apk add libmemcached-dev \
     && pecl install -o -f memcached-2.2.0 \
     && docker-php-ext-enable memcached \
-    && pecl install -o -f mongodb-1.5.3 \
-    && docker-php-ext-configure mongodb --with-libmongoc=yes --with-libbson=yes --with-mongodb-ssl=libressl \
-    && docker-php-ext-enable mongodb \
+    && curl -fsSL 'http://pecl.php.net/get/mongodb-1.5.2.tgz' -o mongodb.tar.gz  \
+    && mkdir -p /tmp/mongodb  \
+    && tar -xf mongodb.tar.gz -C /tmp/mongodb --strip-components=1  \
+    && rm mongodb.tar.gz  \
+    && docker-php-ext-configure /tmp/mongodb --enable-mongodb  \
+    && docker-php-ext-install /tmp/mongodb \
     && pecl install -o -f amqp-1.9.4 \
     && docker-php-ext-enable amqp \
     #yaf pecl安装有bug,只能用源码安装
