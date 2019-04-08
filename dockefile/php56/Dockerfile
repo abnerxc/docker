@@ -1,7 +1,7 @@
 FROM php:5.6-fpm-alpine
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && apk update \
-    && apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev curl icu-dev libxml2-dev libxslt-dev bzip2-dev gettext-dev libressl libressl-dev rabbitmq-c-dev autoconf  g++ make \
+    && apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev curl icu-dev libxml2-dev libxslt-dev bzip2-dev gettext-dev libressl libressl-dev rabbitmq-c-dev autoconf  g++ make pkgconfig \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
     && docker-php-ext-install intl \
@@ -38,7 +38,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && apk add libmemcached-dev \
     && pecl install -o -f memcached-2.2.0 \
     && docker-php-ext-enable memcached \
-    && pecl install -o -f mongodb \
+    && pecl install -o -f mongodb-1.1.10 \
     && docker-php-ext-enable mongodb \
     && pecl install -o -f amqp-1.9.4 \
     && docker-php-ext-enable amqp \
@@ -63,4 +63,5 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
+    && docker-php-source delete \
     && apk del  .phpize-deps && apk del --purge freetype-dev libjpeg-turbo-dev libpng-dev curl icu-dev libxml2-dev libxslt-dev bzip2-dev gettext-dev libressl libressl-dev rabbitmq-c-dev autoconf g++ make
