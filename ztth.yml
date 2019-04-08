@@ -17,7 +17,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     extra_hosts:
-      - "passprox.nginx.net:127.0.0.1"   #这里解决nginx passprox内部转发到域名问题hosts，域名地址:ip 按照实际使用场景进行更换
+      - "e-platform-dev.icsoc.net:127.0.0.1"
     networks:
       default:
         ipv4_address: 172.18.0.50
@@ -61,6 +61,9 @@ services:
     container_name: mongodb
     ports:
       - "27017:27017"
+#    volumes:
+#      - ./data/mongodb/:/data/db/:rw
+#    command: mongod --smallfiles --logpath=/dev/null #windows挂载报错
     networks:
       default:
         ipv4_address: 172.18.0.103
@@ -108,7 +111,11 @@ services:
     container_name: php72
     privileged: true
     extra_hosts:
-      - "debug.mytest.com:172.18.0.50"  #这里解决php curl内部访问容器域名,转发到nginx容器做hosts 域名地址:ip 按照实际使用场景进行更换
+      - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
+      - "dzcx-dev.icsoc.net:172.18.0.50"
+      - "e-dev.icsoc.net:172.18.0.50"
+      - "e-platform-dev.icsoc.net:172.18.0.50"
+      - "platform-dev.icsoc.net:172.18.0.50"
     networks:
       default:
         ipv4_address: 172.18.0.72
