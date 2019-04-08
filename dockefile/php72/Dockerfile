@@ -38,6 +38,10 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && docker-php-ext-enable memcached \
     && pecl install -o -f mongodb-1.4.2 \
     && docker-php-ext-enable mongodb \
+    && pecl install -o -f swoole-2.1.0 \
+    && docker-php-ext-enable swoole \
+    && pecl install -o -f protobuf-3.5.1 \
+    && docker-php-ext-enable protobuf \
     #amqp pecl安装有bug,只能用开源的
     && curl -fsSL 'https://github.com/pdezwart/php-amqp/archive/v1.9.4.tar.gz' -o amqp.tar.gz  \
     && mkdir -p /tmp/amqp  \
@@ -53,10 +57,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && docker-php-ext-configure /tmp/yaf --enable-yaf  \
     && docker-php-ext-install /tmp/yaf \
     && apk add linux-headers \
-    && pecl install -o -f swoole-2.1.0 \
-    && docker-php-ext-enable swoole \
-    && pecl install -o -f protobuf-3.5.1 \
-    && docker-php-ext-enable protobuf \
+    # xhprof 安装
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/v4.1.5.tar.gz' -o xhprof.tar.gz  \
     && mkdir -p /tmp/xhprof \
     && tar -xf xhprof.tar.gz -C /tmp/xhprof --strip-components=1  \
