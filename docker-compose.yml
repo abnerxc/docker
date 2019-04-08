@@ -118,20 +118,6 @@ services:
       default:
         ipv4_address: 172.18.0.56
 
-  php55:
-    image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:5.5
-    expose:
-      - "9000"
-    volumes:
-      - ./www/:/var/www/html/:rw
-      - ./conf/php/php.ini:/usr/local/etc/php/php.ini:ro
-      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
-      - ./log/php-fpm/:/var/log/php-fpm/:rw
-    container_name: php55
-    privileged: true
-    networks:
-      default:
-        ipv4_address: 172.18.0.55
 
 
 networks:
