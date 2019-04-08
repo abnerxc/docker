@@ -38,7 +38,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && rm amqp.tar.gz  \
     && docker-php-ext-configure /tmp/amqp --enable-amqp  \
     && docker-php-ext-install /tmp/amqp \
-
     # xhprof 安装
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/v4.1.5.tar.gz' -o xhprof.tar.gz  \
     && mkdir -p /tmp/xhprof \
