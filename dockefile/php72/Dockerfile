@@ -38,8 +38,13 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && docker-php-ext-enable memcached \
     && pecl install -o -f mongodb-1.4.2 \
     && docker-php-ext-enable mongodb \
-    && pecl install -o -f amqp-1.9.4 \
-    && docker-php-ext-enable amqp \
+    #amqp pecl安装有bug,只能用开源的
+    && curl -fsSL 'https://github.com/pdezwart/php-amqp/archive/v1.9.4.tar.gz' -o amqp.tar.gz  \
+    && mkdir -p /tmp/amqp  \
+    && tar -xf amqp.tar.gz -C /tmp/amqp --strip-components=1  \
+    && rm amqp.tar.gz  \
+    && docker-php-ext-configure /tmp/amqp --enable-amqp  \
+    && docker-php-ext-install /tmp/amqp \
     #yaf pecl安装有bug,只能用源码安装
     && curl -fsSL 'http://pecl.php.net/get/yaf-3.0.6.tgz' -o yaf.tar.gz  \
     && mkdir -p /tmp/yaf  \
@@ -60,6 +65,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && docker-php-ext-install /tmp/xhprof  \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
-    && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
     && docker-php-source delete \
+    && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
     && apk del  .phpize-deps && apk del --purge freetype-dev freetype-dev libjpeg-turbo-dev libpng-dev curl icu-dev libxml2-dev libxslt-dev bzip2-dev gettext-dev libressl libressl-dev rabbitmq-c-dev autoconf  g++ make pkgconfig libssh-dev
