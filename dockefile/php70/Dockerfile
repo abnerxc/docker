@@ -35,5 +35,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     # del
-    && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /usr/share/php \
+    && docker-php-source delete \
+    && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
     && apk del  .phpize-deps
