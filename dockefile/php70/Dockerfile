@@ -31,13 +31,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && rm yaf.tar.gz  \
     && docker-php-ext-configure /tmp/yaf --enable-yaf  \
     && docker-php-ext-install /tmp/yaf \
-    # xhprof
-    && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/v4.1.5.tar.gz' -o xhprof.tar.gz  \
-    && mkdir -p /tmp/xhprof \
-    && tar -xf xhprof.tar.gz -C /tmp/xhprof --strip-components=1  \
-    && rm xhprof.tar.gz \
-    && docker-php-ext-configure /tmp/xhprof --enable-xhprof  \
-    && docker-php-ext-install /tmp/xhprof  \
     # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
