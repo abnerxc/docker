@@ -98,7 +98,7 @@ services:
         ipv4_address: 172.18.0.105
 
   nodejs:
-    image: nodejs:alpine
+    image: node:alpine
     container_name: nodejs
     networks:
       default:
