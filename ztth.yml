@@ -97,13 +97,6 @@ services:
       default:
         ipv4_address: 172.18.0.105
 
-  nodejs:
-    image: node:alpine
-    container_name: nodejs
-    networks:
-      default:
-        ipv4_address: 172.18.0.106
-
   php72:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
     expose:
