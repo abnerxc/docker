@@ -61,3 +61,9 @@ php72即7.2版本容器名称，可以针对不同的域名配置不同的运行
 ```
 # 引用说明
 项目引用自github用户yeszao  https://github.com/yeszao/dnmp 在此基础上进行升级和扩展
+
+
+#查看所有容器ip
+```
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'  $(sudo docker ps -a -q)
+```
