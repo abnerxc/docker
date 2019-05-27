@@ -1,5 +1,10 @@
 version: '2'
-#ip[nginx=...2,php56=....56,php72=....72]
+networks:
+  default:  #这里可以自定义名称 ，跟引用的地方一致就行
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
+          gateway: 172.18.0.1
 
 services:
   nginx:
@@ -79,11 +84,11 @@ services:
         ipv4_address: 172.18.0.104
 
   rabbitmq:
-    image: rabbitmq:3.7.14-alpine
+    image: rabbitmq:3.7.15-management-alpine
     container_name: rabbitmq
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
       RABBITMQ_DEFAULT_VHOST: 'vhost'
     ports:
       - "15672:15672"
@@ -191,9 +196,3 @@ services:
         ipv4_address: 172.18.0.55
 
 
-networks:
-  default:  #这里可以自定义名称 ，跟引用的地方一致就行
-    ipam:
-      config:
-        - subnet: 172.18.0.0/24
-          gateway: 172.18.0.1
