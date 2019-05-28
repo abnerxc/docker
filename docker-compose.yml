@@ -67,6 +67,15 @@ services:
   elasticsearch:
     image: elasticsearch:5.6.12-alpine
     container_name: es
+    environment:
+      - cluster.name=development
+      - node.name=winner
+      - bootstrap.memory_lock=false
+      - discovery.zen.minimum_master_nodes=1
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144
+    volumes:
+      - ./data/elasticsearch/:/usr/share/elasticsearch/data
+      - ./conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
       - 9200:9200
       - 9300:9300
