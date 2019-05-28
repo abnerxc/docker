@@ -87,6 +87,26 @@ services:
           ipv4_address: 172.18.0.105
 
 
+  rabbitmq:
+    image: rabbitmq:3.7.15-management-alpine
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      RABBITMQ_DEFAULT_VHOST: 'vhost'
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      default:
+        ipv4_address: 172.18.0.106
+
+
   php72:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
     expose:
