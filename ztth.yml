@@ -100,7 +100,7 @@ services:
     privileged: true
     volumes:
       # - /home/rabbitmq/etc/rabbitmq:/etc/rabbitmq  #配置文件目录
-      - ./data/rabbitmq:/var/lib/rabbitmq  #数据存储目录
+      - ./data/rabbitmq/:/var/lib/rabbitmq  #数据存储目录
       - ./log/rabbitmq/:/var/log/rabbitmq #日志目录
     environment:
       RABBITMQ_DEFAULT_USER: admin
