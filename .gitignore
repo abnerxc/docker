@@ -4,5 +4,5 @@
 .idea
 #conf/nginx/conf.d/*.conf
 www
-data
+#data
 log
