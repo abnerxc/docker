@@ -118,6 +118,16 @@ services:
       default:
         ipv4_address: 172.18.0.105
 
+  #图表工具
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      default:
+        ipv4_address: 172.18.0.107
+
   php72:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
     expose:
