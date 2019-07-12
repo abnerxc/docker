@@ -130,10 +130,11 @@ services:
 
   #时序数据库
   influxdb:
-    image: influxdb:1.7.7-meta-alpine
+    image: influxdb:1.7-alpine
     container_name: influxdb
     ports:
-      - "8086:8086"
+      - "8083:8083"  #web管理端口
+      - "8086:8086"  #HTTP api端口
     networks:
       default:
         ipv4_address: 172.18.0.107
