@@ -126,7 +126,7 @@ services:
         ipv4_address: 172.18.0.107
 
   #时序数据库
-    influxdb:
+  influxdb:
       image: 1.7.7-meta-alpine
       container_name: influxdb
       ports:

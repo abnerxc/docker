@@ -126,6 +126,16 @@ services:
       - "3000:3000"
     networks:
       default:
+        ipv4_address: 172.18.0.106
+
+  #时序数据库
+  influxdb:
+    image: 1.7.7-meta-alpine
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    networks:
+      default:
         ipv4_address: 172.18.0.107
 
   php72:
