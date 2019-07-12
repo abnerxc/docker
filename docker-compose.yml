@@ -125,15 +125,20 @@ services:
       default:
         ipv4_address: 172.18.0.107
 
-  #时序数据库
   influxdb:
-      image: influxdb:1.7-alpine
-      container_name: influxdb
-      ports:
-        - "8086:8086"  #HTTP api端口
-      networks:
-        default:
-          ipv4_address: 172.18.0.108
+    image: influxdb:1.7-alpine
+    container_name: influxdb
+    ports:
+      - "8086:8086"  #HTTP api端口
+    environment:
+      INFLUXDB_DB: db0
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: 123456
+      INFLUXDB_USER: telegraf
+      INFLUXDB_USER_PASSWORD: telegraf
+    networks:
+      default:
+        ipv4_address: 172.18.0.108
 
 
   php72:
