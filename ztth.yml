@@ -130,7 +130,7 @@ services:
 
   #时序数据库
   influxdb:
-    image: 1.7.7-meta-alpine
+    image: influxdb:1.7.7-meta-alpine
     container_name: influxdb
     ports:
       - "8086:8086"
