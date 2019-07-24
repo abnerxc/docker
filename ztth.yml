@@ -22,7 +22,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     extra_hosts:
-      - "xc-e-platform-dev.icsoc.net:127.0.0.1"
+      - "e-platform-dev.icsoc.net:127.0.0.1"
     networks:
       default:
         ipv4_address: 172.18.0.50
@@ -160,9 +160,9 @@ services:
     extra_hosts:
       - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
       - "dzcx-dev.icsoc.net:172.18.0.50"
-      - "xc-e-dev.icsoc.net:172.18.0.50"
-      - "xc-e-platform-dev.icsoc.net:172.18.0.50"
-      - "xc-platform-dev.icsoc.net:172.18.0.50"
+      - "e-dev.icsoc.net:172.18.0.50"
+      - "e-platform-dev.icsoc.net:172.18.0.50"
+      - "platform-dev.icsoc.net:172.18.0.50"
     networks:
       default:
         ipv4_address: 172.18.0.72
@@ -183,9 +183,9 @@ services:
       extra_hosts:
         - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
         - "dzcx-dev.icsoc.net:172.18.0.50"
-        - "xc-e-dev.icsoc.net:172.18.0.50"
-        - "xc-e-platform-dev.icsoc.net:172.18.0.50"
-        - "xc-platform-dev.icsoc.net:172.18.0.50"
+        - "e-dev.icsoc.net:172.18.0.50"
+        - "e-platform-dev.icsoc.net:172.18.0.50"
+        - "platform-dev.icsoc.net:172.18.0.50"
       networks:
         default:
           ipv4_address: 172.18.0.70
@@ -207,9 +207,9 @@ services:
     extra_hosts:
       - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
       - "dzcx-dev.icsoc.net:172.18.0.50"
-      - "xc-e-dev.icsoc.net:172.18.0.50"
-      - "xc-e-platform-dev.icsoc.net:172.18.0.50"
-      - "xc-platform-dev.icsoc.net:172.18.0.50"
+      - "e-dev.icsoc.net:172.18.0.50"
+      - "e-platform-dev.icsoc.net:172.18.0.50"
+      - "platform-dev.icsoc.net:172.18.0.50"
     networks:
       default:
         ipv4_address: 172.18.0.56
