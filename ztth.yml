@@ -148,6 +148,8 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
     expose:
       - 9000
+    cap_add: #启用容器内核能力
+      - SYS_PTRACE
     volumes:
       - ./www/:/var/www/html/:rw
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
