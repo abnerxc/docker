@@ -1,6 +1,6 @@
 FROM        alpine:latest
 LABEL       maintainer="abner510@126.com"
-RUN         sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && \
+RUN         sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && apk update \
             apk add --update mongodb && \
             mkdir -p /data/db && \
             chown -R mongodb /data/db && \
