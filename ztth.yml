@@ -118,32 +118,6 @@ services:
       default:
         ipv4_address: 172.18.0.105
 
-  #图表工具
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    networks:
-      default:
-        ipv4_address: 172.18.0.106
-
-  #时序数据库
-  influxdb:
-    image: influxdb:1.7-alpine
-    container_name: influxdb
-    ports:
-      - "8086:8086"  #HTTP api端口
-    environment:
-      INFLUXDB_DB: db0
-      INFLUXDB_ADMIN_USER: admin
-      INFLUXDB_ADMIN_PASSWORD: 123456
-      INFLUXDB_USER: telegraf
-      INFLUXDB_USER_PASSWORD: telegraf
-    networks:
-      default:
-        ipv4_address: 172.18.0.107
-
   php72:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
     expose:
