@@ -1,8 +1,10 @@
-FROM        alpine
+FROM        alpine:edge
 LABEL       maintainer="abner510@126.com"
-RUN apk add --no-cache bash mongodb
-RUN mkdir -p /data/db && \
-    chown -R mongodb /data/db
+RUN apk add --no-cache mongodb
+
 VOLUME /data/db
-EXPOSE 27017
-CMD [ "mongod", "--bind_ip", "0.0.0.0"]
+EXPOSE 27017 28017
+
+COPY run.sh /root
+ENTRYPOINT [ "/root/run.sh" ]
+CMD [ "mongod", "--bind_ip", "0.0.0.0" ]
