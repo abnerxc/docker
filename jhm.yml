@@ -54,8 +54,8 @@ services:
 
 
   mongodb:
-    image: registry.cn-hangzhou.aliyuncs.com/xuchen/mongo:4.0
-    #image: mvertes/alpine-mongo
+#    image: registry.cn-hangzhou.aliyuncs.com/xuchen/mongo:4.0
+    image: mvertes/alpine-mongo
     container_name: mongodb
     privileged: true
     ports:
