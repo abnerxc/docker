@@ -54,16 +54,17 @@ services:
 
 
   mongodb:
-    image: mvertes/alpine-mongo
+    image: mongo
     container_name: mongodb
     privileged: true
     ports:
       - "27017:27017"
     volumes:
       - ./data/mongodb/:/data/db/
+    command: --auth --smallfiles --bind_ip_all
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: 123456
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
     networks:
       default:
         ipv4_address: 172.18.0.103
