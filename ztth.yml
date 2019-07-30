@@ -70,8 +70,8 @@ services:
     privileged: true
     ports:
       - "27017:27017"
-    volumes:
-      - ./data/mongodb/:/data/db/
+    # volumes:
+    #   - ./data/mongodb/:/data/db/
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: 123456
