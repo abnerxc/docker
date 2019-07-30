@@ -65,14 +65,16 @@ services:
         ipv4_address: 172.18.0.102
 
   mongodb:
-    image: registry.cn-hangzhou.aliyuncs.com/xuchen/mongo:4.0
+    image: mvertes/alpine-mongo
     container_name: mongodb
     privileged: true
     ports:
       - "27017:27017"
-#    volumes:
-#      - ./data/mongodb/:/data/db/
-#    command: mongod --smallfiles --logpath=/dev/null #windows挂载报错
+    volumes:
+      - ./data/mongodb/:/data/db/
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 123456
     networks:
       default:
         ipv4_address: 172.18.0.103
