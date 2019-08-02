@@ -31,6 +31,13 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && rm yaf.tar.gz  \
     && docker-php-ext-configure /tmp/yaf --enable-yaf  \
     && docker-php-ext-install /tmp/yaf \
+    #tideways 性能分析工具
+    && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/v4.1.7.tar.gz' -o tideways.tar.gz  \
+    && mkdir -p /tmp/tideways  \
+    && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
+    && rm tideways.tar.gz  \
+    && docker-php-ext-configure /tmp/tideways --enable-tideways  \
+    && docker-php-ext-install /tmp/tideways \
     # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
