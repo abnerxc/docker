@@ -1,10 +1,12 @@
-version: '2'
+version: '3'
 networks:
-  default:  #这里可以自定义名称 ，跟引用的地方一致就行
+  ztthnet:  #这里可以自定义名称 ，跟引用的地方一致就行
+    driver: bridge
     ipam:
       config:
         - subnet: 172.18.0.0/24
-          gateway: 172.18.0.1
+          #gateway: 172.18.0.1
+
 
 services:
   nginx:
@@ -24,7 +26,7 @@ services:
     extra_hosts:
       - "e-platform-dev.icsoc.net:127.0.0.1"
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.50
 
   redis:
@@ -35,7 +37,7 @@ services:
       - "6379:6379"
     command: redis-server --requirepass 123456
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.100
 
   memcached:
@@ -45,11 +47,11 @@ services:
     ports:
       - "11211:11211"
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.101
 
   mysql:
-    image: mysql:5.6
+    image: mariadb
     container_name: mysql
     privileged: true
     ports:
@@ -58,10 +60,11 @@ services:
       - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
       - ./data/mysql/:/var/lib/mysql/
       - ./log/mysql/:/var/log/mysql/
+    command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
     environment:
       MYSQL_ROOT_PASSWORD: 123456
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.102
 
   mongodb:
@@ -70,14 +73,14 @@ services:
     privileged: true
     ports:
       - "27017:27017"
-    # volumes:
-    #   - ./data/mongodb/:/data/db/
+#    volumes:
+#      - ./data/mongodb/:/data/db/
     command: --auth --smallfiles --bind_ip_all
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.103
 
   elasticsearch:
@@ -94,7 +97,7 @@ services:
       - 9200:9200
       - 9300:9300
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.104
 
   rabbitmq:
@@ -102,7 +105,6 @@ services:
     container_name: rabbitmq
     privileged: true
     volumes:
-      # - /home/rabbitmq/etc/rabbitmq:/etc/rabbitmq  #配置文件目录
       - ./data/rabbitmq/:/var/lib/rabbitmq  #数据存储目录
       - ./log/rabbitmq/:/var/log/rabbitmq #日志目录
     environment:
@@ -118,7 +120,7 @@ services:
         max-size: "200k"
         max-file: "10"
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.105
 
   php72:
@@ -132,8 +134,8 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-      - ./log/ekt/:/var/log/ekt/ #ztth log
-      - ./log/ekt/:/var/log/e-platform/ #ztth log
+      - ./log/ekt/:/var/log/ekt/ #ztthnet log
+      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
     container_name: php72
     privileged: true
     extra_hosts:
@@ -143,7 +145,7 @@ services:
       - "e-platform-dev.icsoc.net:172.18.0.50"
       - "platform-dev.icsoc.net:172.18.0.50"
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.72
 
   php70:
@@ -155,8 +157,8 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-      - ./log/ekt/:/var/log/ekt/ #ztth log
-      - ./log/ekt/:/var/log/e-platform/ #ztth log
+      - ./log/ekt/:/var/log/ekt/ #ztthnet log
+      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
     container_name: php70
     privileged: true
     extra_hosts:
@@ -166,7 +168,7 @@ services:
       - "e-platform-dev.icsoc.net:172.18.0.50"
       - "platform-dev.icsoc.net:172.18.0.50"
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.70
 
 
@@ -179,8 +181,8 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-      - ./log/ekt/:/var/log/ekt/ #ztth log
-      - ./log/ekt/:/var/log/e-platform/ #ztth log
+      - ./log/ekt/:/var/log/ekt/ #ztthnet log
+      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
     container_name: php56
     privileged: true
     extra_hosts:
@@ -190,7 +192,7 @@ services:
       - "e-platform-dev.icsoc.net:172.18.0.50"
       - "platform-dev.icsoc.net:172.18.0.50"
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.56
 
   php55:
@@ -202,8 +204,8 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-      - ./log/ekt/:/var/log/ekt/ #ztth log
-      - ./log/ekt/:/var/log/e-platform/ #ztth log
+      - ./log/ekt/:/var/log/ekt/ #ztthnet log
+      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
     container_name: php55
     privileged: true
     extra_hosts:
@@ -213,7 +215,7 @@ services:
       - "e-platform-dev.icsoc.net:172.18.0.50"
       - "platform-dev.icsoc.net:172.18.0.50"
     networks:
-      default:
+      ztthnet:
         ipv4_address: 172.18.0.55
 
 
