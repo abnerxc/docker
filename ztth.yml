@@ -123,6 +123,16 @@ services:
       ztthnet:
         ipv4_address: 172.18.0.105
 
+  elasticsearch-head:  #es的web-ui
+    image: mobz/elasticsearch-head:5-alpine
+    container_name: es-web
+    privileged: true
+    ports:
+      - 9100:9100
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.106
+
   php72:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
     expose:
