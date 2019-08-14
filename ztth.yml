@@ -123,6 +123,16 @@ services:
       ztthnet:
         ipv4_address: 172.18.0.105
 
+  elasticsearch-hd:
+    image: containerize/elastichd
+    container_name: es-hd
+    privileged: true
+    ports:
+      - 9800:9800
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.106
+
 
   php72:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
