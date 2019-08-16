@@ -7,6 +7,9 @@ networks:
         - subnet: 172.18.0.0/24
           #gateway: 172.18.0.1
 
+volumes:
+  mongodb_data:
+    driver: local
 
 services:
   nginx:
@@ -73,8 +76,10 @@ services:
     privileged: true
     ports:
       - "27017:27017"
-#    volumes:
+#    volumes:   #win10 -v 挂载目前无解
 #      - ./data/mongodb/:/data/db/
+    volumes:   #win10 -v 挂载目前无解
+      - mongodb_data:/data/db/
     command: --auth --smallfiles --bind_ip_all
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
