@@ -1,0 +1,237 @@
+version: '3'
+networks:
+  ztthnet:  #这里可以自定义名称 ，跟引用的地方一致就行
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
+          #gateway: 172.18.0.1
+
+volumes:
+  mongodb_data:
+    driver: local
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/nginx/conf.d:/etc/nginx/conf.d/
+      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./log/nginx/:/var/log/nginx/
+    container_name: nginx
+    privileged: true #解决不可以写宿主机目录权限问题，如果是centos7也可以关闭selinux
+    environment:
+      - TZ=Asia/Shanghai
+    extra_hosts:
+      - "e-platform-dev.icsoc.net:127.0.0.1"
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.50
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    privileged: true
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass 123456
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.100
+
+  memcached:
+    image: memcached:alpine
+    container_name: memcached
+    privileged: true
+    ports:
+      - "11211:11211"
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.101
+
+  mysql:
+    image: mariadb
+    container_name: mysql
+    privileged: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./data/mysql/:/var/lib/mysql/
+      - ./log/mysql/:/var/log/mysql/
+    command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.102
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    privileged: true
+    ports:
+      - "27017:27017"
+#    volumes:   #win10 -v 挂载目前无解
+#      - ./data/mongodb/:/data/db/
+    volumes:   #win10 -v 挂载目前无解
+      - mongodb_data:/data/db/
+    command: --auth --smallfiles --bind_ip_all
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.103
+
+  elasticsearch:
+    image: elasticsearch:5.6.12-alpine
+    container_name: es
+    privileged: true
+    environment:
+      - cluster.name=development
+      - node.name=winner
+      - bootstrap.memory_lock=false
+      - discovery.zen.minimum_master_nodes=1
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.104
+
+  rabbitmq:
+    image: rabbitmq:3.7.15-management-alpine
+    container_name: rabbitmq
+    privileged: true
+    volumes:
+      - ./data/rabbitmq/:/var/lib/rabbitmq  #数据存储目录
+      - ./log/rabbitmq/:/var/log/rabbitmq #日志目录
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      RABBITMQ_DEFAULT_VHOST: 'vhost'
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.105
+
+  elasticsearch-hd:
+    image: containerize/elastichd
+    container_name: es-hd
+    privileged: true
+    ports:
+      - 9800:9800
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.106
+
+
+  php72:
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
+    expose:
+      - 9000
+    cap_add: #启用容器内核能力
+      - SYS_PTRACE
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./log/php-fpm/:/var/log/php-fpm/
+      - ./log/ekt/:/var/log/ekt/ #ztthnet log
+      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
+    container_name: php72
+    privileged: true
+    extra_hosts:
+      - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
+      - "dzcx-dev.icsoc.net:172.18.0.50"
+      - "e-dev.icsoc.net:172.18.0.50"
+      - "e-platform-dev.icsoc.net:172.18.0.50"
+      - "platform-dev.icsoc.net:172.18.0.50"
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.72
+
+  php70:
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.0
+    expose:
+      - 9000
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./log/php-fpm/:/var/log/php-fpm/
+      - ./log/ekt/:/var/log/ekt/ #ztthnet log
+      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
+    container_name: php70
+    privileged: true
+    extra_hosts:
+      - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
+      - "dzcx-dev.icsoc.net:172.18.0.50"
+      - "e-dev.icsoc.net:172.18.0.50"
+      - "e-platform-dev.icsoc.net:172.18.0.50"
+      - "platform-dev.icsoc.net:172.18.0.50"
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.70
+
+
+  php56:
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:5.6
+    expose:
+      - "9000"
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./log/php-fpm/:/var/log/php-fpm/
+      - ./log/ekt/:/var/log/ekt/ #ztthnet log
+      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
+    container_name: php56
+    privileged: true
+    extra_hosts:
+      - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
+      - "dzcx-dev.icsoc.net:172.18.0.50"
+      - "e-dev.icsoc.net:172.18.0.50"
+      - "e-platform-dev.icsoc.net:172.18.0.50"
+      - "platform-dev.icsoc.net:172.18.0.50"
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.56
+
+  php55:
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:5.5
+    expose:
+      - "9000"
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./log/php-fpm/:/var/log/php-fpm/
+      - ./log/ekt/:/var/log/ekt/ #ztthnet log
+      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
+    container_name: php55
+    privileged: true
+    extra_hosts:
+      - "e-ticket-dzcx-dev.icsoc.net:172.18.0.50"
+      - "dzcx-dev.icsoc.net:172.18.0.50"
+      - "e-dev.icsoc.net:172.18.0.50"
+      - "e-platform-dev.icsoc.net:172.18.0.50"
+      - "platform-dev.icsoc.net:172.18.0.50"
+    networks:
+      ztthnet:
+        ipv4_address: 172.18.0.55
+
+
