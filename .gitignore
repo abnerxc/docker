@@ -3,6 +3,6 @@
 *.iml
 .idea
 #conf/nginx/conf.d/*.conf
-www
+/www
 #data
 log

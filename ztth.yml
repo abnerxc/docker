@@ -80,7 +80,7 @@ services:
 #      - ./data/mongodb/:/data/db/
     volumes:   #win10 -v 挂载目前无解
       - mongodb_data:/data/db/
-    command: --auth --smallfiles --bind_ip_all
+    command: --auth --bind_ip_all
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
