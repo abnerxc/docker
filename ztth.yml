@@ -54,18 +54,19 @@ services:
         ipv4_address: 172.18.0.101
 
   mysql:
-    image: mariadb
+    image: mysql:5.6.45
     container_name: mysql
     privileged: true
     ports:
       - "3306:3306"
     volumes:
       - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-      - ./data/mysql/:/var/lib/mysql/
+#      - ./data/mysql/:/var/lib/mysql/
+      - ./data/mysql/:/usr/data/ #5.6.45
       - ./log/mysql/:/var/log/mysql/
     command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
+       MYSQL_ROOT_PASSWORD: 123456
     networks:
       ztthnet:
         ipv4_address: 172.18.0.102
