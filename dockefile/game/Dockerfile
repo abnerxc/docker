@@ -10,8 +10,6 @@ RUN         yum install -y wget  \
             && mkdir -p /tmp/wine  \
             && tar -xf wine.tar.gz -C /tmp/wine --strip-components=1  \
             && /tmp/wine/configure  --enable-win64  && make && make install \
-            && rm wine.tar.gz  \
+            && rm wine.tar.gz
 
 VOLUME      /data
-EXPOSE      2379 2380
-CMD         [""]
