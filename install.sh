@@ -8,15 +8,17 @@ function getVersionNum(){
 
 function main(){
 	while [ True ];do
-		echo -e "\033[32m CentOs7 docker安装步骤: \033[0m"
-		echo -e "\033[32m The #1 docker服务安装 \033[0m"
-		echo -e "\033[32m The #2 windows下virtual box挂载安装，请保证安装增加工具已经添加 \033[0m"
-		echo -e "\033[32m The #3 添加开机启动和自动挂载 \033[0m"
-		echo -e "\033[32m q键退出 \033[0m"
+		echo -e "\033[33m CentOs7 docker安装步骤: \033[0m"
+		echo -e "\033[33m The #1 docker服务安装 \033[0m"
+		echo -e "\033[33m The #2 virtual box挂载安装，请保证安装增加工具和挂载目录已经添加 \033[0m"
+		echo -e "\033[33m q键退出 \033[0m"
 		read -p '选择安装: ' number
 		case $number in
 		1)
 		echo -e "\033[31m docker install starting \033[0m" \
+		&& yum install -y wget \
+        && mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup \
+        && wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo \
 		&& yum install -y yum-utils \
 		&& yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
 		&& yum install -y device-mapper-persistent-data lvm2 docker-ce \
@@ -30,13 +32,13 @@ function main(){
 		&& systemctl daemon-reload \
 		&& systemctl restart docker \
 		&& systemctl enable docker \
-		&& echo -e "\033[31m docker安装完成 \033[0m"
+		&& echo -e "\033[31m docker安装完成，请重启电脑，执行步骤2 \033[0m" && exit
 		;;
 
 		2)
 		echo -e "\033[31m virtual box增强工具 install starting \033[0m" \
 		&& yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 vim wget \
-		&& getVersionNum && rm -rf /usr/src/linux/$dd && ln -s /usr/src/kernels/$dd/ /usr/src/linux \
+		&& getVersionNum && rm -rf /usr/src/linux && ln -s /usr/src/kernels/$dd /usr/src/linux \
 		&& mount /dev/cdrom /mnt \
 		&& cd /mnt &&  ./VBoxLinuxAdditions.run \
 		&& mkdir -p /root/docker  && chmod -R 777 /root/docker \
@@ -47,7 +49,7 @@ function main(){
 		&& echo "alias ztth-ps='docker-compose -f /root/docker/ztth.yml ps'">> /root/.bashrc \
 		&& echo "alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"'"' $(docker ps -aq)'">> /root/.bashrc \
 		&& source /root/.bashrc \
-		&& echo -e "\033[31m 请服务器重启 \033[0m"
+		&& echo -e "\033[31m 请服务器重启 \033[0m"]
 		;;
 
 		"q"|"quit")
