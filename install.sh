@@ -39,12 +39,7 @@ function main(){
 		&& getVersionNum && rm -rf /usr/src/linux/$dd/ && ln -s /usr/src/kernels/$dd /usr/src/linux \
 		&& mount /dev/cdrom /mnt \
 		&& cd /mnt &&  ./VBoxLinuxAdditions.run \
-		&& echo -e "\033[31m 请服务器重启 \033[0m"
-		;;
-
-		3)
-		echo -e "\033[31m 自动挂载开始执行 \033[0m" \
-		&& mkdir -p /root/docker  && chmod -R 777 /root/docker && modprobe vboxsf &&mount -t vboxsf docker /root/docker \
+		&& mkdir -p /root/docker  && chmod -R 777 /root/docker \
 		&& echo 'docker /root/docker   vboxsf rw,gid=100,uid=1000,auto 0 0'>> /etc/fstab \
 		&& echo -e "\033[31m 请服务器重启 \033[0m"
 		;;
