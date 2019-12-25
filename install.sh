@@ -6,6 +6,14 @@ function getVersionNum(){
     dd=${cut:14}
 }
 
+function dockerAlis() {
+    dcup=`ztth='docker-compose -f /root/docker/ztth.yml up -d'`
+    dcrs=`ztth-rs='docker-compose -f /root/docker/ztth.yml restart'`
+    dcrm=`ztth-rm='docker-compose -f /root/docker/ztth.yml stop && docker-compose -f /root/docker/ztth.yml rm'`
+    dcps=`ztth-ps='docker-compose -f /root/docker/ztth.yml ps'`
+    dcip=`docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"'"' $(docker ps -aq)'`
+}
+
 function main(){
 	while [ True ];do
 		echo -e "\033[33m CentOs7 docker安装步骤: \033[0m"
@@ -37,17 +45,17 @@ function main(){
 
 		2)
 		echo -e "\033[31m virtual box增强工具 install starting \033[0m" \
-		&& yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 vim wget \
 		&& getVersionNum && rm -rf /usr/src/linux && ln -s /usr/src/kernels/$dd /usr/src/linux \
 		&& mount /dev/cdrom /mnt \
 		&& cd /mnt &&  ./VBoxLinuxAdditions.run \
 		&& mkdir -p /root/docker  && chmod -R 777 /root/docker \
 		&& echo 'docker /root/docker   vboxsf rw,gid=100,uid=1000,auto 0 0'>> /etc/fstab \
-		&& echo "alias ztth='docker-compose -f /root/docker/ztth.yml up -d'">> /root/.bashrc \
-		&& echo "alias ztth-rs='docker-compose -f /root/docker/ztth.yml restart'">> /root/.bashrc \
-		&& echo "alias ztth-rm='docker-compose -f /root/docker/ztth.yml stop && docker-compose -f /root/docker/ztth.yml rm'">> /root/.bashrc \
-		&& echo "alias ztth-ps='docker-compose -f /root/docker/ztth.yml ps'">> /root/.bashrc \
-		&& echo "alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"'"' $(docker ps -aq)'">> /root/.bashrc \
+		&& dockerAlis \
+		&& echo "alias $dcup">> /root/.bashrc \
+		&& echo "alias $dcrs">> /root/.bashrc \
+		&& echo "alias $dcrm">> /root/.bashrc \
+		&& echo "alias $dcps">> /root/.bashrc \
+		&& echo "alias $dcip">> /root/.bashrc \
 		&& source /root/.bashrc \
 		&& echo -e "\033[31m 请服务器重启 \033[0m"]
 		;;
