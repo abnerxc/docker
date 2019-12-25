@@ -36,7 +36,7 @@ function main(){
 		2)
 		echo -e "\033[31m virtual box增强工具 install starting \033[0m" \
 		&& yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 vim wget \
-		&& getVersionNum && rm -rf /usr/src/linux/$dd/ && ln -s /usr/src/kernels/$dd /usr/src/linux \
+		&& getVersionNum && rm -rf /usr/src/linux/$dd && ln -s /usr/src/kernels/$dd/ /usr/src/linux \
 		&& mount /dev/cdrom /mnt \
 		&& cd /mnt &&  ./VBoxLinuxAdditions.run \
 		&& mkdir -p /root/docker  && chmod -R 777 /root/docker \
@@ -46,6 +46,7 @@ function main(){
 		&& echo "alias ztth-rm='docker-compose -f /root/docker/ztth.yml stop && docker-compose -f /root/docker/ztth.yml rm'">> /root/.bashrc \
 		&& echo "alias ztth-ps='docker-compose -f /root/docker/ztth.yml ps'">> /root/.bashrc \
 		&& echo "alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"'"' $(docker ps -aq)'">> /root/.bashrc \
+		&& source /root/.bashrc \
 		&& echo -e "\033[31m 请服务器重启 \033[0m"
 		;;
 
