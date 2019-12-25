@@ -58,7 +58,7 @@ function main(){
 		&& echo "alias $dcps">> /root/.bashrc \
 		&& echo "alias $dcip">> /root/.bashrc \
 		&& source /root/.bashrc \
-		&& echo -e "\033[31m 请服务器重启 \033[0m"]
+		&& echo -e "\033[31m 请服务器重启 \033[0m"] && exit
 		;;
 
 		"q"|"quit")
