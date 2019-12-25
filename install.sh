@@ -30,7 +30,7 @@ function main(){
         && wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo \
 		&& yum install -y yum-utils \
 		&& yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
-		&& yum install -y device-mapper-persistent-data lvm2 docker-ce \
+		&& yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 vim wget device-mapper-persistent-data lvm2 docker-ce \
 		&& yum makecache fast \
 		&& service docker start \
 		&& curl -L https://get.daocloud.io/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
