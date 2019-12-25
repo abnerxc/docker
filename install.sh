@@ -8,14 +8,15 @@ function getVersionNum(){
 
 function main(){
 	while [ True ];do
-		echo "CentOs7 docker安装步骤:"
-		echo "The #1 docker服务安装"
-		echo "The #2 windows下virtual box挂载安装，请保证安装增加工具已经添加"
-		echo "q键退出"
+		echo -e "\033[32m CentOs7 docker安装步骤: \033[0m"
+		echo -e "\033[32m The #1 docker服务安装 \033[0m"
+		echo -e "\033[32m The #2 windows下virtual box挂载安装，请保证安装增加工具已经添加 \033[0m"
+		echo -e "\033[32m The #3 添加开机启动和自动挂载 \033[0m"
+		echo -e "\033[32m q键退出 \033[0m"
 		read -p '选择安装: ' number
 		case $number in
 		1)
-		echo "docker install starting" \
+		echo -e "\033[31m docker install starting \033[0m" \
 		&& yum install -y yum-utils \
 		&& yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
 		&& yum install -y device-mapper-persistent-data lvm2 docker-ce \
@@ -28,18 +29,24 @@ function main(){
 		&& echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"]}'>> /etc/docker/daemon.json \
 		&& systemctl daemon-reload \
 		&& systemctl restart docker \
-		&& systemctl enable docker
+		&& systemctl enable docker \
+		&& echo -e "\033[31m docker安装完成 \033[0m"
 		;;
 
 		2)
-		echo "virtual box增强工具 install starting" \
+		echo "\033[31m virtual box增强工具 install starting \033[0m" \
 		&& yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 vim wget \
-		&& getVersionNum && rm -rf /usr/src/linux/$dd && ln -s /usr/src/kernels/$dd /usr/src/linux \
+		&& getVersionNum && rm -rf /usr/src/linux/$dd/ && ln -s /usr/src/kernels/$dd /usr/src/linux \
 		&& mount /dev/cdrom /mnt \
 		&& cd /mnt &&  ./VBoxLinuxAdditions.run \
-		&& sudo mkdir /root/docker  && chmod -R 777 /root/docker && sudo mount -t vboxsf docker /root/docker \
-		&& echo 'docker /root/server   vboxsf rw,gid=100,uid=1000,auto 0 0'>> /etc/fstab \
-		&& echo "请服务器重启"
+		&& echo -e "\033[31m 请服务器重启 \033[0m"
+		;;
+
+		3)
+		echo "\033[31m 自动挂载开始执行 \033[0m" \
+		&& mkdir -p /root/docker  && chmod -R 777 /root/docker && modprobe vboxsf &&mount -t vboxsf docker /root/docker \
+		&& echo 'docker /root/docker   vboxsf rw,gid=100,uid=1000,auto 0 0'>> /etc/fstab \
+		&& echo -e "\033[31m 请服务器重启 \033[0m"
 		;;
 
 		"q"|"quit")
