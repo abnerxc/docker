@@ -41,6 +41,11 @@ function main(){
 		&& cd /mnt &&  ./VBoxLinuxAdditions.run \
 		&& mkdir -p /root/docker  && chmod -R 777 /root/docker \
 		&& echo 'docker /root/docker   vboxsf rw,gid=100,uid=1000,auto 0 0'>> /etc/fstab \
+		&& echo "alias ztth='docker-compose -f /root/docker/ztth.yml up -d'">> /root/.bashrc \
+		&& echo "alias ztth-rs='docker-compose -f /root/docker/ztth.yml restart'">> /root/.bashrc \
+		&& echo "alias ztth-rm='docker-compose -f /root/docker/ztth.yml stop && docker-compose -f /root/docker/ztth.yml rm'">> /root/.bashrc \
+		&& echo "alias ztth-ps='docker-compose -f /root/docker/ztth.yml ps'">> /root/.bashrc \
+		&& echo "alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"'"' $(docker ps -aq)'">> /root/.bashrc \
 		&& echo -e "\033[31m 请服务器重启 \033[0m"
 		;;
 
