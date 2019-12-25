@@ -7,11 +7,12 @@ function getVersionNum(){
 }
 
 function dockerAlis() {
-    dcup=`ztth='docker-compose -f /root/docker/ztth.yml up -d'`
-    dcrs=`ztth-rs='docker-compose -f /root/docker/ztth.yml restart'`
-    dcrm=`ztth-rm='docker-compose -f /root/docker/ztth.yml stop && docker-compose -f /root/docker/ztth.yml rm'`
-    dcps=`ztth-ps='docker-compose -f /root/docker/ztth.yml ps'`
-    dcip=`docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"'"' $(docker ps -aq)'`
+    dps=`$(docker ps -aq)`
+    dcup="ztth='docker-compose -f /root/docker/ztth.yml up -d'"
+    dcrs="ztth-rs='docker-compose -f /root/docker/ztth.yml restart'"
+    dcrm="ztth-rm='docker-compose -f /root/docker/ztth.yml stop && docker-compose -f /root/docker/ztth.yml rm'"
+    dcps="ztth-ps='docker-compose -f /root/docker/ztth.yml ps'"
+    dcip="dcip='docker inspect --format='{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $dps'"
 }
 
 function main(){
