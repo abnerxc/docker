@@ -34,7 +34,7 @@ function main(){
 		;;
 
 		2)
-		echo "\033[31m virtual box增强工具 install starting \033[0m" \
+		echo -e "\033[31m virtual box增强工具 install starting \033[0m" \
 		&& yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 vim wget \
 		&& getVersionNum && rm -rf /usr/src/linux/$dd/ && ln -s /usr/src/kernels/$dd /usr/src/linux \
 		&& mount /dev/cdrom /mnt \
@@ -43,7 +43,7 @@ function main(){
 		;;
 
 		3)
-		echo "\033[31m 自动挂载开始执行 \033[0m" \
+		echo -e "\033[31m 自动挂载开始执行 \033[0m" \
 		&& mkdir -p /root/docker  && chmod -R 777 /root/docker && modprobe vboxsf &&mount -t vboxsf docker /root/docker \
 		&& echo 'docker /root/docker   vboxsf rw,gid=100,uid=1000,auto 0 0'>> /etc/fstab \
 		&& echo -e "\033[31m 请服务器重启 \033[0m"
