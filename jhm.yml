@@ -1,4 +1,11 @@
 version: '2'
+networks:
+  default:  #这里可以自定义名称 ，跟引用的地方一致就行
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
+          gateway: 172.18.0.1
+
 services:
   nginx:
     image: nginx:alpine
@@ -37,79 +44,6 @@ services:
       default:
         ipv4_address: 172.18.0.101
 
-#  mysql:
-#    image: mysql:5.6
-#    ports:
-#      - "3306:3306"
-#    volumes:
-#      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
-#      - ./data/mysql/:/var/lib/mysql/:rw
-#      - ./log/mysql/:/var/log/mysql/:rw
-#    container_name: mysql
-#    environment:
-#      MYSQL_ROOT_PASSWORD: 123456
-#    networks:
-#      default:
-#        ipv4_address: 172.18.0.102
-#
-#
-#  mongodb:
-#    image: mongo
-#    container_name: mongodb
-#    privileged: true
-#    ports:
-#      - "27017:27017"
-#    volumes:
-#      - ./data/mongodb/:/data/db/
-#    command: --auth --smallfiles --bind_ip_all
-#    environment:
-#      MONGO_INITDB_ROOT_USERNAME: root
-#      MONGO_INITDB_ROOT_PASSWORD: 123456
-#    networks:
-#      default:
-#        ipv4_address: 172.18.0.103
-#
-#  elasticsearch:
-#    image: elasticsearch:5.6.12-alpine
-#    container_name: es
-#    privileged: true
-#    environment:
-#      - cluster.name=development
-#      - node.name=winner
-#      - bootstrap.memory_lock=false
-#      - discovery.zen.minimum_master_nodes=1
-#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144
-#    ports:
-#      - 9200:9200
-#      - 9300:9300
-#    networks:
-#      default:
-#        ipv4_address: 172.18.0.104
-#
-#  rabbitmq:
-#    image: rabbitmq:3.7.15-management-alpine
-#    container_name: rabbitmq
-#    privileged: true
-#    volumes:
-#      # - /home/rabbitmq/etc/rabbitmq:/etc/rabbitmq  #配置文件目录
-#      - ./data/rabbitmq/:/var/lib/rabbitmq  #数据存储目录
-#      - ./log/rabbitmq/:/var/log/rabbitmq #日志目录
-#    environment:
-#      RABBITMQ_DEFAULT_USER: admin
-#      RABBITMQ_DEFAULT_PASS: admin
-#      RABBITMQ_DEFAULT_VHOST: 'vhost'
-#    ports:
-#      - "15672:15672"
-#      - "5672:5672"
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-size: "200k"
-#        max-file: "10"
-#    networks:
-#      default:
-#        ipv4_address: 172.18.0.105
-
   php72:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
     expose:
@@ -124,12 +58,3 @@ services:
     networks:
       default:
         ipv4_address: 172.18.0.72
-
-
-
-networks:
-  default:  #这里可以自定义名称 ，跟引用的地方一致就行
-    ipam:
-      config:
-        - subnet: 172.18.0.0/24
-          gateway: 172.18.0.1
