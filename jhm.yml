@@ -54,6 +54,8 @@ services:
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
       - ./log/php-fpm/:/var/log/php-fpm/:rw
     container_name: php72
+    extra_hosts:
+      - "hddev.kerlala.com:172.18.0.50"
     privileged: true
     networks:
       default:
