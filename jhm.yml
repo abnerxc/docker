@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 networks:
   default:  #这里可以自定义名称 ，跟引用的地方一致就行
     ipam:
@@ -34,6 +34,14 @@ services:
     networks:
       default:
         ipv4_address: 172.18.0.100
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 10M
+        reservations:
+          cpus: '0.25'
+          memory: 2M
 
   memcached:
     image: memcached:alpine
@@ -43,6 +51,14 @@ services:
     networks:
       default:
         ipv4_address: 172.18.0.101
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 10M
+        reservations:
+          cpus: '0.25'
+          memory: 2M
 
   php72:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
@@ -60,3 +76,11 @@ services:
     networks:
       default:
         ipv4_address: 172.18.0.72
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 200M
+        reservations:
+          cpus: '0.25'
+          memory: 50M
