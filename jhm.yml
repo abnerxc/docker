@@ -13,10 +13,10 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./www/:/var/www/html/:rw
-      - ./conf/nginx/conf.d:/etc/nginx/conf.d/:ro
-      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./log/nginx/:/var/log/nginx/
+      - ./www/:/var/www/html/:delegated
+      - ./conf/nginx/conf.d:/etc/nginx/conf.d/:cached
+      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf:cached
+      - ./log/nginx/:/var/log/nginx/:delegated
     container_name: nginx
     privileged: true
     environment:
@@ -49,10 +49,10 @@ services:
     expose:
       - 9000
     volumes:
-      - ./www/:/var/www/html/:rw
-      - ./conf/php/php.ini:/usr/local/etc/php/php.ini:ro
-      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
-      - ./log/php-fpm/:/var/log/php-fpm/:rw
+      - ./www/:/var/www/html/:delegated
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini:cached
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:cached
+      - ./log/php-fpm/:/var/log/php-fpm/:delegated
     container_name: php72
     extra_hosts:
       - "hddev.kerlala.com:172.18.0.50"
