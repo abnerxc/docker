@@ -24,6 +24,11 @@ services:
     networks:
       jhm:
         ipv4_address: 172.18.0.50
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 10M
 
   redis:
     image: redis:alpine
