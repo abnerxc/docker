@@ -1,10 +1,10 @@
-version: '3'
+version: '3.7'
 networks:
-  default:  #这里可以自定义名称 ，跟引用的地方一致就行
+  jhm:  #这里可以自定义名称 ，跟引用的地方一致就行
     ipam:
+      driver: default
       config:
         - subnet: 172.18.0.0/24
-          gateway: 172.18.0.1
 
 services:
   nginx:
@@ -22,7 +22,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     networks:
-      default:
+      jhm:
         ipv4_address: 172.18.0.50
 
   redis:
@@ -32,7 +32,7 @@ services:
     container_name: redis
     command: redis-server --requirepass 123456
     networks:
-      default:
+      jhm:
         ipv4_address: 172.18.0.100
     deploy:
       resources:
@@ -49,7 +49,7 @@ services:
       - "11211:11211"
     container_name: memcached
     networks:
-      default:
+      jhm:
         ipv4_address: 172.18.0.101
     deploy:
       resources:
@@ -74,7 +74,7 @@ services:
       - "hddev.kerlala.com:172.18.0.50"
     privileged: true
     networks:
-      default:
+      jhm:
         ipv4_address: 172.18.0.72
     deploy:
       resources:
