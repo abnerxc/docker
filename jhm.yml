@@ -39,9 +39,6 @@ services:
         limits:
           cpus: '0.50'
           memory: 10M
-        reservations:
-          cpus: '0.25'
-          memory: 2M
 
   memcached:
     image: memcached:alpine
@@ -56,9 +53,6 @@ services:
         limits:
           cpus: '0.50'
           memory: 10M
-        reservations:
-          cpus: '0.25'
-          memory: 2M
 
   php72:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
