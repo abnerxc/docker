@@ -8,10 +8,10 @@ function getVersionNum(){
 
 function dockerAlis() {
     dps="\$(docker ps -aq)"
-    dcup="ztth='docker-compose -f /root/docker/ztth.yml up -d'"
-    dcrs="ztth-rs='docker-compose -f /root/docker/ztth.yml restart'"
-    dcrm="ztth-rm='docker-compose -f /root/docker/ztth.yml stop && docker-compose -f /root/docker/ztth.yml rm'"
-    dcps="ztth-ps='docker-compose -f /root/docker/ztth.yml ps'"
+    dcup="jhm='docker-compose -f /root/docker/jhm.yml up -d'"
+    dcrs="jhm-rs='docker-compose -f /root/docker/jhm.yml restart'"
+    dcrm="jhm-rm='docker-compose -f /root/docker/jhm.yml stop && docker-compose -f /root/docker/jhm.yml rm'"
+    dcps="jhm-ps='docker-compose -f /root/docker/jhm.yml ps'"
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
