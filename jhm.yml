@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.1'
 networks:
   jhm:  #这里可以自定义名称 ，跟引用的地方一致就行
     ipam:
