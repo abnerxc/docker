@@ -82,7 +82,7 @@ services:
           memory: 200M
 
   node:
-    build: ./dockefile/node
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/node:1.0
     ports:
       - "3000:3000"
     volumes:
