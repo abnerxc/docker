@@ -95,3 +95,8 @@ services:
     networks:
       jhm:
         ipv4_address: 172.18.0.102
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
