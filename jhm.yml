@@ -89,9 +89,9 @@ services:
       - /Users/abner/work/nodepro:/app:rw
       - /Users/abner/.ssh:/root/.ssh/:rw
     container_name: app
-    privileged: true # 加上不自动退出
+    privileged: true
     stdin_open: true # 加上不自动退出
-    tty: true
+    tty: true # 加上不自动退出
     networks:
       jhm:
         ipv4_address: 172.18.0.102
