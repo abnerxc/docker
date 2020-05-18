@@ -80,3 +80,18 @@ services:
         limits:
           cpus: '0.50'
           memory: 200M
+
+  node:
+    build: ./dockefile/node
+    ports:
+      - "3000:3000"
+    volumes:
+      - /Users/abner/work/nodepro:/app:rw
+      - /Users/abner/.ssh:/root/.ssh/:rw
+    container_name: app
+    privileged: true # 加上不自动退出
+    stdin_open: true # 加上不自动退出
+    tty: true
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.102
