@@ -1,11 +1,10 @@
 version: '3'
 networks:
-  ztthnet:  #这里可以自定义名称 ，跟引用的地方一致就行
+  mynet:  #这里可以自定义名称 ，跟引用的地方一致就行
     driver: bridge
     ipam:
       config:
         - subnet: 172.18.0.0/24
-          #gateway: 172.18.0.1
 
 volumes:
   mongodb_data:
@@ -27,9 +26,9 @@ services:
     environment:
       - TZ=Asia/Shanghai
     extra_hosts:
-      - "ticket-dev.icsoc.net:127.0.0.1"
+      - "ticket-dev.icsoc.net:127.0.0.1"  #容器绑定host
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.50
 
   redis:
@@ -40,8 +39,13 @@ services:
       - "6379:6379"
     command: redis-server --requirepass 123456
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.100
+    deploy: #容器限制资源用法
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 10M
 
   memcached:
     image: memcached:alpine
@@ -50,7 +54,7 @@ services:
     ports:
       - "11211:11211"
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.101
 
   mysql:
@@ -68,7 +72,7 @@ services:
     environment:
        MYSQL_ROOT_PASSWORD: 123456
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.102
 
   mongodb:
@@ -77,16 +81,14 @@ services:
     privileged: true
     ports:
       - "27017:27017"
-#    volumes:   #win10 -v 挂载目前无解
-#      - ./data/mongodb/:/data/db/
-    volumes:   #win10 -v 挂载目前无解
+    volumes:   #win10 -v 方法挂载目前无解
       - mongodb_data:/data/db/
     command: --auth --bind_ip_all
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123456
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.103
 
   elasticsearch:
@@ -103,7 +105,7 @@ services:
       - 9200:9200
       - 9300:9300
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.104
 
   rabbitmq:
@@ -126,7 +128,7 @@ services:
         max-size: "200k"
         max-file: "10"
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.105
 
   kibana:
@@ -153,8 +155,8 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-      - ./log/ekt/:/var/log/ekt/ #ztthnet log
-      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
+      - ./log/ekt/:/var/log/ekt/ #mynet log
+      - ./log/ekt/:/var/log/e-platform/ #mynet log
     container_name: php72
     privileged: true
     extra_hosts:
@@ -164,7 +166,7 @@ services:
       - "ticket-dev.icsoc.net:172.18.0.50"
       - "platform-dev.icsoc.net:172.18.0.50"
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.72
 
   php70:
@@ -176,8 +178,8 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-      - ./log/ekt/:/var/log/ekt/ #ztthnet log
-      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
+      - ./log/ekt/:/var/log/ekt/ #mynet log
+      - ./log/ekt/:/var/log/e-platform/ #mynet log
     container_name: php70
     privileged: true
     extra_hosts:
@@ -187,7 +189,7 @@ services:
       - "ticket-dev.icsoc.net:172.18.0.50"
       - "platform-dev.icsoc.net:172.18.0.50"
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.70
 
 
@@ -200,8 +202,8 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-      - ./log/ekt/:/var/log/ekt/ #ztthnet log
-      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
+      - ./log/ekt/:/var/log/ekt/ #mynet log
+      - ./log/ekt/:/var/log/e-platform/ #mynet log
     container_name: php56
     privileged: true
     extra_hosts:
@@ -211,7 +213,7 @@ services:
       - "ticket-dev.icsoc.net:172.18.0.50"
       - "platform-dev.icsoc.net:172.18.0.50"
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.56
 
   php55:
@@ -223,8 +225,8 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-      - ./log/ekt/:/var/log/ekt/ #ztthnet log
-      - ./log/ekt/:/var/log/e-platform/ #ztthnet log
+      - ./log/ekt/:/var/log/ekt/ #mynet log
+      - ./log/ekt/:/var/log/e-platform/ #mynet log
     container_name: php55
     privileged: true
     extra_hosts:
@@ -234,7 +236,20 @@ services:
       - "ticket-dev.icsoc.net:172.18.0.50"
       - "platform-dev.icsoc.net:172.18.0.50"
     networks:
-      ztthnet:
+      mynet:
         ipv4_address: 172.18.0.55
 
-
+  node:
+    build: ./dockefile/node
+    ports:
+      - "3000:3000"
+    volumes:
+      - /Users/abner/work/nodepro:/app:rw
+      - /Users/abner/.ssh:/root/.ssh/:rw
+    container_name: app
+    privileged: true
+    stdin_open: true # 加上不自动退出 ，打开一个可输入的终端
+    tty: true # 加上不自动退出，打开一个模拟终端，docker run -it(这个t)
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.107
