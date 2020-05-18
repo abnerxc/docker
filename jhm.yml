@@ -84,7 +84,7 @@ services:
   node:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/node:1.0
     ports:
-      - "3000:3000"
+      - "4000:4000"
     volumes:
       - /Users/abner/work/nodepro:/app:rw
       - /Users/abner/.ssh:/root/.ssh/:rw

@@ -5,5 +5,5 @@ RUN         sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repo
             npm install hexo-cli -g && git config --global user.email "abner510@126.com" && git config --global user.name "abner" && \
             rm -rf /var/cache/apk/*
 VOLUME      /app
-EXPOSE      3000
+EXPOSE      4000
 CMD         /bin/bash
