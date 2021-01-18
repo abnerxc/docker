@@ -23,7 +23,7 @@ services:
          MYSQL_ROOT_PASSWORD: 123456
       networks:
         jhm:
-          ipv4_address: 172.18.0.110
+          ipv4_address: 172.18.0.10
       restart: always
 
   mysql_r:
@@ -42,7 +42,7 @@ services:
          MYSQL_ROOT_PASSWORD: 123456
       networks:
         jhm:
-          ipv4_address: 172.18.0.111
+          ipv4_address: 172.18.0.11
       restart: always
 
   ac_w:
@@ -61,7 +61,7 @@ services:
          MYSQL_ROOT_PASSWORD: 123456
       networks:
         jhm:
-          ipv4_address: 172.18.0.120
+          ipv4_address: 172.18.0.12
       restart: always
 
   ac_r:
@@ -80,5 +80,5 @@ services:
          MYSQL_ROOT_PASSWORD: 123456
       networks:
         jhm:
-          ipv4_address: 172.18.0.121
+          ipv4_address: 172.18.0.13
       restart: always
