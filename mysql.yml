@@ -13,18 +13,12 @@ services:
       privileged: true
       ports:
         - "13306:3306"
-      volumes:
-        - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-        - ./data/mysql/:/var/lib/mysql/
-#        - ./data/mysql/:/usr/data/ #5.6.45
-        - ./log/mysql/:/var/log/mysql/
       command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
       environment:
          MYSQL_ROOT_PASSWORD: 123456
       networks:
         jhm:
           ipv4_address: 172.18.0.10
-      restart: always
 
   mysql_r:
       image: mysql:5.6.45
@@ -32,18 +26,12 @@ services:
       privileged: true
       ports:
         - "13307:3306"
-      volumes:
-        - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-        - ./data/mysql/:/var/lib/mysql/
-#        - ./data/mysql/:/usr/data/ #5.6.45
-        - ./log/mysql/:/var/log/mysql/
       command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
       environment:
          MYSQL_ROOT_PASSWORD: 123456
       networks:
         jhm:
           ipv4_address: 172.18.0.11
-      restart: always
 
   ac_w:
       image: mysql:5.6.45
@@ -51,18 +39,12 @@ services:
       privileged: true
       ports:
         - "23306:3306"
-      volumes:
-        - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-        - ./data/mysql/:/var/lib/mysql/
-#        - ./data/mysql/:/usr/data/ #5.6.45
-        - ./log/mysql/:/var/log/mysql/
       command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
       environment:
          MYSQL_ROOT_PASSWORD: 123456
       networks:
         jhm:
           ipv4_address: 172.18.0.12
-      restart: always
 
   ac_r:
       image: mysql:5.6.45
@@ -70,15 +52,9 @@ services:
       privileged: true
       ports:
         - "23307:3306"
-      volumes:
-        - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-        - ./data/mysql/:/var/lib/mysql/
-#        - ./data/mysql/:/usr/data/ #5.6.45
-        - ./log/mysql/:/var/log/mysql/
       command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
       environment:
          MYSQL_ROOT_PASSWORD: 123456
       networks:
         jhm:
           ipv4_address: 172.18.0.13
-      restart: always
