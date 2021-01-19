@@ -101,9 +101,8 @@ services:
           cpus: '0.50'
           memory: 100M
 
-
   mysql:
-      image: mysql:5.6.45
+      image: mysql:5.7.31
       container_name: mysql
       privileged: true
       ports:
@@ -111,16 +110,11 @@ services:
       volumes:
         - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
         - ./data/mysql/:/var/lib/mysql/
-        - ./data/mysql/:/usr/data/ #5.6.45
+        - ./data/mysql/:/usr/data/
         - ./log/mysql/:/var/log/mysql/
-      command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
+#      command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
       environment:
          MYSQL_ROOT_PASSWORD: 123456
       networks:
         jhm:
           ipv4_address: 172.18.0.110
-#      deploy:
-#        resources:
-#          limits:
-#            cpus: '1.00'
-#            memory: 300M
