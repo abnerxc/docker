@@ -51,6 +51,13 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && rm tideways.tar.gz  \
     && docker-php-ext-configure /tmp/tideways --enable-tideways  \
     && docker-php-ext-install /tmp/tideways \
+    #ffmpeg 扩展
+    && apk add --no-cache git \
+    && cd /tmp && git clone --depth 1 https://github.com/AEGEGE/ae-php-ffmpeg \
+    && cd ae-php-ffmpeg \
+    && docker-php-ext-configure /tmp/ae-php-ffmpeg --enable-skip-gd-check  \
+    # make 有报错暂无解决办法
+#    && docker-php-ext-install /tmp/ae-php-ffmpeg \
 
     # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
