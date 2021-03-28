@@ -4,7 +4,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && apk add --no-cache freetype-dev libjpeg-turbo-dev libpng-dev curl icu-dev libxml2-dev libxslt-dev bzip2-dev gettext-dev libressl libressl-dev rabbitmq-c-dev autoconf  g++ make pkgconfig libssh-dev ffmpeg \
     && docker-php-ext-configure gd --with-webp=/usr/include/webp --with-jpeg=/usr/include --with-freetype=/usr/include/freetype2/ \
     && docker-php-ext-install  gd intl soap xsl xmlrpc wddx bz2 zip pcntl pdo_mysql mysqli mbstring exif bcmath calendar sockets gettext shmop sysvmsg sysvsem sysvshm opcache
-#    && :\
+    && :\
     #pecl扩展开始开始
 #    && pecl channel-update pecl.php.net \
 #    && set -xe && apk add --no-cache --update --virtual .phpize-deps $PHPIZE_DEPS \
@@ -45,4 +45,4 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 #    # del
 #    && docker-php-source delete \
 #    && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
-#    && apk del  .phpize-deps
+    && apk del  .phpize-deps
