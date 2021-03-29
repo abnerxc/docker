@@ -41,7 +41,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && mkdir -p /tmp/tideways  \
     && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
     && docker-php-ext-configure /tmp/tideways --enable-tideways  \
-    && docker-php-ext-install /tmp/tideways \ #tideways 性能分析工具
+    && docker-php-ext-install /tmp/tideways \
+    #tideways 性能分析工具
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
     && mkdir -p /tmp/tideways  \
     && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
