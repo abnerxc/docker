@@ -5,7 +5,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && docker-php-ext-configure gd --with-webp=/usr/include/webp --with-jpeg=/usr/include --with-freetype=/usr/include/freetype2/ \
     && docker-php-ext-install gd intl soap xsl xmlrpc bz2 zip pcntl pdo_mysql mysqli mbstring exif bcmath calendar sockets gettext shmop sysvmsg sysvsem sysvshm opcache \
     && :\
-    pecl扩展开始开始
+    #pecl扩展开始开始
     && pecl channel-update pecl.php.net \
     && set -xe && apk add --no-cache --update --virtual .phpize-deps $PHPIZE_DEPS \
     && pecl install -o -f xdebug-3.0.3 \
@@ -28,36 +28,35 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && curl -fsSL 'http://pecl.php.net/get/yaf-3.3.2.tgz' -o yaf.tar.gz  \
     && mkdir -p /tmp/yaf  \
     && tar -xf yaf.tar.gz -C /tmp/yaf --strip-components=1  \
-    && rm yaf.tar.gz  \
     && docker-php-ext-configure /tmp/yaf --enable-yaf  \
     && docker-php-ext-install /tmp/yaf \
     #FFmpeg视频处理功能
     && curl -fsSL 'https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2' -o ffmpeg.tar.gz  \
     && mkdir -p /tmp/ffmpeg  \
     && tar -xf ffmpeg.tar.gz -C /tmp/ffmpeg --strip-components=1  \
-    && rm ffmpeg.tar.gz  \
     && docker-php-ext-configure /tmp/ffmpeg --enable-ffmpeg  \
     && docker-php-ext-install /tmp/ffmpeg \
     #tideways 性能分析工具
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
     && mkdir -p /tmp/tideways  \
     && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
-    && rm tideways.tar.gz  \
     && docker-php-ext-configure /tmp/tideways --enable-tideways  \
     && docker-php-ext-install /tmp/tideways \ #tideways 性能分析工具
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
     && mkdir -p /tmp/tideways  \
     && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
-    && rm tideways.tar.gz  \
     && docker-php-ext-configure /tmp/tideways --enable-tideways  \
     && docker-php-ext-install /tmp/tideways \
+    #wxwork_finance_sdk PHP 扩展 （会话存档功能需要）
+    && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 \
+    && cd /tmp \
+    && curl -fsSL "https://github.com/oh-stone/wework-chatdata-sdk/archive/v0.1.0.tar.gz" -o wxwork_finance_sdk.tar.gz \
+    && mkdir -p wxwork_finance_sdk \
+    && tar -xf wxwork_finance_sdk.tar.gz -C wxwork_finance_sdk --strip-components=1 \
+    && cd wxwork_finance_sdk/php7-wxwork-finance-sdk \
+    && docker-php-ext-configure /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk --with-wxwork-finance-sdk=/tmp/wxwork_finance_sdk/C_sdk \
+    && docker-php-ext-install /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk
     #ffmpeg 扩展
-    && apk add --no-cache git \
-    && cd /tmp && git clone --depth 1 https://github.com/AEGEGE/ae-php-ffmpeg \
-    && cd ae-php-ffmpeg \
-    && docker-php-ext-configure /tmp/ae-php-ffmpeg --enable-skip-gd-check  \
-    # make 有报错暂无解决办法
-#    && docker-php-ext-install /tmp/ae-php-ffmpeg \
 
     # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
@@ -65,4 +64,4 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     # del
     && docker-php-source delete \
     && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
-#    && apk del  .phpize-deps
+    && apk del  .phpize-deps
