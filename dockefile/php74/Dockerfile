@@ -55,7 +55,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && tar -xf wxwork_finance_sdk.tar.gz -C wxwork_finance_sdk --strip-components=1 \
     && cd wxwork_finance_sdk/php7-wxwork-finance-sdk \
     && docker-php-ext-configure /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk --with-wxwork-finance-sdk=/tmp/wxwork_finance_sdk/C_sdk \
-    && docker-php-ext-install /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk
+    && docker-php-ext-install /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk \
     #ffmpeg 扩展
 
     # composer
