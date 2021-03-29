@@ -34,13 +34,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
     && mkdir -p /tmp/tideways  \
     && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
-    && docker-php-ext-configure /tmp/tideways --enable-tideways  \
-    && docker-php-ext-install /tmp/tideways \
-    #tideways 性能分析工具
-    && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
-    && mkdir -p /tmp/tideways  \
-    && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
-    && docker-php-ext-configure /tmp/tideways --enable-tideways  \
+    && docker-php-ext-configure /tmp/tideways  \
     && docker-php-ext-install /tmp/tideways \
     #wxwork_finance_sdk PHP 扩展 （会话存档功能需要）
     && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 \
