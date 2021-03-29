@@ -30,12 +30,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && tar -xf yaf.tar.gz -C /tmp/yaf --strip-components=1  \
     && docker-php-ext-configure /tmp/yaf --enable-yaf  \
     && docker-php-ext-install /tmp/yaf \
-    #FFmpeg视频处理功能
-    && curl -fsSL 'https://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2' -o ffmpeg.tar.gz  \
-    && mkdir -p /tmp/ffmpeg  \
-    && tar -xf ffmpeg.tar.gz -C /tmp/ffmpeg --strip-components=1  \
-    && docker-php-ext-configure /tmp/ffmpeg --enable-ffmpeg  \
-    && docker-php-ext-install /tmp/ffmpeg \
     #tideways 性能分析工具
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
     && mkdir -p /tmp/tideways  \
