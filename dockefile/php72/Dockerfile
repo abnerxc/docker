@@ -40,8 +40,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && docker-php-ext-install /tmp/tideways \
 
     # composer
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
-    && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
+    && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/1.8.6/composer.phar && chmod u+x /usr/local/bin/composer \
     # del
     && docker-php-source delete \
     && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
