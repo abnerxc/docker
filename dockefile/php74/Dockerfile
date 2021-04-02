@@ -8,8 +8,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     #pecl扩展开始开始
     && pecl channel-update pecl.php.net \
     && set -xe && apk add --no-cache --update --virtual .phpize-deps $PHPIZE_DEPS \
-#    && pecl install -o -f xdebug-3.0.3 \
-#    && docker-php-ext-enable xdebug \
+    && pecl install -o -f xdebug-3.0.3 \
+    && docker-php-ext-enable xdebug \
     && pecl install -o -f redis-5.3.4 \
     && docker-php-ext-enable redis \
     && apk add libmemcached-dev \
@@ -31,21 +31,21 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && docker-php-ext-configure /tmp/yaf --enable-yaf  \
     && docker-php-ext-install /tmp/yaf \
     #tideways 性能分析工具
-#    && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
-#    && mkdir -p /tmp/tideways  \
-#    && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
-#    && docker-php-ext-configure /tmp/tideways  \
-#    && docker-php-ext-install /tmp/tideways \
+    && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
+    && mkdir -p /tmp/tideways  \
+    && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
+    && docker-php-ext-configure /tmp/tideways  \
+    && docker-php-ext-install /tmp/tideways \
     #wxwork_finance_sdk PHP 扩展 （会话存档功能需要）
-    && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 \
-    && cd /tmp \
-    && curl -fsSL "https://github.com/oh-stone/wework-chatdata-sdk/archive/v0.1.0.tar.gz" -o wxwork_finance_sdk.tar.gz \
-    && mkdir -p wxwork_finance_sdk \
-    && tar -xf wxwork_finance_sdk.tar.gz -C wxwork_finance_sdk --strip-components=1 \
-    && cd wxwork_finance_sdk/php7-wxwork-finance-sdk \
-    && docker-php-ext-configure /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk --with-wxwork-finance-sdk=/tmp/wxwork_finance_sdk/C_sdk \
-    && docker-php-ext-install /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk \
-    && cp /tmp/wxwork_finance_sdk/C_sdk/libWeWorkFinanceSdk_C.so /usr/local/lib/libWeWorkFinanceSdk_C.so \
+#    && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 \
+#    && cd /tmp \
+#    && curl -fsSL "https://github.com/oh-stone/wework-chatdata-sdk/archive/v0.1.0.tar.gz" -o wxwork_finance_sdk.tar.gz \
+#    && mkdir -p wxwork_finance_sdk \
+#    && tar -xf wxwork_finance_sdk.tar.gz -C wxwork_finance_sdk --strip-components=1 \
+#    && cd wxwork_finance_sdk/php7-wxwork-finance-sdk \
+#    && docker-php-ext-configure /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk --with-wxwork-finance-sdk=/tmp/wxwork_finance_sdk/C_sdk \
+#    && docker-php-ext-install /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk \
+#    && cp /tmp/wxwork_finance_sdk/C_sdk/libWeWorkFinanceSdk_C.so /usr/local/lib/libWeWorkFinanceSdk_C.so \
     #ffmpeg 扩展
 
     # composer
