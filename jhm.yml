@@ -59,8 +59,8 @@ services:
           cpus: '0.50'
           memory: 10M
 
-  php72:
-    image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.2
+  php74:
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.4
     expose:
       - 9000
     volumes:
@@ -68,13 +68,13 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-    container_name: php72
+    container_name: php74
     extra_hosts:
       - "hddev.kerlala.com:172.18.0.50"
     privileged: true
     networks:
       jhm:
-        ipv4_address: 172.18.0.72
+        ipv4_address: 172.18.0.74
     deploy:
       resources:
         limits:
