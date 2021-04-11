@@ -118,3 +118,18 @@ services:
       networks:
         jhm:
           ipv4_address: 172.18.0.110
+
+  php56:
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:5.6
+    expose:
+      - 9000
+    volumes:
+      - ./www/:/var/www/html/
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./log/php-fpm/:/var/log/php-fpm/
+    container_name: php56
+    privileged: true
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.56
