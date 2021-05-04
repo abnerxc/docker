@@ -104,7 +104,7 @@ services:
           cpus: '0.50'
           memory: 100M
 
- mysql:
+  mysql:
    image: mysql:5.7.31
    container_name: mysql
    privileged: true
@@ -115,7 +115,6 @@ services:
      - ./data/mysql/:/var/lib/mysql/
      - ./data/mysql/:/usr/data/
      - ./log/mysql/:/var/log/mysql/
-#      command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
    environment:
       MYSQL_ROOT_PASSWORD: 123456
    user: "1000:50"
