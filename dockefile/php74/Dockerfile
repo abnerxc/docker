@@ -50,6 +50,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
     # composer
     && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/1.8.6/composer.phar && chmod u+x /usr/local/bin/composer \
+    && wget -nv -O /usr/local/bin/php-cs-fixer  https://cs.symfony.com/download/php-cs-fixer-v2.phar && chmod u+x /usr/local/bin/php-cs-fixer \
     # del
     && docker-php-source delete \
     && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
