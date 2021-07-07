@@ -40,7 +40,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && docker-php-ext-install /tmp/tideways \
 
     # composer
-    && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/1.8.6/composer.phar && chmod u+x /usr/local/bin/composer \
+    && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/2.1.3/composer.phar && chmod u+x /usr/local/bin/composer \
     && wget -nv -O /usr/local/bin/php-cs-fixer  https://cs.symfony.com/download/php-cs-fixer-v2.phar && chmod u+x /usr/local/bin/php-cs-fixer \
     # del
     && docker-php-source delete \
