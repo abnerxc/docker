@@ -36,23 +36,10 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
     && docker-php-ext-configure /tmp/tideways  \
     && docker-php-ext-install /tmp/tideways \
-    #wxwork_finance_sdk PHP 扩展 （会话存档功能需要）
-#    && ln -s /lib/libc.musl-x86_64.so.1 /lib/ld-linux-x86-64.so.2 \
-#    && cd /tmp \
-#    && curl -fsSL "https://github.com/oh-stone/wework-chatdata-sdk/archive/v0.1.0.tar.gz" -o wxwork_finance_sdk.tar.gz \
-#    && mkdir -p wxwork_finance_sdk \
-#    && tar -xf wxwork_finance_sdk.tar.gz -C wxwork_finance_sdk --strip-components=1 \
-#    && cd wxwork_finance_sdk/php7-wxwork-finance-sdk \
-#    && docker-php-ext-configure /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk --with-wxwork-finance-sdk=/tmp/wxwork_finance_sdk/C_sdk \
-#    && docker-php-ext-install /tmp/wxwork_finance_sdk/php7-wxwork-finance-sdk \
-#    && cp /tmp/wxwork_finance_sdk/C_sdk/libWeWorkFinanceSdk_C.so /usr/local/lib/libWeWorkFinanceSdk_C.so \
-    #ffmpeg 扩展
-
     # composer
-    && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/2.1.3/composer.phar \
-    && chmod u+x /usr/local/bin/composer \
+    && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/2.1.3/composer.phar && chmod u+x /usr/local/bin/composer && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && mkdir -p /.composer/cache/ && chmod u+x /.composer/cache/   \
-    && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
+
     && wget -nv -O /usr/local/bin/php-cs-fixer  https://cs.symfony.com/download/php-cs-fixer-v2.phar && chmod u+x /usr/local/bin/php-cs-fixer \
     # del
     && docker-php-source delete \
