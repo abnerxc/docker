@@ -36,4 +36,10 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
     && docker-php-ext-configure /tmp/tideways  \
     && docker-php-ext-install /tmp/tideways \
+    # composer
+    && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/1.8.6/composer.phar && chmod u+x /usr/local/bin/composer \
+    && wget -nv -O /usr/local/bin/php-cs-fixer  https://cs.symfony.com/download/php-cs-fixer-v2.phar && chmod u+x /usr/local/bin/php-cs-fixer \
+    # del
+    && docker-php-source delete \
+    && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
     && apk del  .phpize-deps
