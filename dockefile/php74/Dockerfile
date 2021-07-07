@@ -49,7 +49,10 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     #ffmpeg 扩展
 
     # composer
-    && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/1.8.6/composer.phar && chmod u+x /usr/local/bin/composer \
+    && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/2.1.3/composer.phar \
+    && chmod u+x /usr/local/bin/composer \
+    && mkdir -p /.composer/cache/ && chmod u+x /.composer/cache/   \
+    && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && wget -nv -O /usr/local/bin/php-cs-fixer  https://cs.symfony.com/download/php-cs-fixer-v2.phar && chmod u+x /usr/local/bin/php-cs-fixer \
     # del
     && docker-php-source delete \
