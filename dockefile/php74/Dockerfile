@@ -38,8 +38,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     && docker-php-ext-install /tmp/tideways \
     # composer
     && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/2.1.3/composer.phar && chmod u+x /usr/local/bin/composer && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
-    && mkdir -p /.composer/cache/ && chmod u+x /.composer/cache/   \
-
     && wget -nv -O /usr/local/bin/php-cs-fixer  https://cs.symfony.com/download/php-cs-fixer-v2.phar && chmod u+x /usr/local/bin/php-cs-fixer \
     # del
     && docker-php-source delete \
