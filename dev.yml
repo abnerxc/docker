@@ -68,8 +68,11 @@ services:
     container_name: es
     privileged: true
     environment:
-      - cluster.name=development
-      - node.name=winner
+      - http.port=9200
+      - http.cors.enabled=true
+      - http.cors.allow-origin=http://172.18.0.105:1358,http://172.18.0.105:1358
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
       - bootstrap.memory_lock=false
       - discovery.zen.minimum_master_nodes=1
       - ES_JAVA_OPTS=-Xms512m -Xmx512m  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144
