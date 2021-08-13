@@ -72,7 +72,7 @@ services:
       - node.name=winner
       - bootstrap.memory_lock=false
       - discovery.zen.minimum_master_nodes=1
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144,重启会失效；永久/etc/sysctl.conf 文件中修改 vm.max_map_count
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144,重启会失效；永久 echo "vm.max_map_count=262144" > /etc/sysctl.conf && sysctl -p
     volumes:
       - ./data/elasticsearch/:/usr/share/elasticsearch/data
       - ./conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
