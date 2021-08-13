@@ -97,6 +97,16 @@ services:
       mynet:
         ipv4_address: 172.18.0.104
 
+  dejavu:  # elasticsearch 浏览器管理界面
+    image: appbaseio/dejavu:3.4.7
+    container_name: dejavu
+    privileged: true
+    ports:
+      - 1358:1358
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.105
+
   rabbitmq:
     image: rabbitmq:3.7.15-management-alpine
     container_name: rabbitmq
@@ -118,18 +128,5 @@ services:
         max-file: "10"
     networks:
       mynet:
-        ipv4_address: 172.18.0.105
-
-  kibana:
-    image: kibana:5.6.12
-    container_name: kibana
-    privileged: true
-    environment:
-      - ELASTICSEARCH_URL=http://172.18.0.104:9200
-    ports:
-      - 5601:5601
-    networks:
-      mynet:
         ipv4_address: 172.18.0.106
-
 
