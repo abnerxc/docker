@@ -63,25 +63,8 @@ services:
       mynet:
         ipv4_address: 172.18.0.102
 
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    privileged: true
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./data/mongodb/:/data/db/
-    command: --auth --bind_ip_all
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 123456
-      ME_CONFIG_MONGODB_URL: mongodb://root:123456@mongo:27017/
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.103
-
   elasticsearch:
-    image: elasticsearch:5.6.12-alpine
+    image: elasticsearch:6.8.18
     container_name: es
     privileged: true
     environment:
@@ -89,7 +72,7 @@ services:
       - node.name=winner
       - bootstrap.memory_lock=false
       - discovery.zen.minimum_master_nodes=1
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144
     ports:
       - 9200:9200
       - 9300:9300
