@@ -39,6 +39,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     # composer
     && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/2.1.3/composer.phar && chmod u+x /usr/local/bin/composer && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && wget -nv -O /usr/local/bin/php-cs-fixer  https://cs.symfony.com/download/php-cs-fixer-v2.phar && chmod u+x /usr/local/bin/php-cs-fixer \
+    && wget -nv -O /usr/local/bin/phpunit  http://phar.phpunit.cn/phpunit.phar && chmod u+x /usr/local/bin/phpunit \
     # del
     && docker-php-source delete \
     && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
