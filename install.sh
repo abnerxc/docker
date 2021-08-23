@@ -37,7 +37,7 @@ function main(){
             && chmod +x /usr/local/bin/docker-compose\
             && gpasswd -a $USER docker \
             && mkdir -p /etc/docker \
-            && echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"],"iptables":false}'>> /etc/docker/daemon.json \
+            && echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"]}'>> /etc/docker/daemon.json \
             && systemctl daemon-reload \
             && systemctl restart docker \
             && systemctl enable docker \
