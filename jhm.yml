@@ -13,7 +13,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./www/:/var/www/html/
+      - ./www/:/var/www/html/:rw
       - ./conf/nginx/conf.d:/etc/nginx/conf.d/
       - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./log/nginx/:/var/log/nginx/
@@ -57,8 +57,6 @@ services:
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
     container_name: php74
-    extra_hosts:
-      - "hddev.kerlala.com:172.18.0.50"
     privileged: true
     networks:
       jhm:
