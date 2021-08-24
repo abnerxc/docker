@@ -57,10 +57,13 @@ services:
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
     container_name: php74
+    privileged: true
+    dns:
+      - "114.114.114.114"
+      - "8.8.8.8"
     extra_hosts:
       - "hddev.kerlala.com:172.18.0.50"
       - "ccbhddev.kerlala.com:172.18.0.50"
-    privileged: true
     networks:
       jhm:
         ipv4_address: 172.18.0.74
