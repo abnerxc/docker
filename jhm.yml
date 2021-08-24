@@ -24,11 +24,7 @@ services:
     networks:
       jhm:
         ipv4_address: 172.18.0.50
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 10M
+
 
   redis:
     image: redis:alpine
@@ -39,11 +35,7 @@ services:
     networks:
       jhm:
         ipv4_address: 172.18.0.100
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 10M
+
 
   memcached:
     image: memcached:alpine
@@ -53,18 +45,14 @@ services:
     networks:
       jhm:
         ipv4_address: 172.18.0.101
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 10M
+
 
   php74:
     image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.4
     expose:
       - 9000
     volumes:
-      - ./www/:/var/www/html/
+      - ./www/:/var/www/html/:rw
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
@@ -72,17 +60,9 @@ services:
     extra_hosts:
       - "hddev.kerlala.com:172.18.0.50"
     privileged: true
-    dns:
-      - "114.114.114.114"
-      - "8.8.8.8"
     networks:
       jhm:
         ipv4_address: 172.18.0.74
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 200M
 
   node:
    image: registry.cn-hangzhou.aliyuncs.com/xuchen/node:1.0
@@ -98,29 +78,24 @@ services:
    networks:
      jhm:
        ipv4_address: 172.18.0.102
-   deploy:
-     resources:
-       limits:
-         cpus: '0.50'
-         memory: 100M
 
-  mysql:
-   image: mysql:5.7.31
-   container_name: mysql
-   privileged: true
-   ports:
-     - "3306:3306"
-   volumes:
-     - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-     - ./data/mysql/:/var/lib/mysql/
-     - ./data/mysql/:/usr/data/
-     - ./log/mysql/:/var/log/mysql/
-   environment:
-      MYSQL_ROOT_PASSWORD: 123456
-   user: "1000:50"
-   networks:
-     jhm:
-       ipv4_address: 172.18.0.110
+#  mysql:
+#   image: mysql:5.7.31
+#   container_name: mysql
+#   privileged: true
+#   ports:
+#     - "3306:3306"
+#   volumes:
+#     - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
+#     - ./data/mysql/:/var/lib/mysql/
+#     - ./data/mysql/:/usr/data/:rw
+#     - ./log/mysql/:/var/log/mysql/:rw
+#   environment:
+#      MYSQL_ROOT_PASSWORD: 123456
+#   user: "1000:50"
+#   networks:
+#     jhm:
+#       ipv4_address: 172.18.0.110
 
 #  php56:
 #   image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:5.6
