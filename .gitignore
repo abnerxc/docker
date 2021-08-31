@@ -2,8 +2,6 @@
 #no push
 *.iml
 .idea
-#conf/nginx/conf.d/*.conf
 /www
-#data
 log
 *.DS_Store
