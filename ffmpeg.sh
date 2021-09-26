@@ -3,4 +3,4 @@ docker run -it -v /Users/abner/work/ffdev:/root --entrypoint='sh'  jrottenberg/f
 
 
 
-# ffmpeg -i 'https://vod.bunediy.com/20200504/hzsbE24q/index.m3u8' -c copy xuchen.mp4
+# ffmpeg  -i 'https://new.iskcd.com/20210921/WQP04lpt/3509kb/hls/index.m3u8' -vcodec copy -acodec copy  zgys.mp4
