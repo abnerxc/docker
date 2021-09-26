@@ -84,24 +84,24 @@ services:
        ipv4_address: 172.18.0.102
 
 
-  mysql:
-   image: mysql:5.7.31
-   container_name: mysql
-   privileged: true
-   ports:
-     - "3306:3306"
-   volumes:
-     - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-     - ./data/mysql/:/var/lib/mysql/
-     - ./data/mysql/:/usr/data/:rw
-     - ./log/mysql/:/var/log/mysql/:rw
-   environment:
-      MYSQL_ROOT_PASSWORD: 123456
-   user: "1000:50"
-   command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON
-   networks:
-     jhm:
-       ipv4_address: 172.18.0.110
+# mysql:
+#  image: mysql:5.7.31
+#  container_name: mysql
+#  privileged: true
+#  ports:
+#    - "3306:3306"
+#  volumes:
+#    - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
+#    - ./data/mysql/:/var/lib/mysql/
+#    - ./data/mysql/:/usr/data/:rw
+#    - ./log/mysql/:/var/log/mysql/:rw
+#  environment:
+#     MYSQL_ROOT_PASSWORD: 123456
+#  user: "1000:50"
+#  command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON
+#  networks:
+#    jhm:
+#      ipv4_address: 172.18.0.110
 
 #  php56:
 #   image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:5.6
