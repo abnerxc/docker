@@ -98,7 +98,7 @@ services:
     environment:
        MYSQL_ROOT_PASSWORD: 123456
     user: "1000:50"
-    command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON
+#    command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON
     networks:
       jhm:
         ipv4_address: 172.18.0.110
