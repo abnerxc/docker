@@ -6,7 +6,7 @@ services:
     restart: always
 
   redis:
-    image: redis:4.0.6
+    image: redis:alpine
     command: redis-server --appendonly yes
     networks:
       - easy-mock
