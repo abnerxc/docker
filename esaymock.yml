@@ -1,6 +1,8 @@
 services:
   mongodb:
     image: mongo:3.4.1
+    volumes:
+      - './data/mongo:/data/db'
     networks:
       - easy-mock
     restart: always
