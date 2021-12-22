@@ -28,7 +28,7 @@ function main(){
             && yum install -y wget \
             && mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup \
             && wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo \
-            && yum install -y yum-utils \
+            && yum clean all && yum makecache && yum update -y  && yum install -y yum-utils \
             && yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
             && yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 vim wget device-mapper-persistent-data lvm2 docker-ce \
             && yum makecache fast \
