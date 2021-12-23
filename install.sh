@@ -38,7 +38,7 @@ function main(){
             && systemctl daemon-reload \
             && systemctl restart docker \
             && systemctl enable docker \
-            && echo -e "\033[31m docker安装完成，请重启电脑，执行步骤2 \033[0m" && exit
+            && echo -e "\033[31m docker安装完成，请重启虚拟机挂载增强和目录再执行步骤2 \033[0m" && exit
             ;;
 
           2)
