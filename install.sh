@@ -25,12 +25,9 @@ function main(){
 		case $number in
           1)
             echo -e "\033[31m docker install starting \033[0m" \
-            && echo "nameserver 8.8.8.8" >> /etc/resolv.conf && echo "nameserver 114.114.114.114" >> /etc/resolv.conf && yum install -y wget \
-            && mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup \
-            && wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo \
-            && yum clean all && yum makecache && yum update -y  && yum install -y yum-utils && yum install -y yum-utils \
+            && yum clean all -y && yum makecache -y && yum update -y && yum install -y yum-utils \
             && yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
-            && yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 vim wget device-mapper-persistent-data lvm2 docker-ce \
+            && yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 device-mapper-persistent-data lvm2 docker-ce \
             && yum makecache fast \
             && service docker start \
             && curl -L https://get.daocloud.io/docker/compose/releases/download/v2.2.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
