@@ -79,6 +79,9 @@ services:
    privileged: true
    stdin_open: true # 加上不自动退出 ，打开一个可输入的终端
    tty: true # 加上不自动退出，打开一个模拟终端，docker run -it(这个t)
+   extra_hosts:
+     - "raw.githubusercontent.com:199.232.68.133"
+     - "user-images.githubusercontent.com:199.232.68.133"
    networks:
      jhm:
        ipv4_address: 172.18.0.102
