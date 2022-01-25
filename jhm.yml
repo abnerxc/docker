@@ -48,7 +48,7 @@ services:
 
 
   php74:
-    image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:7.4
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:7.4
     expose:
       - 9000
     volumes:
@@ -64,12 +64,13 @@ services:
     extra_hosts:
       - "hddev.kerlala.com:172.18.0.50"
       - "ccbhddev.kerlala.com:172.18.0.50"
+      - "ccbhdcrmdev.kerlala.com:172.18.0.50"
     networks:
       jhm:
         ipv4_address: 172.18.0.74
 
   node:
-   image: registry.cn-hangzhou.aliyuncs.com/xuchen/node:1.0
+   image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
    ports:
      - 4000:4000
    volumes:
@@ -79,29 +80,32 @@ services:
    privileged: true
    stdin_open: true # 加上不自动退出 ，打开一个可输入的终端
    tty: true # 加上不自动退出，打开一个模拟终端，docker run -it(这个t)
+   extra_hosts:
+     - "raw.githubusercontent.com:199.232.68.133"
+     - "user-images.githubusercontent.com:199.232.68.133"
    networks:
      jhm:
        ipv4_address: 172.18.0.102
 
 
-# mysql:
-#  image: mysql:5.7.31
-#  container_name: mysql
-#  privileged: true
-#  ports:
-#    - "3306:3306"
-#  volumes:
-#    - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-#    - ./data/mysql/:/var/lib/mysql/
-#    - ./data/mysql/:/usr/data/:rw
-#    - ./log/mysql/:/var/log/mysql/:rw
-#  environment:
-#     MYSQL_ROOT_PASSWORD: 123456
-#  user: "1000:50"
-#  command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON
-#  networks:
-#    jhm:
-#      ipv4_address: 172.18.0.110
+  mysql:
+    image: mysql:5.7.31
+    container_name: mysql
+    privileged: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./data/mysql/:/var/lib/mysql/
+      - ./data/mysql/:/usr/data/:rw
+      - ./log/mysql/:/var/log/mysql/:rw
+    environment:
+       MYSQL_ROOT_PASSWORD: 123456
+    user: "1000:50"
+#    command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.110
 
 #  php56:
 #   image: registry.cn-hangzhou.aliyuncs.com/xuchen/php:5.6

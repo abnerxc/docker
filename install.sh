@@ -25,15 +25,12 @@ function main(){
 		case $number in
           1)
             echo -e "\033[31m docker install starting \033[0m" \
-            && yum install -y wget \
-            && mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup \
-            && wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo \
-            && yum install -y yum-utils \
+            && yum clean all -y && yum makecache -y && yum update -y && yum install -y yum-utils \
             && yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
-            && yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 vim wget device-mapper-persistent-data lvm2 docker-ce \
+            && yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel bzip2 device-mapper-persistent-data lvm2 docker-ce \
             && yum makecache fast \
             && service docker start \
-            && curl -L https://get.daocloud.io/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
+            && curl -L https://get.daocloud.io/docker/compose/releases/download/v2.2.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
             && chmod +x /usr/local/bin/docker-compose\
             && gpasswd -a $USER docker \
             && mkdir -p /etc/docker \
@@ -41,7 +38,7 @@ function main(){
             && systemctl daemon-reload \
             && systemctl restart docker \
             && systemctl enable docker \
-            && echo -e "\033[31m docker安装完成，请重启电脑，执行步骤2 \033[0m" && exit
+            && echo -e "\033[31m docker安装完成，请重启虚拟机挂载增强和目录再执行步骤2 \033[0m" && exit
             ;;
 
           2)
