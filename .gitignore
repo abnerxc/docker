@@ -2,6 +2,6 @@
 #no push
 *.iml
 .idea
-/www
+www
 log
 *.DS_Store
