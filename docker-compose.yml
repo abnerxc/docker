@@ -1,0 +1,166 @@
+version: '2'
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/nginx/conf.d:/etc/nginx/conf.d/:ro
+      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./log/nginx/:/var/log/nginx/
+    container_name: nginx
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      default:
+        ipv4_address: 172.18.0.50
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    container_name: redis
+    command: redis-server --requirepass 123456
+    networks:
+      default:
+        ipv4_address: 172.18.0.100
+
+  memcached:
+    image: memcached:alpine
+    ports:
+      - "11211:11211"
+    container_name: memcached
+    networks:
+      default:
+        ipv4_address: 172.18.0.101
+
+  mysql:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
+      - ./data/mysql/:/var/lib/mysql/:rw
+      - ./log/mysql/:/var/log/mysql/:rw
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      default:
+        ipv4_address: 172.18.0.102
+
+  mongodb:
+    image: registry.cn-hangzhou.aliyuncs.com/xuchen/mongo:4.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+#    volumes:
+#      - ./data/mongodb/:/data/db/:rw
+#    command: mongod --smallfiles --logpath=/dev/null #windows挂载报错
+    networks:
+      default:
+        ipv4_address: 172.18.0.103
+
+  elasticsearch:
+    image: elasticsearch:5.6.12-alpine
+    container_name: es
+    environment:
+      - cluster.name=development
+      - node.name=winner
+      - bootstrap.memory_lock=false
+      - discovery.zen.minimum_master_nodes=1
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144,重启会失效；永久 echo "vm.max_map_count=262144" > /etc/sysctl.conf && sysctl -p
+    volumes:
+      - ./data/elasticsearch/:/usr/share/elasticsearch/data
+      - ./conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      default:
+        ipv4_address: 172.18.0.104
+
+  etcd-1:
+      container_name: etcd1
+      image: registry.cn-hangzhou.aliyuncs.com/xuchen/etcd
+      ports:
+          - "2379:2379"
+      volumes:
+          - ./data/etcd/etcd_1/:/data/:rw
+      command: etcd --name etcd1 --data-dir=/data/ --listen-client-urls 'http://0.0.0.0:2379' --advertise-client-urls 'http://127.0.0.1:2379'
+      networks:
+        default:
+          ipv4_address: 172.18.0.105
+
+
+  rabbitmq:
+    image: rabbitmq:3.7.15-management-alpine
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      RABBITMQ_DEFAULT_VHOST: 'vhost'
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      default:
+        ipv4_address: 172.18.0.106
+
+  #图表工具
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      default:
+        ipv4_address: 172.18.0.107
+  #时序数据库 常与grafana配合使用
+  influxdb:
+    image: influxdb:1.7-alpine
+    container_name: influxdb
+    ports:
+      - "8086:8086"  #HTTP api端口
+    environment:
+      INFLUXDB_DB: db0
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: 123456
+      INFLUXDB_USER: telegraf
+      INFLUXDB_USER_PASSWORD: telegraf
+    networks:
+      default:
+        ipv4_address: 172.18.0.108
+
+
+  php74:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:7.4
+    expose:
+      - 9000
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ./log/php-fpm/:/var/log/php-fpm/:rw
+    container_name: php74
+    privileged: true
+    networks:
+      default:
+        ipv4_address: 172.18.0.74
+
+
+
+networks:
+  default:  #这里可以自定义名称 ，跟引用的地方一致就行
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
+          gateway: 172.18.0.1

@@ -1,0 +1,28 @@
+services:
+  mongodb:
+    image: mongo:3.4.1
+    volumes:
+      - './data/mongo:/data/db'
+    networks:
+      - easy-mock
+    restart: always
+
+  redis:
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    networks:
+      - easy-mock
+    restart: always
+
+  web:
+    image: easymock/easymock:1.6.0
+    # easy-mock 官方给出的文件，这里是 npm start，这里修改为 npm run dev
+    command: /bin/bash -c "npm run dev"
+    ports:
+      - 7300:7300
+    networks:
+      - easy-mock
+    restart: always
+
+networks:
+  easy-mock:

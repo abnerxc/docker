@@ -1,0 +1,118 @@
+version: '3'
+networks:
+  mynet:  #这里可以自定义名称 ，跟引用的地方一致就行
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/nginx/conf.d:/etc/nginx/conf.d/:rw
+      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf:rw
+      - ./log/nginx/:/var/log/nginx/:rw
+    container_name: nginx
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.50
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    privileged: true
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass 123456
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.100
+
+  memcached:
+    image: memcached:alpine
+    container_name: memcached
+    privileged: true
+    ports:
+      - "11211:11211"
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.101
+
+  mysql:
+    image: mysql:5.6.45
+    container_name: mysql
+    privileged: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./data/mysql/:/usr/data/
+      - ./log/mysql/:/var/log/mysql/
+    command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON
+    environment:
+       MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.102
+
+  elasticsearch:
+    image: elasticsearch:5.6.12-alpine
+    container_name: es
+    privileged: true
+    environment:
+      - http.port=9200
+      - http.cors.enabled=true
+      - http.cors.allow-origin=http://172.18.0.105:1358,http://172.18.0.105:1358
+      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+      - http.cors.allow-credentials=true
+      - bootstrap.memory_lock=false
+      - discovery.zen.minimum_master_nodes=1
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.104
+
+  dejavu:  # elasticsearch 浏览器管理界面
+    image: appbaseio/dejavu:3.4.7
+    container_name: dejavu
+    privileged: true
+    ports:
+      - 1358:1358
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.105
+
+  rabbitmq:
+    image: rabbitmq:3.7.15-management-alpine
+    container_name: rabbitmq
+    privileged: true
+    volumes:
+      - ./data/rabbitmq/:/var/lib/rabbitmq  #数据存储目录
+      - ./log/rabbitmq/:/var/log/rabbitmq #日志目录
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      RABBITMQ_DEFAULT_VHOST: 'vhost'
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.106
+
