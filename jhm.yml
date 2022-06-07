@@ -62,8 +62,8 @@ services:
         ipv4_address: 172.18.0.102      
 
 
-  php74:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:7.4
+  php81:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.1
     expose:
       - 9000
     volumes:
