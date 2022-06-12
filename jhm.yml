@@ -62,8 +62,8 @@ services:
         ipv4_address: 172.18.0.102      
 
 
-  php74:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:7.4
+  php81:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.1
     expose:
       - 9000
     volumes:
@@ -71,7 +71,7 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-    container_name: php74
+    container_name: php81
     privileged: true
     dns:
       - "114.114.114.114"
@@ -82,4 +82,4 @@ services:
       - "ccbhdcrmdev.kerlala.com:172.18.0.50"
     networks:
       jhm:
-        ipv4_address: 172.18.0.74
+        ipv4_address: 172.18.0.81
