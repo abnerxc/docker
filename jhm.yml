@@ -82,4 +82,4 @@ services:
       - "ccbhdcrmdev.kerlala.com:172.18.0.50"
     networks:
       jhm:
-        ipv4_address: 172.18.0.81
+        ipv4_address: 172.18.0.74
