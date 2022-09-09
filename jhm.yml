@@ -59,7 +59,7 @@ services:
   #     MYSQL_ROOT_PASSWORD: 123456
   #   networks:
   #     jhm:
-        ipv4_address: 172.18.0.102      
+  #      ipv4_address: 172.18.0.102
 
 
   php81:
