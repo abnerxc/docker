@@ -46,20 +46,22 @@ services:
       jhm:
         ipv4_address: 172.18.0.101
 
-  # mysql:
-  #   image: mysql:8.0
-  #   ports:
-  #     - "3306:3306"
-  #   volumes:
-  #     - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
-  #     - ./data/mysql/:/var/lib/mysql/:rw
-  #     - ./log/mysql/:/var/log/mysql/:rw
-  #   container_name: mysql
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: 123456
-  #   networks:
-  #     jhm:
-  #      ipv4_address: 172.18.0.102
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
+      - ./conf/mysql/mysql-files:/var/lib/mysql-files/:rw #windows 8.0版本需要
+      - ./data/mysql/:/var/lib/mysql/:rw
+      - ./log/mysql/:/var/log/mysql/:rw
+    container_name: mysql
+    command: "--innodb_use_native_aio=0" #windows
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.102
 
 
   php81:
