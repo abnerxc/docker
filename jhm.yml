@@ -19,6 +19,8 @@ services:
       - ./log/nginx/:/var/log/nginx/
     container_name: nginx
     privileged: true
+    extra_hosts:
+      - "casdev.kerlala.com:127.0.0.1"
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -62,8 +64,30 @@ services:
         ipv4_address: 172.18.0.102      
 
 
-  php81:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.1
+#  php81:
+#    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.1
+#    expose:
+#      - 9000
+#    volumes:
+#      - ./www/:/var/www/html/:rw
+#      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+#      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+#      - ./log/php-fpm/:/var/log/php-fpm/
+#    container_name: php81
+#    privileged: true
+#    dns:
+#      - "114.114.114.114"
+#      - "8.8.8.8"
+#    extra_hosts:
+#      - "hddev.kerlala.com:172.18.0.50"
+#      - "ccbhddev.kerlala.com:172.18.0.50"
+#      - "ccbhdcrmdev.kerlala.com:172.18.0.50"
+#    networks:
+#      jhm:
+#        ipv4_address: 172.18.0.74
+
+  php74:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:7.4
     expose:
       - 9000
     volumes:
@@ -71,7 +95,7 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-    container_name: php81
+    container_name: php74
     privileged: true
     dns:
       - "114.114.114.114"
