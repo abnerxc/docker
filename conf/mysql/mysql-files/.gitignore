@@ -1,7 +1,0 @@
-!.gitignore
-#no push
-*.iml
-.idea
-www
-log
-*.DS_Store

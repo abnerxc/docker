@@ -5,6 +5,10 @@ networks:
       driver: default
       config:
         - subnet: 172.18.0.0/24
+volumes:
+  mysql_data:
+    driver: local
+
 
 services:
   nginx:
@@ -54,9 +58,10 @@ services:
       - "3306:3306"
     volumes:
       - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
-      - ./data/mysql/:/var/lib/mysql/:rw
+      -  mysql_data:/var/lib/mysql/:rw
       - ./log/mysql/:/var/log/mysql/:rw
     container_name: mysql
+    privileged: true
     environment:
       MYSQL_ROOT_PASSWORD: 123456
     networks:
