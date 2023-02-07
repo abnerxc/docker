@@ -56,7 +56,7 @@ services:
     volumes:
       - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
       - ./log/mysql/:/var/log/mysql/:rw
-      - ./data/mysql/data/:/usr/data/:rw
+      - ./data/mysql/data/:/var/lib/mysql/:rw
       - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
     command:
       --default-authentication-plugin=mysql_native_password
