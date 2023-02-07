@@ -5,9 +5,6 @@ networks:
       driver: default
       config:
         - subnet: 172.18.0.0/24
-volumes:
-  mysql_data:
-    driver: local
 
 
 services:
@@ -58,8 +55,14 @@ services:
       - "3306:3306"
     volumes:
       - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
-      -  mysql_data:/var/lib/mysql/:rw
       - ./log/mysql/:/var/log/mysql/:rw
+      - ./data/mysql/data/:/usr/data/:rw
+      - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --innodb-flush-method=O_DSYNC
+      --innodb-use-native-aio=0
+      --log_bin=ON
     container_name: mysql
     privileged: true
     environment:
