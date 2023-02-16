@@ -112,6 +112,7 @@ services:
       - "hddev.kerlala.com:172.18.0.50"
       - "ccbhddev.kerlala.com:172.18.0.50"
       - "ccbhdcrmdev.kerlala.com:172.18.0.50"
+      - "mockdev.kerlala.com:172.18.0.50"
     networks:
       jhm:
         ipv4_address: 172.18.0.74
