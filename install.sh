@@ -25,8 +25,8 @@ function main(){
 		case $number in
           1)
             echo -e "\033[31m docker install starting \033[0m" \
-            && sudo sed -e 's|^mirrorlist=|#mirrorlist=|g' -e 's|^#baseurl=http://mirror.centos.org/centos|baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos|g' -i.bak /etc/yum.repos.d/CentOS-*.repo \
-            && yum clean all -y && yum makecache -y && yum update -y && yum install -y yum-utils && yum install -y epel-release \
+            && yum clean all -y &&  yum update -y && yum install -y yum-utils && yum install -y epel-release && yum
+            makecache -y \
             && yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
             && yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel  bzip2 dkms libXtst.i686 libXtst libX11.so.6 libX11 device-mapper-persistent-data lvm2 docker-ce \
             && yum makecache fast \
