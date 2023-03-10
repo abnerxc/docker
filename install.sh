@@ -25,8 +25,7 @@ function main(){
 		case $number in
           1)
             echo -e "\033[31m docker install starting \033[0m" \
-            && yum clean all -y && yum makecache -y && yum update -y && yum install -y yum-utils && yum install -y
-            epel-release \
+            && yum clean all -y && yum makecache -y && yum update -y && yum install -y yum-utils && yum install -y epel-release \
             && yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
             && yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel  bzip2 dkms libX11.so.6 libX11 device-mapper-persistent-data lvm2 docker-ce \
             && yum makecache fast \
