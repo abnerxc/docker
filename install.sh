@@ -28,8 +28,7 @@ function main(){
             && yum clean all -y && yum makecache -y && yum update -y && yum install -y yum-utils && yum install -y
             epel-release \
             && yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
-            && yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel  bzip2 dkms libX11.so.6
-            libX11 device-mapper-persistent-data lvm2 docker-ce \
+            && yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel  bzip2 dkms libX11.so.6 libX11 device-mapper-persistent-data lvm2 docker-ce \
             && yum makecache fast \
             && service docker start \
             && curl -L https://get.daocloud.io/docker/compose/releases/download/v2.2.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
