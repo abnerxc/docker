@@ -17,7 +17,7 @@ function dockerAlis() {
 
 function main(){
 	while [ True ];do
-		echo -e "\033[33m CentOs7 docker安装步骤: \033[0m"
+		echo -e "\033[33m Centos-steam9 docker安装步骤: \033[0m"
 		echo -e "\033[33m The #1 docker服务安装 \033[0m"
 		echo -e "\033[33m The #2 virtual box挂载安装，请保证安装增加工具和挂载目录已经添加 \033[0m"
 		echo -e "\033[33m q键退出 \033[0m"
@@ -25,28 +25,25 @@ function main(){
 		case $number in
           1)
             echo -e "\033[31m docker install starting \033[0m" \
-            && yum clean all -y &&  yum update -y && yum install -y yum-utils && yum install -y epel-release && yum makecache -y \
-            && yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
-            && yum install -y gcc gcc-devel gcc-c++ gcc-c++-devel make kernel kernel-devel  bzip2 dkms libXtst.i686 libXtst libX11.so.6 libX11 device-mapper-persistent-data lvm2 docker-ce \
-            && yum makecache fast \
+            && curl -o /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
+            && yum clean all -y &&  yum update -y && yum install -y epel-release && yum makecache -y \
+            && yum -y install kernel-devel-$(uname -r) gcc gcc-c++ make bzip2 elfutils-libelf-devel \
+            && yum -y install docker-ce --allowerasing \
             && service docker start \
-            && curl -L https://get.daocloud.io/docker/compose/releases/download/v2.2.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
+            && curl -L https://get.daocloud.io/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
             && chmod +x /usr/local/bin/docker-compose\
             && gpasswd -a $USER docker \
             && mkdir -p /etc/docker \
             && echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"]}'>> /etc/docker/daemon.json \
-            && systemctl daemon-reload \
-            && systemctl restart docker \
-            && systemctl enable docker \
+            && systemctl daemon-reload && systemctl restart docker && systemctl enable docker \
             && echo -e "\033[31m docker安装完成，请重启虚拟机挂载增强和目录再执行步骤2 \033[0m" && exit
             ;;
 
           2)
             echo -e "\033[31m virtual box增强工具 install starting \033[0m" \
-            && getVersionNum && rm -rf /usr/src/linux && ln -s /usr/src/kernels/$dd /usr/src/linux \
             && mount /dev/cdrom /mnt \
             && cd /mnt &&  ./VBoxLinuxAdditions.run \
-            && mkdir -p /root/docker  && chmod -R 777 /root/docker \
+            && mkdir -p /root/docker  && chmod -R 775 /root/docker \
             && echo 'docker /root/docker   vboxsf rw,gid=100,uid=1000,auto 0 0'>> /etc/fstab \
             && dockerAlis \
             && echo "alias $dcup">> /root/.bashrc \
