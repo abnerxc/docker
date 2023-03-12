@@ -39,16 +39,6 @@ services:
       jhm:
         ipv4_address: 172.18.0.100
 
-
-  memcached:
-    image: memcached:alpine
-    ports:
-      - "11211:11211"
-    container_name: memcached
-    networks:
-      jhm:
-        ipv4_address: 172.18.0.101
-
   mysql:
     image: mysql:8.0
     ports:
