@@ -22,6 +22,8 @@ services:
     privileged: true
     extra_hosts:
       - "casdev.kerlala.com:127.0.0.1"
+      - "jxjkhdcrmbch.kerlala.com:182.92.3.164"
+      - "jxjkhdbch.kerlala.com:182.92.3.164"
     environment:
       - TZ=Asia/Shanghai
     networks:
@@ -39,27 +41,27 @@ services:
       jhm:
         ipv4_address: 172.18.0.100
 
-  mysql:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
-      - ./log/mysql/:/var/log/mysql/:rw
-      - ./data/mysql/data/:/var/lib/mysql/:rw
-      - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
-    command:
-      --default-authentication-plugin=mysql_native_password
-      --innodb-flush-method=O_DSYNC
-      --innodb-use-native-aio=0
-      --log_bin=ON
-    container_name: mysql
-    privileged: true
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-    networks:
-      jhm:
-        ipv4_address: 172.18.0.102      
+#  mysql:
+#    image: mysql:8.0
+#    ports:
+#      - "3306:3306"
+#    volumes:
+#      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
+#      - ./log/mysql/:/var/log/mysql/:rw
+#      - ./data/mysql/data/:/var/lib/mysql/:rw
+#      - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
+#    command:
+#      --default-authentication-plugin=mysql_native_password
+#      --innodb-flush-method=O_DSYNC
+#      --innodb-use-native-aio=0
+#      --log_bin=ON
+#    container_name: mysql
+#    privileged: true
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 123456
+#    networks:
+#      jhm:
+#        ipv4_address: 172.18.0.102
 
 
 #  php81:
@@ -95,13 +97,10 @@ services:
       - ./log/php-fpm/:/var/log/php-fpm/
     container_name: php74
     privileged: true
-    dns:
-      - "114.114.114.114"
-      - "8.8.8.8"
     extra_hosts:
       - "hddev.kerlala.com:172.18.0.50"
-      - "ccbhddev.kerlala.com:172.18.0.50"
-      - "ccbhdcrmdev.kerlala.com:172.18.0.50"
+      - "jxjkhddev.kerlala.com:172.18.0.50"
+      - "jxjkhdcrmdev.kerlala.com:172.18.0.50"
       - "mockdev.kerlala.com:172.18.0.50"
     networks:
       jhm:
