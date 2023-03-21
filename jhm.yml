@@ -22,6 +22,8 @@ services:
     privileged: true
     extra_hosts:
       - "casdev.kerlala.com:127.0.0.1"
+      - "jxjkhddev.kerlala.com:127.0.0.1"
+      - "jxjkhdcrmdev.kerlala.com:127.0.0.1"
       - "jxjkhdcrmbch.kerlala.com:182.92.3.164"
       - "jxjkhdbch.kerlala.com:182.92.3.164"
     environment:
