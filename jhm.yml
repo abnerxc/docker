@@ -26,8 +26,6 @@ services:
       - "jxjkhdcrmdev.kerlala.com:127.0.0.1"
       - "jxjkhdcrmbch.kerlala.com:182.92.3.164"
       - "jxjkhdbch.kerlala.com:182.92.3.164"
-    environment:
-      - TZ=Asia/Shanghai
     networks:
       jhm:
         ipv4_address: 172.18.0.50
