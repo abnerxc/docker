@@ -16,8 +16,8 @@ function dockerAlis() {
 }
 
 function yumSource(){
-    rm -rf /etc/yum.repos.d/* && touch /etc/yum.repos.d/Centos.repo \
-    && cat > /etc/yum.repos.d/Centos.repo <<- EOF
+    mv /etc/yum.repos.d/centos.repo /etc/yum.repos.d/centos.repo.backup \
+    && cat > /etc/yum.repos.d/centos.repo <<- EOF
 [AppStream]
 name=CentOS-\$releasever - AppStream - mirrors.ustc.edu.cn
 baseurl=https://mirrors.ustc.edu.cn/centos-stream/\$stream/AppStream/\$basearch/os/
