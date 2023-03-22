@@ -15,16 +15,39 @@ function dockerAlis() {
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
+function yumSource(){
+    rm -rf /etc/yum.repos.d/* && touch /etc/yum.repos.d/Centos.repo \
+    && cat > /etc/yum.repos.d/Centos.repo <<- EOF
+[baseos]
+name=CentOS Stream \$releasever - BaseOS
+#mirrorlist=http://mirrorlist.centos.org/?release=\$stream&arch=\$basearch&repo=BaseOS&infra=\$infra
+baseurl=https://mirrors.ustc.edu.cn/centos-stream/9-stream/BaseOS/\$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+[appstream]
+name=CentOS Stream \$releasever - AppStream
+#mirrorlist=http://mirrorlist.centos.org/?release=\$stream&arch=\$basearch&repo=AppStream&infra=\$infra
+baseurl=https://mirrors.ustc.edu.cn/centos-stream/9-stream/AppStream/\$basearch/os/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+EOF
+yum clean all && yum makecache
+
+}
+
 function main(){
-	while [ True ];do
-		echo -e "\033[33m Centos-steam9 docker安装步骤: \033[0m"
-		echo -e "\033[33m The #1 docker服务安装 \033[0m"
-		echo -e "\033[33m The #2 virtual box挂载安装，请保证安装增加工具和挂载目录已经添加 \033[0m"
-		echo -e "\033[33m q键退出 \033[0m"
-		read -p '选择安装: ' number
-		case $number in
+    while [ True ];do
+        echo -e "\033[33m Centos-steam9 docker安装步骤: \033[0m"
+        echo -e "\033[33m The #1 docker服务安装 \033[0m"
+        echo -e "\033[33m The #2 virtual box挂载安装，请保证安装增加工具和挂载目录已经添加 \033[0m"
+        echo -e "\033[33m q键退出 \033[0m"
+        read -p '选择安装: ' number
+        case $number in
           1)
             echo -e "\033[31m docker install starting \033[0m" \
+            && yumSource \
             && curl -o /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
             && yum clean all -y &&  yum update -y && yum install -y epel-release && yum makecache -y \
             && yum -y install gcc gcc-c++ make kernel-devel-`uname -r` kernel-headers-`uname -r` bzip2 dkms elfutils-libelf-devel \
@@ -55,7 +78,7 @@ function main(){
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;
 
-		 "q"|"quit")
+         "q"|"quit")
             exit
             ;;
 
@@ -63,8 +86,8 @@ function main(){
             echo "Input error!!"
              ;;
 
-		esac
-	done
+        esac
+    done
 }
 
 main
