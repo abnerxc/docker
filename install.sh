@@ -100,6 +100,9 @@ function main(){
             && echo "alias $dcps">> /root/.bashrc \
             && echo "alias $dcip">> /root/.bashrc \
             && source /root/.bashrc \
+            && firewall-cmd --zone=public --add-port=80/tcp --permanent \
+            && firewall-cmd --zone=public --add-port=3306/tcp --permanent \
+            && firewall-cmd --zone=public --add-port=6379/tcp --permanent \
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;
 
