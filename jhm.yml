@@ -47,7 +47,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /d/work/gopro:/app:rw
+      - ./www/gopro:/app:rw
     container_name: app
     privileged: true
     stdin_open: true # 加上不自动退出 ，打开一个可输入的终端
