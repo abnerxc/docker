@@ -42,6 +42,20 @@ services:
       jhm:
         ipv4_address: 172.18.0.100
 
+  node:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - /d/work/gopro:/app:rw
+    container_name: app
+    privileged: true
+    stdin_open: true # 加上不自动退出 ，打开一个可输入的终端
+    tty: true # 加上不自动退出，打开一个模拟终端，docker run -it(这个t)
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.107
+
 #  mysql:
 #    image: mysql:8.0
 #    ports:
@@ -64,31 +78,8 @@ services:
 #      jhm:
 #        ipv4_address: 172.18.0.102
 
-
-#  php81:
-#    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.1
-#    expose:
-#      - 9000
-#    volumes:
-#      - ./www/:/var/www/html/:rw
-#      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
-#      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-#      - ./log/php-fpm/:/var/log/php-fpm/
-#    container_name: php81
-#    privileged: true
-#    dns:
-#      - "114.114.114.114"
-#      - "8.8.8.8"
-#    extra_hosts:
-#      - "hddev.kerlala.com:172.18.0.50"
-#      - "ccbhddev.kerlala.com:172.18.0.50"
-#      - "ccbhdcrmdev.kerlala.com:172.18.0.50"
-#    networks:
-#      jhm:
-#        ipv4_address: 172.18.0.74
-
-  php74:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:7.4
+  php82:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.2
     expose:
       - 9000
     volumes:
@@ -96,7 +87,7 @@ services:
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
       - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./log/php-fpm/:/var/log/php-fpm/
-    container_name: php74
+    container_name: php82
     privileged: true
     extra_hosts:
       - "hddev.kerlala.com:172.18.0.50"
