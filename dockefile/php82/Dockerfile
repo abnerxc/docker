@@ -5,7 +5,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     && docker-php-ext-configure gd --with-webp=/usr/include/webp --with-jpeg=/usr/include --with-freetype=/usr/include/freetype2/ \
     && docker-php-ext-install gd intl soap xsl  bz2 zip pcntl pdo_mysql mysqli mbstring exif bcmath calendar sockets gettext shmop sysvmsg sysvsem sysvshm opcache \
     && :\
-    #pecl扩展开始开始
     && pecl channel-update pecl.php.net \
     && set -xe && apk add --no-cache --update --virtual .phpize-deps $PHPIZE_DEPS \
     && pecl install -o -f xmlrpc-1.0.0RC3 \
@@ -24,17 +23,14 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     && docker-php-ext-enable protobuf \
     && pecl install -o -f amqp-1.11.0 \
     && docker-php-ext-enable amqp \
-    #tideways 性能分析工具
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
     && mkdir -p /tmp/tideways  \
     && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
     && docker-php-ext-configure /tmp/tideways  \
     && docker-php-ext-install /tmp/tideways \
-    # composer
     && wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/2.3.7/composer.phar && chmod u+x /usr/local/bin/composer && composer config -g repo.packagist composer https://packagist.phpcomposer.com \
     && wget -nv -O /usr/local/bin/php-cs-fixer  https://cs.symfony.com/download/php-cs-fixer-v2.phar && chmod u+x /usr/local/bin/php-cs-fixer \
     && wget -nv -O /usr/local/bin/phpunit  http://phar.phpunit.cn/phpunit.phar && chmod u+x /usr/local/bin/phpunit \
-    # del
     && docker-php-source delete \
     && rm -rf /tmp/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/pear ~/.pearrc && rm -rf /usr/share/php \
     && apk del  .phpize-deps
