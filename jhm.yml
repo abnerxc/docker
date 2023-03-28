@@ -46,6 +46,7 @@ services:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
     ports:
       - "3000:3000"
+      - "4000:4000"
     volumes:
       - ./www/gopro:/app:rw
     container_name: app
