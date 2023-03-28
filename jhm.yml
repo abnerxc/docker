@@ -43,13 +43,14 @@ services:
         ipv4_address: 172.18.0.100
 
   node:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
+    build: ./dockefile/node
     ports:
       - "3000:3000"
       - "4000:4000"
     volumes:
-      - ./www/gopro:/app:rw
-    container_name: app
+      - ./www/gopro:/home/node:rw
+    container_name: node
+    user: 0:0
     privileged: true
     stdin_open: true # 加上不自动退出 ，打开一个可输入的终端
     tty: true # 加上不自动退出，打开一个模拟终端，docker run -it(这个t)
