@@ -67,3 +67,7 @@ php72即7.2版本容器名称，可以针对不同的域名配置不同的运行
 ```
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'  $(sudo docker ps -a -q)
 ```
+
+
+
+docker exec -it node /bin/sh

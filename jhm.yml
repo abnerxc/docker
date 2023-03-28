@@ -42,15 +42,16 @@ services:
       jhm:
         ipv4_address: 172.18.0.100
 
-  node:
+  node: #只能运行不能
     build: ./dockefile/node
+    container_name: node
+    user: "node"
+    working_dir: /home/app
     ports:
       - "3000:3000"
       - "4000:4000"
     volumes:
-      - ./www/gopro:/home/node:rw
-    container_name: node
-    user: 0:0
+      - ./www/gopro:/home/app:rw
     privileged: true
     stdin_open: true # 加上不自动退出 ，打开一个可输入的终端
     tty: true # 加上不自动退出，打开一个模拟终端，docker run -it(这个t)
