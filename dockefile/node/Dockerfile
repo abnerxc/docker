@@ -7,5 +7,6 @@ RUN         sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repo
             npm install -g cnpm --registry=https://registry.npm.taobao.org && \
             npm install webpack -g && npm install -g @vue/cli && npm install -g @vue/cli-init && \
             rm -rf /var/cache/apk/*
+ARG         HOST_UID=1000y
 EXPOSE      4000
 CMD         ["/bin/sh"]

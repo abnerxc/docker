@@ -248,7 +248,7 @@ services:
       - /Users/abner/.ssh:/root/.ssh/:rw
     container_name: app
     privileged: true
-    stdin_open: true # 加上不自动退出 ，打开一个可输入的终端
+    stdin_open: true # 加上不自pwd动退出 ，打开一个可输入的终端
     tty: true # 加上不自动退出，打开一个模拟终端，docker run -it(这个t)
     networks:
       jhm:
