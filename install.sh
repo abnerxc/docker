@@ -78,7 +78,7 @@ function main(){
             && yum -y install gcc gcc-c++ make kernel-devel-`uname -r` kernel-headers-`uname -r` bzip2 dkms elfutils-libelf-devel  \
             && yum -y install docker-ce --allowerasing \
             && service docker start \
-            && curl -L https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
+            && curl -L https://github.com/docker/compose/releases/download/2.2.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
             && chmod -R 777 /usr/local/bin/docker-compose \
             && gpasswd -a $USER docker \
             && mkdir -p /etc/docker \
