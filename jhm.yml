@@ -42,19 +42,6 @@ services:
       jhm:
         ipv4_address: 172.18.0.100
 
-  node:
-    build: ./dockefile/node
-    container_name: node
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./www/gopro:/home/node/app:rw
-      - /root/.ssh:/root/.ssh/:rw #容器里面
-    tty: true # 加上不自动退出，打开一个模拟终端，docker run -it(这个t)
-    command: "/bin/sh"
-    networks:
-      jhm:
-        ipv4_address: 172.18.0.107
 
 #  mysql:
 #    image: mysql:8.0
