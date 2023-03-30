@@ -75,7 +75,7 @@ function main(){
             echo -e "\033[31m docker install starting \033[0m" \
             && curl -o /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
             && yum clean all -y &&  yum update -y && yum install -y epel-release && yum makecache -y \
-            && yum -y install gcc gcc-c++ make kernel-devel-`uname -r` kernel-headers-`uname -r` bzip2 dkms elfutils-libelf-devel nodejs npm \
+            && yum -y install gcc gcc-c++ make kernel-devel-`uname -r` kernel-headers-`uname -r` bzip2 dkms elfutils-libelf-devel  \
             && yum -y install docker-ce --allowerasing \
             && service docker start \
             && curl -L https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
