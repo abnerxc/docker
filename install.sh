@@ -79,7 +79,7 @@ function main(){
             && yum -y install docker-ce --allowerasing \
             && service docker start \
             && curl -L https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
-            && chmod +x /usr/local/bin/docker-compose \
+            && chmod -R 777 /usr/local/bin/docker-compose \
             && gpasswd -a $USER docker \
             && mkdir -p /etc/docker \
             && echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"]}'>> /etc/docker/daemon.json \
