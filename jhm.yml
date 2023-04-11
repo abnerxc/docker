@@ -83,4 +83,24 @@ services:
       - "mockdev.kerlala.com:172.18.0.50"
     networks:
       jhm:
+        ipv4_address: 172.18.0.82
+
+  php74:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:7.4
+    expose:
+      - 9000
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./log/php-fpm/:/var/log/php-fpm/
+    container_name: php74
+    privileged: true
+    extra_hosts:
+      - "hddev.kerlala.com:172.18.0.50"
+      - "jxjkhddev.kerlala.com:172.18.0.50"
+      - "jxjkhdcrmdev.kerlala.com:172.18.0.50"
+      - "mockdev.kerlala.com:172.18.0.50"
+    networks:
+      jhm:
         ipv4_address: 172.18.0.74
