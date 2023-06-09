@@ -65,7 +65,11 @@ php72即7.2版本容器名称，可以针对不同的域名配置不同的运行
 
 #查看所有容器ip
 ```
-docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'  $(sudo docker ps -a -q)
+alias jhm='docker-compose -f /mnt/e/work/docker/jhm.yml up -d'
+alias jhm-rs='docker-compose -f /mnt/e/work/docker/jhm.yml restart'
+alias jhm-rm='docker-compose -f /mnt/e/work/docker/jhm.yml stop && docker-compose -f /mnt/e/work/docker/jhm.yml rm'
+alias jhm-ps='docker-compose -f /mnt/e/work/docker/jhm.yml ps'
+alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"'"' $(docker ps -aq)'
 ```
 
 
