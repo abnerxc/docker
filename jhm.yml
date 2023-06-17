@@ -110,10 +110,11 @@ services:
     tty: true
     ports:
       - '8081:8081'
-      - '3000:3000'
+      - '4000:4000'
     volumes:
       - '/Users/abner/work/gopro/govue/front:/app/front'
       - '/Users/abner/work/blog:/app/blog'
+      - '/Users/abner/.ssh:/root/.ssh'
     container_name: vuecli
     networks:
       jhm:
