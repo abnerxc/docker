@@ -106,7 +106,7 @@ services:
         ipv4_address: 172.18.0.74
 
   vuecli:
-    image: vuecli:0.1
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
     tty: true
     ports:
       - '8080:8080'
