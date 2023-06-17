@@ -114,7 +114,7 @@ services:
     volumes:
       - '/Users/abner/work/gopro/govue/front:/app/front'
       - '/Users/abner/work/blog:/app/blog'
-    container_name: vueclia
+    container_name: vuecli
     networks:
       jhm:
-        ipv4_address: 172.18.0.74
+        ipv4_address: 172.18.0.10
