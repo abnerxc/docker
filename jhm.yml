@@ -109,7 +109,7 @@ services:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
     tty: true
     ports:
-      - '8080:8080'
+      - '8081:8081'
       - '3000:3000'
     volumes:
       - '/Users/abner/work/gopro/govue/front:/app/front'
