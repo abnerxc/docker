@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.3'
 networks:
   jhm:  #这里可以自定义名称 ，跟引用的地方一致就行
     ipam:
@@ -101,6 +101,20 @@ services:
       - "jxjkhddev.kerlala.com:172.18.0.50"
       - "jxjkhdcrmdev.kerlala.com:172.18.0.50"
       - "mockdev.kerlala.com:172.18.0.50"
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.74
+
+  vuecli:
+    image: vuecli:0.1
+    tty: true
+    ports:
+      - '8080:8080'
+      - '3000:3000'
+    volumes:
+      - '/Users/abner/work/gopro/govue/front:/app/front'
+      - '/Users/abner/work/blog:/app/blog'
+    container_name: vueclia
     networks:
       jhm:
         ipv4_address: 172.18.0.74

@@ -5,4 +5,3 @@ RUN         npm config set registry https://registry.npm.taobao.org && yarn conf
             npm install -g hexo-cli  && git config --global user.email abner510@126.com && git config --global user.name abner && \
             npm install webpack -g && npm install -g @vue/cli && \
             rm -rf /var/cache/apk/*
-EXPOSE      3000
