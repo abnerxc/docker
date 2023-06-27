@@ -81,6 +81,7 @@ services:
       - "jxjkhddev.kerlala.com:172.18.0.50"
       - "jxjkhdcrmdev.kerlala.com:172.18.0.50"
       - "mockdev.kerlala.com:172.18.0.50"
+      - "casdev.kerlala.com:172.18.0.50"
     networks:
       jhm:
         ipv4_address: 172.18.0.82
@@ -101,6 +102,7 @@ services:
       - "jxjkhddev.kerlala.com:172.18.0.50"
       - "jxjkhdcrmdev.kerlala.com:172.18.0.50"
       - "mockdev.kerlala.com:172.18.0.50"
+      - "casdev.kerlala.com:172.18.0.50"
     networks:
       jhm:
         ipv4_address: 172.18.0.74
