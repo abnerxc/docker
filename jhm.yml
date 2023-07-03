@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.0'
 networks:
   jhm:  #这里可以自定义名称 ，跟引用的地方一致就行
     ipam:
@@ -43,27 +43,27 @@ services:
         ipv4_address: 172.18.0.100
 
 
-  mysql:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
-      - ./log/mysql/:/var/log/mysql/:rw
-      - ./data/mysql/data/:/var/lib/mysql/:rw
-      - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
-    command:
-      --default-authentication-plugin=mysql_native_password
-      --innodb-flush-method=O_DSYNC
-      --innodb-use-native-aio=0
-      --log_bin=ON
-    container_name: mysql
-    privileged: true
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-    networks:
-      jhm:
-        ipv4_address: 172.18.0.102
+  # mysql:
+  #   image: mysql:8.0
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
+  #     - ./log/mysql/:/var/log/mysql/:rw
+  #     - ./data/mysql/data/:/var/lib/mysql/:rw
+  #     - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
+  #   command:
+  #     --default-authentication-plugin=mysql_native_password
+  #     --innodb-flush-method=O_DSYNC
+  #     --innodb-use-native-aio=0
+  #     --log_bin=ON
+  #   container_name: mysql
+  #   privileged: true
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 123456
+  #   networks:
+  #     jhm:
+  #       ipv4_address: 172.18.0.102
 
   php82:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.2
@@ -107,17 +107,17 @@ services:
       jhm:
         ipv4_address: 172.18.0.74
 
-  vuecli:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
-    tty: true
-    ports:
-      - '8081:8081'
-      - '4000:4000'
-    volumes:
-      - '/Users/abner/work/gopro/govue/front:/app/front'
-      - '/Users/abner/work/blog:/app/blog'
-      - '/Users/abner/.ssh:/root/.ssh'
-    container_name: vuecli
-    networks:
-      jhm:
-        ipv4_address: 172.18.0.10
+  # vuecli:
+  #   image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
+  #   tty: true
+  #   ports:
+  #     - '8081:8081'
+  #     - '4000:4000'
+  #   volumes:
+  #     - '/Users/abner/work/gopro/govue/front:/app/front'
+  #     - '/Users/abner/work/blog:/app/blog'
+  #     - '/Users/abner/.ssh:/root/.ssh'
+  #   container_name: vuecli
+  #   networks:
+  #     jhm:
+  #       ipv4_address: 172.18.0.10
