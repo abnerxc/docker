@@ -22,6 +22,18 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     && docker-php-ext-enable protobuf \
     && pecl install -o -f amqp-1.11.0 \
     && docker-php-ext-enable amqp \
+    && pecl install -o -f rdkafka-6.0.3 \
+    && docker-php-ext-enable rdkafka \
+    && curl -fsSL 'https://github.com/alanxz/rabbitmq-c/archive/refs/tags/v0.13.0.tar.gz' -o rabbitmq.tar.gz  \
+    && mkdir -p /tmp/rabbitmq  \
+    && tar -xf rabbitmq.tar.gz -C /tmp/rabbitmq --strip-components=1  \
+    && docker-php-ext-configure /tmp/rabbitmq  \
+    && docker-php-ext-install /tmp/rabbitmq \
+    && curl -fsSL 'https://github.com/apache/rocketmq-client-cpp/archive/refs/tags/2.1.0.tar.gz' -o rocketmq.tar.gz  \
+    && mkdir -p /tmp/rocketmq  \
+    && tar -xf rocketmq.tar.gz -C /tmp/rocketmq --strip-components=1  \
+    && docker-php-ext-configure /tmp/rocketmq  \
+    && docker-php-ext-install /tmp/rocketmq \
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
     && mkdir -p /tmp/tideways  \
     && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
