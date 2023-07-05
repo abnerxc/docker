@@ -1,7 +1,7 @@
 FROM php:8.2-fpm-alpine
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories && apk update \
-    && apk add --no-cache linux-headers libmemcached-dev freetype-dev libjpeg-turbo-dev libpng-dev curl icu-dev libxml2-dev libxslt-dev bzip2-dev gettext-dev openssl rabbitmq-c-dev autoconf  g++ make pkgconfig libssh-dev ffmpeg libwebp-dev yasm  ffmpeg-dev libzip-dev oniguruma-dev \
+    && apk add --no-cache linux-headers g++ make librdkafka-dev libmemcached-dev freetype-dev libjpeg-turbo-dev libpng-dev curl icu-dev libxml2-dev libxslt-dev bzip2-dev gettext-dev openssl rabbitmq-c rabbitmq-c-dev autoconf pkgconfig libssh-dev ffmpeg libwebp-dev yasm  ffmpeg-dev libzip-dev oniguruma-dev \
     && docker-php-ext-configure gd --with-webp=/usr/include/webp --with-jpeg=/usr/include --with-freetype=/usr/include/freetype2/ \
     && docker-php-ext-install gd intl soap xsl  bz2 zip pcntl pdo_mysql mysqli mbstring exif bcmath calendar sockets gettext shmop sysvmsg sysvsem sysvshm opcache \
     && pecl channel-update pecl.php.net \
@@ -24,11 +24,6 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
     && docker-php-ext-enable amqp \
     && pecl install -o -f rdkafka-6.0.3 \
     && docker-php-ext-enable rdkafka \
-    && curl -fsSL 'https://github.com/alanxz/rabbitmq-c/archive/refs/tags/v0.13.0.tar.gz' -o rabbitmq.tar.gz  \
-    && mkdir -p /tmp/rabbitmq  \
-    && tar -xf rabbitmq.tar.gz -C /tmp/rabbitmq --strip-components=1  \
-    && docker-php-ext-configure /tmp/rabbitmq  \
-    && docker-php-ext-install /tmp/rabbitmq \
     && curl -fsSL 'https://github.com/apache/rocketmq-client-cpp/archive/refs/tags/2.1.0.tar.gz' -o rocketmq.tar.gz  \
     && mkdir -p /tmp/rocketmq  \
     && tar -xf rocketmq.tar.gz -C /tmp/rocketmq --strip-components=1  \
