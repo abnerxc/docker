@@ -24,6 +24,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
     && docker-php-ext-enable amqp \
     && pecl install -o -f rdkafka-6.0.3 \
     && docker-php-ext-enable rdkafka \
+    && pecl install -o -f SeasClick-0.1.1 \
+    && docker-php-ext-enable SeasClick \
     && curl -fsSL 'https://github.com/tideways/php-xhprof-extension/archive/refs/tags/v5.0.4.tar.gz' -o tideways.tar.gz  \
     && mkdir -p /tmp/tideways  \
     && tar -xf tideways.tar.gz -C /tmp/tideways --strip-components=1  \
