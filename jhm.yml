@@ -121,3 +121,48 @@ services:
   #   networks:
   #     jhm:
   #       ipv4_address: 172.18.0.10
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+     jhm:
+       ipv4_address: 172.18.0.81
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 0 # 每个容器就是一个 broker，设置其对应的 ID
+      #外部网络只能获取到容器名称，在内外网络隔离情况下
+      #通过名称是无法成功访问 kafka 的
+      #因此需要通过绑定这个监听器能够让外部获取到的是 IP
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.92:9092
+      #kafka启动后初始化一个有2个partition(分区)0个副本名叫kafeidou的topic
+      KAFKA_CREATE_TOPICS: "kafeidou:2:0"
+      #通过端口连接 zookeeper
+      KAFKA_ZOOKEEPER_CONNECT: 172.18.0.81:2181
+      # kafka 监听器，告诉外部连接者要通过什么协议访问指定主机名和端口开放的 Kafka 服务。
+      KAFKA_LISTENERS: PLAINTEXT://172.18.0.92:9092
+      # Kafka默认使用-Xmx1G -Xms1G的JVM内存配置，由于服务器小，调整下启动配置
+      # 这个看自己的现状做调整，如果资源充足，可以不用配置这个
+      KAFKA_HEAP_OPTS: "-Xmx256M -Xms128M"
+      # 设置 kafka 日志位置
+      KAFKA_LOG_DIRS: "/kafka/logs"
+      # kafka 自动创建 topic，对于生成者与消费者连接的 TOPIC 不存在自动创建
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+      # kafka 开启删除 topic，开了自动创建，删除的也要开，否则删除后还会自动创建
+      KAFKA_DELETE_TOPIC_ENABLE: true
+    volumes:
+      - /data/kafka/docker.sock:/var/run/docker.sock
+      # 挂载 kafka 日志
+      - /log/kafka:/kafka/logs
+    depends_on:
+      - zookeeper
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.92
