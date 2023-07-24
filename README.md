@@ -74,4 +74,4 @@ alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSetti
 
 
 
-docker exec -it node /bin/sh
+sed -i 's/\r$//' install.sh
