@@ -92,7 +92,7 @@ function main(){
             && mount /dev/cdrom /mnt \
             && cd /mnt &&  ./VBoxLinuxAdditions.run \
             && mkdir -p /root/docker  && chmod -R 775 /root/docker \
-            && echo 'docker /root/docker   vboxsf rw,gid=100,uid=1000,auto 0 0'>> /etc/fstab \
+            && echo 'mount -t vboxsf docker /root/docker'>> /etc/rc.local && chmod +x /etc/rc.d/rc.local \
             && dockerAlis \
             && echo "alias $dcup">> /root/.bashrc \
             && echo "alias $dcrs">> /root/.bashrc \
