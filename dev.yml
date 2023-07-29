@@ -47,21 +47,26 @@ services:
         ipv4_address: 172.18.0.101
 
   mysql:
-    image: mysql:5.6.45
-    container_name: mysql
-    privileged: true
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-      - ./data/mysql/:/usr/data/
-      - ./log/mysql/:/var/log/mysql/
-    command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON
-    environment:
-       MYSQL_ROOT_PASSWORD: 123456
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.102
+   image: mysql:8.0
+   ports:
+     - "3306:3306"
+   volumes:
+     - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
+     - ./log/mysql/:/var/log/mysql/:rw
+     - ./data/mysql/data/:/var/lib/mysql/:rw
+     - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
+   command:
+     --default-authentication-plugin=mysql_native_password
+     --innodb-flush-method=O_DSYNC
+     --innodb-use-native-aio=0
+     --log_bin=ON
+   container_name: mysql
+   privileged: true
+   environment:
+     MYSQL_ROOT_PASSWORD: 123456
+   networks:
+     jhm:
+       ipv4_address: 172.18.0.102
 
   elasticsearch:
     image: elasticsearch:5.6.12-alpine
@@ -116,3 +121,86 @@ services:
       mynet:
         ipv4_address: 172.18.0.106
 
+
+  etcd:
+    image: bitnami/etcd
+    container_name: etcd
+    privileged: true
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    environment:
+      ALLOW_NONE_AUTHENTICATION: yes
+      ETCD_ADVERTISE_CLIENT_URLS: http://etcd-server:2379
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.107
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.120
+
+  kafka2:
+    image: wurstmeister/kafka
+    container_name: kafka2
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: 172.18.0.120:2181 #zookeeper服务地址 docker restart kafka2 kafka3 kafka4
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.122:9092 #kafka服务地址,ip和端口号要写对
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_LOG_DIRS: /data/kafka-data
+    volumes:
+      - /data/kafka:/data/kafka-data
+    restart: unless-stopped
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.122
+
+  kafka3:
+    image: wurstmeister/kafka
+    container_name: kafka3
+    depends_on:
+      - zookeeper
+    ports:
+      - "9093:9093"
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: 172.18.0.120:2181 #zookeeper服务地址
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.123:9093 #kafka服务地址
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093
+      KAFKA_LOG_DIRS: /data/kafka-data
+    volumes:
+      - /data/kafka:/data/kafka-data
+    restart: unless-stopped
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.123
+
+  kafka4:
+    image: wurstmeister/kafka
+    container_name: kafka4
+    depends_on:
+      - zookeeper
+    ports:
+      - "9094:9094"
+    environment:
+      KAFKA_BROKER_ID: 4
+      KAFKA_ZOOKEEPER_CONNECT: 172.18.0.120:2181 #zookeeper服务地址
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.124:9094 #kafka服务地址
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
+      KAFKA_LOG_DIRS: /data/kafka-data
+    volumes:
+      - /data/kafka:/data/kafka-data
+    restart: unless-stopped
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.124

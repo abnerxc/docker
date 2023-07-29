@@ -1,6 +1,6 @@
 version: '3.0'
 networks:
-  jhm:  #这里可以自定义名称 ，跟引用的地方一致就行
+  mynet:  #这里可以自定义名称 ，跟引用的地方一致就行
     ipam:
       driver: default
       config:
@@ -34,7 +34,7 @@ services:
       - "scrmbch.kerlala.com:182.92.3.164"
       - "scrmresbch.kerlala.com:182.92.3.164"
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.50
 
 
@@ -45,7 +45,7 @@ services:
     container_name: redis
     command: redis-server --requirepass 123456
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.100
 
 
@@ -68,7 +68,7 @@ services:
   #   environment:
   #     MYSQL_ROOT_PASSWORD: 123456
   #   networks:
-  #     jhm:
+  #     mynet:
   #       ipv4_address: 172.18.0.102
 
   php82:
@@ -89,29 +89,8 @@ services:
       - "mockdev.kerlala.com:172.18.0.50"
       - "casdev.kerlala.com:172.18.0.50"
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.82
-
-  # php74:
-  #   image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:7.4
-  #   expose:
-  #     - 9000
-  #   volumes:
-  #     - ./www/:/var/www/html/:rw
-  #     - ./conf/php/php.ini:/usr/local/etc/php/php.ini
-  #     - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-  #     - ./log/php-fpm/:/var/log/php-fpm/
-  #   container_name: php74
-  #   privileged: true
-  #   extra_hosts:
-  #     - "hddev.kerlala.com:172.18.0.50"
-  #     - "jxjkhddev.kerlala.com:172.18.0.50"
-  #     - "jxjkhdcrmdev.kerlala.com:172.18.0.50"
-  #     - "mockdev.kerlala.com:172.18.0.50"
-  #     - "casdev.kerlala.com:172.18.0.50"
-  #   networks:
-  #     jhm:
-  #       ipv4_address: 172.18.0.74
 
   # vuecli:
   #   image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
@@ -125,74 +104,6 @@ services:
   #     - '/Users/abner/.ssh:/root/.ssh'
   #   container_name: vuecli
   #   networks:
-  #     jhm:
+  #     mynet:
   #       ipv4_address: 172.18.0.10
 
-  zookeeper:
-    image: wurstmeister/zookeeper
-    container_name: zookeeper
-    ports:
-      - "2181:2181"
-    networks:
-     jhm:
-       ipv4_address: 172.18.0.120
-
-  kafka2:
-    image: wurstmeister/kafka
-    container_name: kafka2
-    depends_on:
-      - zookeeper
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: 172.18.0.120:2181 #zookeeper服务地址 docker restart kafka2 kafka3 kafka4
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.122:9092 #kafka服务地址,ip和端口号要写对
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_LOG_DIRS: /data/kafka-data
-    volumes:
-      - /data/kafka:/data/kafka-data
-    restart: unless-stopped
-    networks:
-      jhm:
-        ipv4_address: 172.18.0.122
-
-  kafka3:
-    image: wurstmeister/kafka
-    container_name: kafka3
-    depends_on:
-      - zookeeper
-    ports:
-      - "9093:9093"
-    environment:
-      KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: 172.18.0.120:2181 #zookeeper服务地址
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.123:9093 #kafka服务地址
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093
-      KAFKA_LOG_DIRS: /data/kafka-data
-    volumes:
-      - /data/kafka:/data/kafka-data
-    restart: unless-stopped
-    networks:
-      jhm:
-        ipv4_address: 172.18.0.123
-
-  kafka4:
-    image: wurstmeister/kafka
-    container_name: kafka4
-    depends_on:
-      - zookeeper
-    ports:
-      - "9094:9094"
-    environment:
-      KAFKA_BROKER_ID: 4
-      KAFKA_ZOOKEEPER_CONNECT: 172.18.0.120:2181 #zookeeper服务地址
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.124:9094 #kafka服务地址
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
-      KAFKA_LOG_DIRS: /data/kafka-data
-    volumes:
-      - /data/kafka:/data/kafka-data
-    restart: unless-stopped
-    networks:
-      jhm:
-        ipv4_address: 172.18.0.124
