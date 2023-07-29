@@ -122,7 +122,7 @@ services:
         ipv4_address: 172.18.0.120
 
   kafka2:
-    image: wurstmeister/kafka
+    image: wurstmeister/kafka  #docker stop kafka2 kafka3 kafka4  && docker rm kafka2 kafka3 kafka4 && docker-compose -f dev.yml up -d
     container_name: kafka2
     depends_on:
       - zookeeper
@@ -133,9 +133,9 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: 172.18.0.120:2181 #zookeeper服务地址 docker restart kafka2 kafka3 kafka4
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.122:9092 #kafka服务地址,ip和端口号要写对
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_LOG_DIRS: /data/kafka-data
-    volumes:
-      - ./data/kafka/kafka2:/data/kafka-data
+      KAFKA_LOG_DIRS: /data/kafka-data  #下面的volumes挂载，每次重启容器要清除挂载的data,不然出现信息不一致导致起不来，所以不要本地数据了
+#    volumes:
+#      - ./data/kafka/kafka2:/data/kafka-data
     networks:
       mynet:
         ipv4_address: 172.18.0.122
@@ -153,8 +153,8 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.123:9093 #kafka服务地址
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093
       KAFKA_LOG_DIRS: /data/kafka-data
-    volumes:
-      - ./data/kafka/kafka3:/data/kafka-data
+#    volumes:
+#      - ./data/kafka/kafka3:/data/kafka-data
     networks:
       mynet:
         ipv4_address: 172.18.0.123
@@ -172,8 +172,8 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.124:9094 #kafka服务地址
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
       KAFKA_LOG_DIRS: /data/kafka-data
-    volumes:
-      - ./data/kafka/kafka4:/data/kafka-data
+#    volumes:
+#      - ./data/kafka/kafka4:/data/kafka-data
     networks:
       mynet:
         ipv4_address: 172.18.0.124
