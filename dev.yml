@@ -10,8 +10,8 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     volumes:
       - ./www/:/var/www/html/:rw
       - ./conf/nginx/conf.d:/etc/nginx/conf.d/:rw
@@ -23,7 +23,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       mynet:
-        ipv4_address: 172.18.0.50
+        ipv4_address: 172.18.0.2
 
   redis:
     image: redis:alpine
@@ -34,17 +34,8 @@ services:
     command: redis-server --requirepass 123456
     networks:
       mynet:
-        ipv4_address: 172.18.0.100
+        ipv4_address: 172.18.0.20
 
-  memcached:
-    image: memcached:alpine
-    container_name: memcached
-    privileged: true
-    ports:
-      - "11211:11211"
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.101
 
   mysql:
    image: mysql:8.0
@@ -66,37 +57,22 @@ services:
      MYSQL_ROOT_PASSWORD: 123456
    networks:
      mynet:
-       ipv4_address: 172.18.0.102
+       ipv4_address: 172.18.0.30
 
   elasticsearch:
-    image: elasticsearch:5.6.12-alpine
+    image: elasticsearch
     container_name: es
     privileged: true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
     environment:
       - http.port=9200
-      - http.cors.enabled=true
-      - http.cors.allow-origin=http://172.18.0.105:1358,http://172.18.0.105:1358
-      - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
-      - http.cors.allow-credentials=true
-      - bootstrap.memory_lock=false
-      - discovery.zen.minimum_master_nodes=1
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144
-    ports:
-      - 9200:9200
-      - 9300:9300
+      - discovery.type=single-node
     networks:
       mynet:
-        ipv4_address: 172.18.0.104
+        ipv4_address: 172.18.0.40
 
-  dejavu:  # elasticsearch 浏览器管理界面
-    image: appbaseio/dejavu:3.4.7
-    container_name: dejavu
-    privileged: true
-    ports:
-      - 1358:1358
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.105
 
   rabbitmq:
     image: rabbitmq:3.7.15-management-alpine
@@ -119,7 +95,7 @@ services:
         max-file: "10"
     networks:
       mynet:
-        ipv4_address: 172.18.0.106
+        ipv4_address: 172.18.0.50
 
 
   etcd:
@@ -134,7 +110,7 @@ services:
       ETCD_ADVERTISE_CLIENT_URLS: http://etcd-server:2379
     networks:
       mynet:
-        ipv4_address: 172.18.0.107
+        ipv4_address: 172.18.0.60
 
   zookeeper:
     image: wurstmeister/zookeeper
