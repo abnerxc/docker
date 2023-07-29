@@ -251,7 +251,7 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
       KAFKA_LOG_DIRS: /data/kafka-data
     volumes:
-      - ./data/kafka/kafka3:/data/kafka-data
+      - ./data/kafka/kafka4:/data/kafka-data
     networks:
       mynet:
         ipv4_address: 172.18.0.124
