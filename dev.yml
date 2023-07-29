@@ -65,7 +65,7 @@ services:
    environment:
      MYSQL_ROOT_PASSWORD: 123456
    networks:
-     jhm:
+     mynet:
        ipv4_address: 172.18.0.102
 
   elasticsearch:
@@ -142,7 +142,7 @@ services:
     ports:
       - "2181:2181"
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.120
 
   kafka2:
@@ -162,7 +162,7 @@ services:
       - /data/kafka:/data/kafka-data
     restart: unless-stopped
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.122
 
   kafka3:
@@ -182,7 +182,7 @@ services:
       - /data/kafka:/data/kafka-data
     restart: unless-stopped
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.123
 
   kafka4:
@@ -202,5 +202,5 @@ services:
       - /data/kafka:/data/kafka-data
     restart: unless-stopped
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.124
