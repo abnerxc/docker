@@ -91,46 +91,6 @@ services:
       mynet:
         ipv4_address: 172.18.0.103
 
-  elasticsearch:
-    image: elasticsearch:5.6.12-alpine
-    container_name: es
-    privileged: true
-    environment:
-      - cluster.name=development
-      - node.name=winner
-      - bootstrap.memory_lock=false
-      - discovery.zen.minimum_master_nodes=1
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # 宿主机执行 sudo sysctl -w vm.max_map_count=262144
-    ports:
-      - 9200:9200
-      - 9300:9300
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.104
-
-  rabbitmq:
-    image: rabbitmq:3.7.15-management-alpine
-    container_name: rabbitmq
-    privileged: true
-    volumes:
-      - ./data/rabbitmq/:/var/lib/rabbitmq  #数据存储目录
-      - ./log/rabbitmq/:/var/log/rabbitmq #日志目录
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: admin
-      RABBITMQ_DEFAULT_VHOST: 'vhost'
-    ports:
-      - "15672:15672"
-      - "5672:5672"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.105
-
   kibana:
     image: kibana:5.6.12
     container_name: kibana
@@ -142,7 +102,6 @@ services:
     networks:
       std:
         ipv4_address: 172.18.0.106
-
 
   php82:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.2
@@ -180,13 +139,64 @@ services:
      jhm:
        ipv4_address: 172.18.0.10
 
+  elasticsearch:
+    image: elasticsearch
+    container_name: es
+    privileged: true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - http.port=9200
+      - discovery.type=single-node
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.40
+
+  rabbitmq:
+    image: rabbitmq:3.7.15-management-alpine
+    container_name: rabbitmq
+    privileged: true
+    volumes:
+      - ./data/rabbitmq/:/var/lib/rabbitmq #数据存储目录
+      - ./log/rabbitmq/:/var/log/rabbitmq #日志目录
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      RABBITMQ_DEFAULT_VHOST: 'vhost'
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.50
+
+  etcd:
+    image: bitnami/etcd
+    container_name: etcd
+    privileged: true
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    environment:
+      ALLOW_NONE_AUTHENTICATION: yes
+      ETCD_ADVERTISE_CLIENT_URLS: http://etcd-server:2379
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.60
+
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
     ports:
       - "2181:2181"
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.120
 
   kafka2:
@@ -198,15 +208,14 @@ services:
       - "9092:9092"
     environment:
       KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: 172.18.0.120:2181 #zookeeper服务地址
+      KAFKA_ZOOKEEPER_CONNECT: 172.18.0.120:2181 #zookeeper服务地址 docker restart kafka2 kafka3 kafka4
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://172.18.0.122:9092 #kafka服务地址,ip和端口号要写对
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_LOG_DIRS: /data/kafka-data
     volumes:
-      - /data/kafka:/data/kafka-data
-    restart: unless-stopped
+      - ./data/kafka/kafka2:/data/kafka-data
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.122
 
   kafka3:
@@ -223,10 +232,9 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093
       KAFKA_LOG_DIRS: /data/kafka-data
     volumes:
-      - /data/kafka:/data/kafka-data
-    restart: unless-stopped
+      - ./data/kafka/kafka3:/data/kafka-data
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.123
 
   kafka4:
@@ -243,8 +251,7 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
       KAFKA_LOG_DIRS: /data/kafka-data
     volumes:
-      - /data/kafka:/data/kafka-data
-    restart: unless-stopped
+      - ./data/kafka/kafka3:/data/kafka-data
     networks:
-      jhm:
+      mynet:
         ipv4_address: 172.18.0.124
