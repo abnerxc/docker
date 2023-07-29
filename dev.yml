@@ -73,7 +73,6 @@ services:
       mynet:
         ipv4_address: 172.18.0.40
 
-
   rabbitmq:
     image: rabbitmq:3.7.15-management-alpine
     container_name: rabbitmq
@@ -97,20 +96,47 @@ services:
       mynet:
         ipv4_address: 172.18.0.50
 
-
-  etcd:
-    image: bitnami/etcd
-    container_name: etcd
-    privileged: true
+  etcd-node1:
+    image: quay.io/coreos/etcd:v3.3.1
+    container_name: etcd-node1
     ports:
-      - "2379:2379"
-      - "2380:2380"
-    environment:
-      ALLOW_NONE_AUTHENTICATION: yes
-      ETCD_ADVERTISE_CLIENT_URLS: http://etcd-server:2379
+      - "12379:2379"
+      - "12380:2380"
+    restart: always
+    volumes:
+      - ./data/etcd/node1:/data/app/etcd
+    command: etcd --name etcd-node1 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.60:2379 --initial-advertise-peer-urls http://172.18.0.60:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
     networks:
       mynet:
         ipv4_address: 172.18.0.60
+
+  etcd-node2:
+    image: quay.io/coreos/etcd:v3.3.1
+    container_name: etcd-node2
+    ports:
+      - "22379:2379"
+      - "22380:2380"
+    restart: always
+    volumes:
+      - ./data/etcd/node2:/data/app/etcd
+    command: etcd --name etcd-node2 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.61:2379 --initial-advertise-peer-urls http://172.18.0.61:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.61
+
+  etcd-node3:
+    image: quay.io/coreos/etcd:v3.3.1
+    container_name: etcd-node3
+    ports:
+      - "32379:2379"
+      - "32380:2380"
+    restart: always
+    volumes:
+      - ./data/etcd/node3:/data/app/etcd
+    command: etcd --name etcd-node3 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.62:2379 --initial-advertise-peer-urls http://172.18.0.62:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.62
 
   zookeeper:
     image: wurstmeister/zookeeper
