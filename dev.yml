@@ -79,7 +79,7 @@ services:
     container_name: rabbitmq
     privileged: true
     volumes:
-      - ./data/rabbitmq/:/var/lib/rabbitmq  #数据存储目录
+      - ./data/rabbitmq/:/var/lib/rabbitmq #数据存储目录
       - ./log/rabbitmq/:/var/log/rabbitmq #日志目录
     environment:
       RABBITMQ_DEFAULT_USER: admin
@@ -135,8 +135,7 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_LOG_DIRS: /data/kafka-data
     volumes:
-      - /data/kafka:/data/kafka-data
-    restart: unless-stopped
+      - ./data/kafka/kafka2:/data/kafka-data
     networks:
       mynet:
         ipv4_address: 172.18.0.122
@@ -155,8 +154,7 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093
       KAFKA_LOG_DIRS: /data/kafka-data
     volumes:
-      - /data/kafka:/data/kafka-data
-    restart: unless-stopped
+      - ./data/kafka/kafka3:/data/kafka-data
     networks:
       mynet:
         ipv4_address: 172.18.0.123
@@ -175,8 +173,7 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
       KAFKA_LOG_DIRS: /data/kafka-data
     volumes:
-      - /data/kafka:/data/kafka-data
-    restart: unless-stopped
+      - ./data/kafka/kafka3:/data/kafka-data
     networks:
       mynet:
         ipv4_address: 172.18.0.124
