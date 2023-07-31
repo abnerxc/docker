@@ -97,7 +97,7 @@ services:
         ipv4_address: 172.18.0.50
 
   etcd-node1:
-    image: quay.io/coreos/etcd:v3.3.1
+    image: quay.io/coreos/etcd:v3.4.27
     container_name: etcd-node1
     ports:
       - "12379:2379"
@@ -111,7 +111,7 @@ services:
         ipv4_address: 172.18.0.60
 
   etcd-node2:
-    image: quay.io/coreos/etcd:v3.3.1
+    image: quay.io/coreos/etcd:v3.4.27
     container_name: etcd-node2
     ports:
       - "22379:2379"
@@ -125,7 +125,7 @@ services:
         ipv4_address: 172.18.0.61
 
   etcd-node3:
-    image: quay.io/coreos/etcd:v3.3.1
+    image: quay.io/coreos/etcd:v3.4.27
     container_name: etcd-node3
     ports:
       - "32379:2379"
