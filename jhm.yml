@@ -35,7 +35,7 @@ services:
       - "scrmresbch.kerlala.com:182.92.3.164"
     networks:
       mynet:
-        ipv4_address: 172.18.0.50
+        ipv4_address: 172.18.0.2
 
 
   redis:
@@ -83,11 +83,11 @@ services:
     container_name: php82
     privileged: true
     extra_hosts:
-      - "hddev.kerlala.com:172.18.0.50"
-      - "jxjkhddev.kerlala.com:172.18.0.50"
-      - "jxjkhdcrmdev.kerlala.com:172.18.0.50"
-      - "mockdev.kerlala.com:172.18.0.50"
-      - "casdev.kerlala.com:172.18.0.50"
+      - "hddev.kerlala.com:172.18.0.2"
+      - "jxjkhddev.kerlala.com:172.18.0.2"
+      - "jxjkhdcrmdev.kerlala.com:172.18.0.2"
+      - "mockdev.kerlala.com:172.18.0.2"
+      - "casdev.kerlala.com:172.18.0.2"
     networks:
       mynet:
         ipv4_address: 172.18.0.82
