@@ -57,7 +57,7 @@ services:
 #     MYSQL_ROOT_PASSWORD: 123456
 #   networks:
 #     mynet:
-#       ipv4_address: 172.18.0.30
+#       ipv4_address: 172.18.0.10
 
   elasticsearch:
     image: elasticsearch
@@ -71,7 +71,7 @@ services:
       - discovery.type=single-node
     networks:
       mynet:
-        ipv4_address: 172.18.0.40
+        ipv4_address: 172.18.0.20
 
   rabbitmq:
     image: rabbitmq:3.7.15-management-alpine
@@ -94,7 +94,7 @@ services:
         max-file: "10"
     networks:
       mynet:
-        ipv4_address: 172.18.0.50
+        ipv4_address: 172.18.0.30
 
   etcd-node1:
     image: quay.io/coreos/etcd:v3.4.27
