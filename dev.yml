@@ -23,7 +23,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       mynet:
-        ipv4_address: 172.18.0.2
+        ipv4_address: 172.18.0.50
 
   redis:
     image: redis:alpine
