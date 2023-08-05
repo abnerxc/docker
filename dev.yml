@@ -103,6 +103,8 @@ services:
       - "12379:2379"
       - "12380:2380"
     restart: always
+    environment:
+      ETCDCTL_API: 3
     volumes:
       - ./data/etcd/node1:/data/app/etcd
     command: etcd --name etcd-node1 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.60:2379 --initial-advertise-peer-urls http://172.18.0.60:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
@@ -117,6 +119,8 @@ services:
       - "22379:2379"
       - "22380:2380"
     restart: always
+    environment:
+      ETCDCTL_API: 3
     volumes:
       - ./data/etcd/node2:/data/app/etcd
     command: etcd --name etcd-node2 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.61:2379 --initial-advertise-peer-urls http://172.18.0.61:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
@@ -131,6 +135,8 @@ services:
       - "32379:2379"
       - "32380:2380"
     restart: always
+    environment:
+      ETCDCTL_API: 3
     volumes:
       - ./data/etcd/node3:/data/app/etcd
     command: etcd --name etcd-node3 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.62:2379 --initial-advertise-peer-urls http://172.18.0.62:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
