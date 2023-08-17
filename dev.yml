@@ -105,8 +105,8 @@ services:
     restart: always
     environment:
       ETCDCTL_API: 3
-    volumes:
-      - ./data/etcd/node1:/data/app/etcd
+#    volumes:
+#      - ./data/etcd/node1:/data/app/etcd
     command: etcd --name etcd-node1 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.60:2379 --initial-advertise-peer-urls http://172.18.0.60:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
     networks:
       mynet:
@@ -121,8 +121,8 @@ services:
     restart: always
     environment:
       ETCDCTL_API: 3
-    volumes:
-      - ./data/etcd/node2:/data/app/etcd
+#    volumes:
+#      - ./data/etcd/node2:/data/app/etcd
     command: etcd --name etcd-node2 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.61:2379 --initial-advertise-peer-urls http://172.18.0.61:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
     networks:
       mynet:
@@ -137,8 +137,8 @@ services:
     restart: always
     environment:
       ETCDCTL_API: 3
-    volumes:
-      - ./data/etcd/node3:/data/app/etcd
+#    volumes:
+#      - ./data/etcd/node3:/data/app/etcd
     command: etcd --name etcd-node3 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.62:2379 --initial-advertise-peer-urls http://172.18.0.62:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
     networks:
       mynet:
@@ -211,7 +211,7 @@ services:
         ipv4_address: 172.18.0.124
 
   redroid: #安卓仿真机器
-    image: redroid/redroid:13.0.0_64only-latest
+    image: redroid/redroid:12.0.0_64only-latest
     container_name: redroid
     privileged: true
     restart: always
@@ -220,7 +220,11 @@ services:
     ports:
       - "5555:5555"
     volumes:
-      - ./data/redroid:/data
+      - ./data/redroid/data:/data
     environment:
       - TZ="Asia/Shanghai"
+      - redroid.gpu.mode=guest
     command: [ "tail", "-f", "/dev/null" ]
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.254
