@@ -209,3 +209,18 @@ services:
     networks:
       mynet:
         ipv4_address: 172.18.0.124
+
+  redroid: #安卓仿真机器
+    image: redroid/redroid:13.0.0_64only-latest
+    container_name: redroid
+    privileged: true
+    restart: always
+    stdin_open: true
+    tty: true
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./data/redroid:/data
+    environment:
+      - TZ="Asia/Shanghai"
+    command: [ "tail", "-f", "/dev/null" ]
