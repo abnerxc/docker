@@ -221,10 +221,10 @@ services:
       - "5555:5555"
     volumes:
       - ./data/redroid/data:/data
-    environment:
-      - TZ="Asia/Shanghai"
-      - redroid.gpu.mode=guest
-    command: [ "tail", "-f", "/dev/null" ]
+    command:
+      - androidboot.redroid_gpu_mode=guest
+      - androidboot.redroid_net_ndns=1
+      - androidboot.redroid_net_dns1=223.6.6.6
     networks:
       mynet:
         ipv4_address: 172.18.0.254
