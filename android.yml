@@ -1,0 +1,22 @@
+version: '3'
+networks:
+  mynet:  #这里可以自定义名称 ，跟引用的地方一致就行
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
+
+services:
+  redroid: #安卓仿真机器
+    image: redroid/redroid:13.0.0_64only-latest
+    container_name: redroid
+    privileged: true
+    restart: always
+    stdin_open: true
+    ports:
+      - "5555:5555"
+    volumes:
+      - /data/redroid/data:/data
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.254
