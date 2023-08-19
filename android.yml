@@ -7,7 +7,7 @@ networks:
         - subnet: 172.18.0.0/24
 
 services:
-  redroid: #安卓仿真机器
+  redroid: #安卓仿真机器  ，https://blog.csdn.net/u012960155/article/details/129277193
     image: redroid/redroid:13.0.0_64only-latest
     container_name: redroid
     privileged: true
