@@ -16,7 +16,7 @@ services:
     ports:
       - "5555:5555"
     volumes:
-      - /data/redroid/data:/data
+      - /data/redroid/dev_fs:/data
     command:
       - androidboot.redroid_gpu_mode=host
       - ro.product.cpu.abilist=x86_64,arm64-v8a,x86,armeabi-v7a,armeabi
