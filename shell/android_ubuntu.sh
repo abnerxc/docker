@@ -9,5 +9,6 @@ sudo echo '{ "registry-mirrors": ["https://l714mp7z.mirror.aliyuncs.com"] }' >  
 sudo curl https://ghproxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && \
 sudo chmod +x /usr/local/bin/docker-compose && \
 sudo echo "binder_linux"  >>  /etc/modules-load.d/redroid.conf  && sudo echo "ashmem_linux"  >>  /etc/modules-load.d/redroid.conf && \
+sudo echo 'options binder_linux devices="binder,hwbinder,vndbinder"'  >>  /etc/modules-load.d/redroid.conf && \
 sudo modprobe binder_linux devices="binder,hwbinder,vndbinder" && sudo modprobe ashmem_linux
 
