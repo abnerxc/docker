@@ -1,2 +1,2 @@
-FROM redroid/redroid:12.0.0_64only-latest
+FROM redroid/redroid:11.0.0-latest
 ADD native-bridge.tar /
