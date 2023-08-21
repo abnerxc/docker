@@ -1,6 +1,6 @@
 #!/bin/sh
 sudo apt-get update && sudo apt-get -y install  cpu-checker openssh-server vim git adb linux-modules-extra-`uname -r` && \
-sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common && \
+sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common sleuthkit p7zip binwalk && \
 curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add - && \
 sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable" && \
 sudo apt-get -y install docker-ce && \
@@ -12,4 +12,3 @@ sudo chmod +x /usr/local/bin/docker-compose && \
 sudo echo "binder_linux"  >>  /etc/modules-load.d/redroid.conf  && sudo echo "ashmem_linux"  >>  /etc/modules-load.d/redroid.conf && \
 sudo echo 'options binder_linux devices="binder,hwbinder,vndbinder"'  >>  /etc/modules-load.d/redroid.conf && \
 sudo modprobe binder_linux devices="binder,hwbinder,vndbinder" && sudo modprobe ashmem_linux
-
