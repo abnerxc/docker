@@ -36,7 +36,7 @@ function main(){
         echo -e "\033[31m init end \033[0m" && exit
         ;;
       2)
-        echo -e "\033[31m native-bridge starting \033[0m" && \
+        echo -e "\033[31m x86 native-bridge starting \033[0m" && \
         sudo mkdir /home/abner/Droid-NDK-Extractor && cd /home/abner/Droid-NDK-Extractor && androidExtractNdk && \
         cd /home/abner/Droid-NDK-Extractor/working/extracted/ && mkdir native-bridge && cd native-bridge && \
         sudo tar -xpf /home/abner/Droid-NDK-Extractor/working/extracted/native-bridge.tar && \
