@@ -1,13 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
 # ssh -i "/Users/abner/Downloads/imac.pem" ubuntu@ec2-13-125-212-122.ap-northeast-2.compute.amazonaws.com
 
 function androidExtractNdk() {
-ARCH="x86_64"
-mkdir ./working && cd ./working && git clone https://gitlab.com/android-generic/android_vendor_google_emu-x86.git && \
-yes | ./android_vendor_google_emu-x86/download-files.sh "${ARCH}" && yes | unzip "${ARCH}-*-linux.zip" && 7z e x86_64/system.img && binwalk -e --depth 1 --count 1 -y 'filesystem' super.img && \
-mkdir extracted && cd extracted && yes | 7z x ../_super.img.extracted/100000.ext && \
-find system \( -name 'libndk_translation*' -o -name '*arm*' -o -name 'ndk_translation*' \) | tar -cf native-bridge.tar -T - && pwd && stat native-bridge.tar && echo "${PWD}/native-bridge.tar"
+  ARCH="x86_64"
+  mkdir ./working && cd ./working && git clone https://gitlab.com/android-generic/android_vendor_google_emu-x86.git && \
+  yes | ./android_vendor_google_emu-x86/download-files.sh "${ARCH}" && yes | unzip "${ARCH}-*-linux.zip" && 7z e x86_64/system.img && binwalk -e --depth 1 --count 1 -y 'filesystem' super.img && \
+  mkdir extracted && cd extracted && yes | 7z x ../_super.img.extracted/100000.ext && \
+  find system \( -name 'libndk_translation*' -o -name '*arm*' -o -name 'ndk_translation*' \) | tar -cf native-bridge.tar -T - && pwd && stat native-bridge.tar && echo "${PWD}/native-bridge.tar"
 }
 
 function main(){
