@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# ssh -i "/Users/abner/Downloads/imac.pem" ubuntu@ec2-13-125-212-122.ap-northeast-2.compute.amazonaws.com
+
 function androidExtractNdk() {
 ARCH="x86_64"
 mkdir ./working && cd ./working && git clone https://gitlab.com/android-generic/android_vendor_google_emu-x86.git && \
