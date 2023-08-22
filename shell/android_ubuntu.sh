@@ -14,7 +14,7 @@ function main(){
   while [ True ];do
     echo -e "\033[33m Redroid-ubuntu install: \033[0m"
     echo -e "\033[33m （1键）服务安装 \033[0m"
-    echo -e "\033[33m （2键）native-bridge 安装 \033[0m"
+    echo -e "\033[33m （2键）x86-native-bridge 安装 \033[0m"
     echo -e "\033[33m （q键）退出 \033[0m"
     read -p '选择安装: ' number
     case $number in
