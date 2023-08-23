@@ -75,3 +75,6 @@ alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSetti
 
 
 sed -i 's/\r$//' install.sh
+
+ssh root@127.0.0.1
+scp /Users/abner/work/docker/shell/android_ubuntu.sh /Users/abner/work/docker/android.yml root@127.0.0.1:/root
