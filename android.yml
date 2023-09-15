@@ -8,7 +8,7 @@ networks:
 
 services:
   redroid:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/redroid:11
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/redroid:1.0
     container_name: redroid
     stdin_open: true
     tty: true
