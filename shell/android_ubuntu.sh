@@ -21,7 +21,7 @@ function main(){
       1)
         echo -e "\033[31m init install start \033[0m" && \
         sudo apt-get -y update && sudo apt-get -y upgrade && sudo apt-get -y install  cpu-checker openssh-server vim git adb linux-modules-extra-`uname -r` && \
-        sudo apt install linux-headers-5.15.0-79-generic linux-image-5.15.0-79-generic && \
+        sudo apt install linux-headers-`uname -r` linux-image-`uname -r` && \
         sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common sleuthkit p7zip binwalk && \
         curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add - && \
         sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable" && \
