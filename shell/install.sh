@@ -102,7 +102,7 @@ function main(){
             && source /root/.bashrc \
             && firewall-cmd --zone=public --add-port=80/tcp --add-port=3306/tcp --add-port=6379/tcp --permanent \
             && firewall-cmd --reload \
-            && systemctl disable firewalld
+            && systemctl disable firewalld \
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;
 
