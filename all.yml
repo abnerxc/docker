@@ -11,6 +11,22 @@ volumes:
     driver: local
 
 services:
+  #vue-10
+  vuecli:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
+    tty: true
+    ports:
+      - '8081:8081'
+      - '4000:4000'
+    volumes:
+      - '/Users/abner/work/gopro/govue/front:/app/front'
+      - '/Users/abner/work/blog:/app/blog'
+      - '/Users/abner/.ssh:/root/.ssh'
+    container_name: vuecli #node-dev
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.10
+  #nginx-50
   nginx:
     image: nginx:alpine
     ports:
@@ -30,129 +46,7 @@ services:
     networks:
       mynet:
         ipv4_address: 172.18.0.50
-
-  redis:
-    image: redis:alpine
-    container_name: redis
-    privileged: true
-    ports:
-      - "6379:6379"
-    command: redis-server --requirepass 123456
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.100
-    deploy: #容器限制资源用法
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 10M
-
-  memcached:
-    image: memcached:alpine
-    container_name: memcached
-    privileged: true
-    ports:
-      - "11211:11211"
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.101
-
-  mysql:
-    image: mysql:5.6.45
-    container_name: mysql
-    privileged: true
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-#      - ./data/mysql/:/var/lib/mysql/
-      - ./data/mysql/:/usr/data/ #5.6.45
-      - ./log/mysql/:/var/log/mysql/
-    command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
-    environment:
-       MYSQL_ROOT_PASSWORD: 123456
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.102
-
-  mongodb:
-    image: mongo
-    container_name: mongodb
-    privileged: true
-    ports:
-      - "27017:27017"
-    volumes:   #win10 -v 方法挂载目前无解
-      - mongodb_data:/data/db/
-    command: --auth --bind_ip_all
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 123456
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.103
-
-  kibana:
-    image: kibana:5.6.12
-    container_name: kibana
-    privileged: true
-    environment:
-      - ELASTICSEARCH_URL=http://172.18.0.104:9200
-    ports:
-      - 5601:5601
-    networks:
-      std:
-        ipv4_address: 172.18.0.106
-
-  php82:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.2
-    expose:
-      - 9000
-    volumes:
-      - ./www/:/var/www/html/:rw
-      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
-      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./log/php-fpm/:/var/log/php-fpm/
-    container_name: php82
-    privileged: true
-    extra_hosts:
-      - "hddev.kerlala.com:172.18.0.50"
-      - "jxjkhddev.kerlala.com:172.18.0.50"
-      - "jxjkhdcrmdev.kerlala.com:172.18.0.50"
-      - "mockdev.kerlala.com:172.18.0.50"
-      - "casdev.kerlala.com:172.18.0.50"
-    networks:
-      jhm:
-        ipv4_address: 172.18.0.82
-
-  vuecli:
-   image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
-   tty: true
-   ports:
-     - '8081:8081'
-     - '4000:4000'
-   volumes:
-     - '/Users/abner/work/gopro/govue/front:/app/front'
-     - '/Users/abner/work/blog:/app/blog'
-     - '/Users/abner/.ssh:/root/.ssh'
-   container_name: vuecli #node-dev
-   networks:
-     jhm:
-       ipv4_address: 172.18.0.10
-
-  elasticsearch:
-    image: elasticsearch
-    container_name: es
-    privileged: true
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    environment:
-      - http.port=9200
-      - discovery.type=single-node
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.40
-
+  #rabbitmq-60~65
   rabbitmq:
     image: rabbitmq:3.7.15-management-alpine
     container_name: rabbitmq
@@ -174,8 +68,8 @@ services:
         max-file: "10"
     networks:
       mynet:
-        ipv4_address: 172.18.0.50
-
+        ipv4_address: 172.18.0.60\
+  #etcd-66~68
   etcd-node1:
     image: quay.io/coreos/etcd:v3.3.1
     container_name: etcd-node1
@@ -185,10 +79,10 @@ services:
     restart: always
     volumes:
       - ./data/etcd/node1:/data/app/etcd
-    command: etcd --name etcd-node1 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.60:2379 --initial-advertise-peer-urls http://172.18.0.60:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
+    command: etcd --name etcd-node1 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.66:2379 --initial-advertise-peer-urls http://172.18.0.66:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.66:2380,etcd-node2=http://172.18.0.67:2380,etcd-node3=http://172.18.0.68:2380" --initial-cluster-state new
     networks:
       mynet:
-        ipv4_address: 172.18.0.60
+        ipv4_address: 172.18.0.66
 
   etcd-node2:
     image: quay.io/coreos/etcd:v3.3.1
@@ -199,10 +93,10 @@ services:
     restart: always
     volumes:
       - ./data/etcd/node2:/data/app/etcd
-    command: etcd --name etcd-node2 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.61:2379 --initial-advertise-peer-urls http://172.18.0.61:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
+    command: etcd --name etcd-node2 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.67:2379 --initial-advertise-peer-urls http://172.18.0.67:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.66:2380,etcd-node2=http://172.18.0.67:2380,etcd-node3=http://172.18.0.68:2380" --initial-cluster-state new
     networks:
       mynet:
-        ipv4_address: 172.18.0.61
+        ipv4_address: 172.18.0.67
 
   etcd-node3:
     image: quay.io/coreos/etcd:v3.3.1
@@ -213,11 +107,82 @@ services:
     restart: always
     volumes:
       - ./data/etcd/node3:/data/app/etcd
-    command: etcd --name etcd-node3 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.62:2379 --initial-advertise-peer-urls http://172.18.0.62:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.60:2380,etcd-node2=http://172.18.0.61:2380,etcd-node3=http://172.18.0.62:2380" --initial-cluster-state new
+    command: etcd --name etcd-node3 --data-dir /data/app/etcd/ --advertise-client-urls http://172.18.0.68:2379 --initial-advertise-peer-urls http://172.18.0.68:2380 --listen-client-urls http://0.0.0.0:2379 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster-token etcd-cluster --initial-cluster "etcd-node1=http://172.18.0.66:2380,etcd-node2=http://172.18.0.67:2380,etcd-node3=http://172.18.0.68:2380" --initial-cluster-state new
     networks:
       mynet:
-        ipv4_address: 172.18.0.62
-
+        ipv4_address: 172.18.0.68
+  #php82
+  php82:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.2
+    expose:
+      - 9000
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./log/php-fpm/:/var/log/php-fpm/
+    container_name: php82
+    privileged: true
+    extra_hosts:
+      - "hddev.kerlala.com:172.18.0.50"
+      - "jxjkhddev.kerlala.com:172.18.0.50"
+      - "jxjkhdcrmdev.kerlala.com:172.18.0.50"
+      - "mockdev.kerlala.com:172.18.0.50"
+      - "casdev.kerlala.com:172.18.0.50"
+    networks:
+      jhm:
+        ipv4_address: 172.18.0.82
+  #redis-100~104
+  redis:
+    image: redis:alpine
+    container_name: redis
+    privileged: true
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass 123456
+    deploy: #容器限制资源用法
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 10M
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.100
+  #mysql-105~108
+  mysql:
+    image: mysql:5.6.45
+    container_name: mysql
+    privileged: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
+#      - ./data/mysql/:/var/lib/mysql/
+      - ./data/mysql/:/usr/data/ #5.6.45
+      - ./log/mysql/:/var/log/mysql/
+    command: --innodb-flush-method=O_DSYNC --innodb-use-native-aio=0 --log_bin=ON #解决windows挂载无法启动
+    environment:
+       MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.105
+  #mongodb-109~112
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    privileged: true
+    ports:
+      - "27017:27017"
+    volumes:   #win10 -v 方法挂载目前无解
+      - mongodb_data:/data/db/
+    command: --auth --bind_ip_all
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.109
+  #zookeeper-113~115
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
@@ -225,8 +190,8 @@ services:
       - "2181:2181"
     networks:
       mynet:
-        ipv4_address: 172.18.0.120
-
+        ipv4_address: 172.18.0.113
+  #kafka-116-118
   kafka2:
     image: wurstmeister/kafka
     container_name: kafka2
@@ -244,7 +209,7 @@ services:
       - ./data/kafka/kafka2:/data/kafka-data
     networks:
       mynet:
-        ipv4_address: 172.18.0.122
+        ipv4_address: 172.18.0.116
 
   kafka3:
     image: wurstmeister/kafka
@@ -263,7 +228,7 @@ services:
       - ./data/kafka/kafka3:/data/kafka-data
     networks:
       mynet:
-        ipv4_address: 172.18.0.123
+        ipv4_address: 172.18.0.117
 
   kafka4:
     image: wurstmeister/kafka
@@ -282,4 +247,32 @@ services:
       - ./data/kafka/kafka4:/data/kafka-data
     networks:
       mynet:
-        ipv4_address: 172.18.0.124
+        ipv4_address: 172.18.0.118
+
+  #kibana-120
+  kibana:
+    image: kibana:5.6.12
+    container_name: kibana
+    privileged: true
+    environment:
+      - ELASTICSEARCH_URL=http://172.18.0.104:9200
+    ports:
+      - 5601:5601
+    networks:
+      std:
+        ipv4_address: 172.18.0.120
+
+  #elasticsearch-125
+  elasticsearch:
+    image: elasticsearch
+    container_name: es
+    privileged: true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - http.port=9200
+      - discovery.type=single-node
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.125
