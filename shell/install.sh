@@ -8,7 +8,7 @@ function getVersionNum(){
 
 function dockerAlis() {
     dps="\$(docker ps -aq)"
-    dcup="jhm='docker-compose -f /root/docker/jhm.yml up -d'"
+    dcup="jhm='docker-compose -f /root/docker/jhm.yml up -d --remove-orphans'"
     dcrs="jhm-rs='docker-compose -f /root/docker/jhm.yml restart'"
     dcrm="jhm-rm='docker-compose -f /root/docker/jhm.yml stop && docker-compose -f /root/docker/jhm.yml rm'"
     dcps="jhm-ps='docker-compose -f /root/docker/jhm.yml ps'"

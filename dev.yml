@@ -7,57 +7,48 @@ networks:
         - subnet: 172.18.0.0/24
 
 services:
-#  nginx:
-#    image: nginx:alpine
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    volumes:
-#      - ./www/:/var/www/html/:rw
-#      - ./conf/nginx/conf.d:/etc/nginx/conf.d/:rw
-#      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf:rw
-#      - ./log/nginx/:/var/log/nginx/:rw
-#    container_name: nginx
-#    privileged: true
-#    environment:
-#      - TZ=Asia/Shanghai
-#    networks:
-#      mynet:
-#        ipv4_address: 172.18.0.2
-
-#  redis:
-#    image: redis:alpine
-#    container_name: redis
-#    privileged: true
-#    ports:
-#      - "6379:6379"
-#    command: redis-server --requirepass 123456
-#    networks:
-#      mynet:
-#        ipv4_address: 172.18.0.100
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/nginx/conf.d:/etc/nginx/conf.d/:rw
+      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf:rw
+      - ./log/nginx/:/var/log/nginx/:rw
+    container_name: nginx
+    privileged: true #解决不可以写宿主机目录权限问题，如果是centos7也可以关闭selinux
+    environment:
+      - TZ=Asia/Shanghai
+    extra_hosts:
+      - "ticket-dev.icsoc.net:127.0.0.1"  #容器绑定host
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.50
 
 
   mysql:
-   image: mysql:8.0
-   ports:
-     - "3306:3306"
-   volumes:
-     - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
-     - ./log/mysql/:/var/log/mysql/:rw
-     - ./data/mysql/data/:/var/lib/mysql/:rw
-     - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
-   command:
-     --default-authentication-plugin=mysql_native_password
-     --innodb-flush-method=O_DSYNC
-     --innodb-use-native-aio=0
-     --log_bin=ON
-   container_name: mysql
-   privileged: true
-   environment:
-     MYSQL_ROOT_PASSWORD: 123456
-   networks:
-     mynet:
-       ipv4_address: 172.18.0.10
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
+      - ./log/mysql/:/var/log/mysql/:rw
+      - ./data/mysql/data/:/var/lib/mysql/:rw
+      - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --innodb-flush-method=O_DSYNC
+      --innodb-use-native-aio=0
+      --log_bin=ON
+    container_name: mysql
+    privileged: true
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.105
 
   nacos01:
     image: nacos/nacos-server:v2.2.3-slim
@@ -65,19 +56,74 @@ services:
       - "8848:8848"
     container_name: nacos01
     hostname: nacos01  #这里设置主机名，是方便在同一个服务器docker环境中各个nacos服务能发现对方
+    volumes:
+      - ./log/nacos/logs:/home/nacos/logs
     environment:
       MODE: cluster # 集群模式
-      NACOS_SERVERS: nacos01:8848 nacos02:8848 nacos03:8848 # IP1,IP2是对应的服务器外网,PORT1,PORT2是对应的nacos服务端口
+      NACOS_SERVERS: nacos01:8848 nacos02:8849 nacos03:8850 # IP1,IP2是对应的服务器外网,PORT1,PORT2是对应的nacos服务端口
       PREFER_HOST_MODE: hostname
       SPRING_DATASOURCE_PLATFORM: mysql
-      MYSQL_SERVICE_HOST: #填写自己mysql的地址
+      MYSQL_SERVICE_HOST: 172.18.0.105
       MYSQL_SERVICE_DB_NAME: config_info
-      MYSQL_SERVICE_PORT: #填写自己mysql的端口
-      MYSQL_SERVICE_USER: #填写自己mysql的账号
-      MYSQL_SERVICE_PASSWORD: #填写自己mysql的密码
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: 123456
       JVM_XMS: 512m
       JVM_MMS: 320m
-    volumes:  #宿主机地址或文件：映射容器地址和文件
-      - /opt/nacos/logs/:/home/nacos/logs  #存放nacos日志
-      - /opt/nacos/plugins/:/home/nacos/plugins #存放一些插件jar包，这里因为是mysql8 所以要放置对应的jar包
-      - /opt/nacos/conf/application.properties:/home/nacos/conf/application.properties #存放nacos配置文件
+    depends_on:
+      - mysql
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.131
+
+  nacos02:
+    image: nacos/nacos-server:v2.2.3-slim
+    ports:
+      - "8849:8848"
+    container_name: nacos02
+    hostname: nacos02  #这里设置主机名，是方便在同一个服务器docker环境中各个nacos服务能发现对方
+    volumes: #宿主机地址或文件：映射容器地址和文件
+      - ./log/nacos/logs:/home/nacos/logs  #存放nacos日志
+    environment:
+      MODE: cluster # 集群模式
+      NACOS_SERVERS: nacos01:8848 nacos02:8849 nacos03:8850 # IP1,IP2是对应的服务器外网,PORT1,PORT2是对应的nacos服务端口
+      PREFER_HOST_MODE: hostname
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_SERVICE_HOST: 172.18.0.105
+      MYSQL_SERVICE_DB_NAME: config_info
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: 123456
+      JVM_XMS: 512m
+      JVM_MMS: 320m
+    depends_on:
+      - mysql
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.132
+
+  nacos03:
+    image: nacos/nacos-server:v2.2.3-slim
+    ports:
+      - "8850:8848"
+    container_name: nacos03
+    hostname: nacos03  #这里设置主机名，是方便在同一个服务器docker环境中各个nacos服务能发现对方
+    volumes: #宿主机地址或文件：映射容器地址和文件
+      - ./log/nacos/logs:/home/nacos/logs  #存放nacos日志
+    environment:
+      MODE: cluster # 集群模式
+      NACOS_SERVERS: nacos01:8848 nacos02:8849 nacos03:8850 # IP1,IP2是对应的服务器外网,PORT1,PORT2是对应的nacos服务端口
+      PREFER_HOST_MODE: hostname
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_SERVICE_HOST: 172.18.0.105
+      MYSQL_SERVICE_DB_NAME: config_info
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: 123456
+      JVM_XMS: 512m
+      JVM_MMS: 320m
+    depends_on:
+      - mysql
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.133
