@@ -33,6 +33,7 @@ services:
     image: nacos/nacos-server:v2.2.3-slim
     ports:
       - "8848:8848"
+      - "9848:9848"
     container_name: nacos01
     restart: always
     volumes:
@@ -61,6 +62,7 @@ services:
     image: nacos/nacos-server:v2.2.3-slim
     ports:
       - "8849:8848"
+      - "9849:9848"
     container_name: nacos02
     restart: always
     volumes:
@@ -89,6 +91,7 @@ services:
     image: nacos/nacos-server:v2.2.3-slim
     ports:
       - "8850:8848"
+      - "9850:9848"
     container_name: nacos03
     restart: always
     volumes:
