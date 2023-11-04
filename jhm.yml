@@ -92,19 +92,19 @@ services:
       mynet:
         ipv4_address: 172.18.0.82
 
-  vuecli:
-   image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
-   tty: true
-   ports:
-     - '8081:8081'
-     - '4000:4000'
-   volumes:
-     - '/Users/abner/work/gopro/govue/front:/app/front'
-     - '/Users/abner/work/blog:/app/blog'
-     - '/Users/abner/work/nopro:/app/nopro'
-     - '/Users/abner/.ssh:/root/.ssh'
-   container_name: vuecli
-   networks:
-     mynet:
-       ipv4_address: 172.18.0.10
+#  vuecli:
+#   image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
+#   tty: true
+#   ports:
+#     - '8081:8081'
+#     - '4000:4000'
+#   volumes:
+#     - '/Users/abner/work/gopro/govue/front:/app/front'
+#     - '/Users/abner/work/blog:/app/blog'
+#     - '/Users/abner/work/nopro:/app/nopro'
+#     - '/Users/abner/.ssh:/root/.ssh'
+#   container_name: vuecli
+#   networks:
+#     mynet:
+#       ipv4_address: 172.18.0.10
 
