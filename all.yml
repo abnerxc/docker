@@ -370,6 +370,10 @@ services:
       - 8858:8858
     container_name: sentinel
     privileged: true
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
     networks:
       mynet:
         ipv4_address: 172.18.0.136
