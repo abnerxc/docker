@@ -56,3 +56,13 @@ services:
     networks:
       mynet:
         ipv4_address: 172.18.0.131
+
+  sentinel:
+    image: bladex/sentinel-dashboard:latest
+    ports:
+      - 8858:8858
+    container_name: sentinel
+    privileged: true
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.136

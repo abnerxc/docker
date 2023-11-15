@@ -275,7 +275,7 @@ services:
       mynet:
         ipv4_address: 172.18.0.126
 
-  #nacos-131~135
+  #java-nacos-131~135
   nacos01:
     image: nacos/nacos-server:v2.2.3-slim
     ports:
@@ -362,3 +362,14 @@ services:
     networks:
       mynet:
         ipv4_address: 172.18.0.133
+
+  #Java-sentinel 136~138 ，服务保护
+  sentinel:
+    image: bladex/sentinel-dashboard:latest
+    ports:
+      - 8858:8858
+    container_name: sentinel
+    privileged: true
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.136
