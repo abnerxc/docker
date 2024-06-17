@@ -76,7 +76,7 @@ function main(){
             && curl -o /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
             && yum clean all -y &&  yum update -y && yum install -y epel-release && yum makecache -y \
             && yum -y install gcc gcc-c++ make kernel-devel-`uname -r` kernel-headers-`uname -r` bzip2 dkms elfutils-libelf-devel  \
-            && yum -y install docker-ce --allowerasing \
+            && yum -y install docker-ce \
             && service docker start \
             && curl -L  https://ghproxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
             && chmod -R 777 /usr/local/bin/docker-compose \
