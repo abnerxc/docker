@@ -78,7 +78,7 @@ function main(){
             && yum -y install gcc gcc-c++ make kernel-devel-`uname -r` kernel-headers-`uname -r` bzip2 dkms elfutils-libelf-devel  \
             && yum -y install docker-ce \
             && service docker start \
-            && curl -L  https://ghproxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
+            && curl -L  https://mirror.ghproxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
             && chmod -R 777 /usr/local/bin/docker-compose \
             && gpasswd -a $USER docker \
             && mkdir -p /etc/docker \
