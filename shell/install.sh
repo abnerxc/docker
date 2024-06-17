@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#无用
 function getVersionNum(){
     version=`cat /proc/version`
     cut=${version%%(*}
@@ -16,51 +17,13 @@ function dockerAlis() {
 }
 
 function yumSource(){
-    mv /etc/yum.repos.d/centos.repo /etc/yum.repos.d/centos.repo.backup \
-    && cat > /etc/yum.repos.d/centos.repo <<- EOF
-[AppStream]
-name=CentOS-\$releasever - AppStream - mirrors.ustc.edu.cn
-baseurl=https://mirrors.ustc.edu.cn/centos-stream/\$stream/AppStream/\$basearch/os/
-gpgcheck=1
-gpgkey=https://mirrors.ustc.edu.cn/centos-stream/RPM-GPG-KEY-CentOS-Official
-
-[BaseOS]
-name=CentOS-\$releasever - BaseOS - mirrors.ustc.edu.cn
-baseurl=https://mirrors.ustc.edu.cn/centos-stream/\$stream/BaseOS/\$basearch/os/
-gpgcheck=1
-gpgkey=https://mirrors.ustc.edu.cn/centos-stream/RPM-GPG-KEY-CentOS-Official
-
-[CRB]
-name=CentOS-\$releasever - CRB - mirrors.ustc.edu.cn
-baseurl=https://mirrors.ustc.edu.cn/centos-stream/\$stream/CRB/\$basearch/os/
-gpgcheck=1
-gpgkey=https://mirrors.ustc.edu.cn/centos-stream/RPM-GPG-KEY-CentOS-Official
-
-[HighAvailability]
-name=CentOS-\$releasever - HighAvailability - mirrors.ustc.edu.cn
-baseurl=https://mirrors.ustc.edu.cn/centos-stream/\$stream/HighAvailability/\$basearch/os/
-gpgcheck=1
-gpgkey=https://mirrors.ustc.edu.cn/centos-stream/RPM-GPG-KEY-CentOS-Official
-
-[NFV]
-name=CentOS-\$releasever - NFV - mirrors.ustc.edu.cn
-baseurl=https://mirrors.ustc.edu.cn/centos-stream/\$stream/NFV/\$basearch/os/
-gpgcheck=1
-gpgkey=https://mirrors.ustc.edu.cn/centos-stream/RPM-GPG-KEY-CentOS-Official
-
-[RT]
-name=CentOS-\$releasever - RT - mirrors.ustc.edu.cn
-baseurl=https://mirrors.ustc.edu.cn/centos-stream/\$stream/RT/\$basearch/os/
-gpgcheck=1
-gpgkey=https://mirrors.ustc.edu.cn/centos-stream/RPM-GPG-KEY-CentOS-Official
-
-[ResilientStorage]
-name=CentOS-\$releasever - ResilientStorage - mirrors.ustc.edu.cn
-baseurl=https://mirrors.ustc.edu.cn/centos-stream/\$stream/ResilientStorage/\$basearch/os/
-gpgcheck=1
-gpgkey=https://mirrors.ustc.edu.cn/centos-stream/RPM-GPG-KEY-CentOS-Official
-EOF
-yum install -y epel-release
+   mkdir /etc/yum.repos.d/backup \
+   && cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ \
+   && sed -i 's|metalink|#metalink|g' /etc/yum.repos.d/*.repo \
+   && sed -i '/name=CentOS Stream $releasever - BaseOS/a baseurl=https://mirrors.aliyun.com/centos-stream/$stream/BaseOS/$basearch/os/' /etc/yum.repos.d/*.repo \
+   && sed -i '/name=CentOS Stream $releasever - AppStream/a baseurl=https://mirrors.aliyun.com/centos-stream/$stream/AppStream/$basearch/os/' /etc/yum.repos.d/*.repo \
+   && sed -i '/name=CentOS Stream $releasever - Extras packages/a baseurl=https://mirrors.aliyun.com/centos-stream/SIGs/$stream/extras/$basearch/extras-common/' /etc/yum.repos.d/*.repo \
+   && yum clean all &&  yum makecache && yum update
 }
 
 function main(){
@@ -73,6 +36,7 @@ function main(){
         case $number in
           1)
             echo -e "\033[31m docker install starting \033[0m" \
+            && yumSource \
             && curl -o /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
             && yum clean all -y &&  yum update -y && yum install -y epel-release && yum makecache -y \
             && yum -y install gcc gcc-c++ make kernel-headers-$(uname -r) kernel-devel-$(uname -r) bzip2 dkms elfutils-libelf-devel  \
