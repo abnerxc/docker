@@ -78,7 +78,6 @@ alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSetti
 - 映射：10.0.0.128，端口22
 
 
-
 sed -i 's/\r$//' install.sh
 
 ssh root@127.0.0.1
