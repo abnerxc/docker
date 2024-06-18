@@ -30,6 +30,7 @@ function main(){
         echo -e "\033[33m Centos-steam9 docker安装步骤: \033[0m"
         echo -e "\033[33m （1键）docker服务安装 \033[0m"
         echo -e "\033[33m （2键）virtual box挂载安装，请保证安装增加工具和挂载目录已经添加 \033[0m"
+        echo -e "\033[33m （3键）VMware挂载目录 \033[0m"
         echo -e "\033[33m （q键）退出 \033[0m"
         read -p '选择安装: ' number
         case $number in
