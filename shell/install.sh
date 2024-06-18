@@ -17,7 +17,7 @@ function dockerAlis() {
 }
 
 function yumSource(){
-   mkdir /etc/yum.repos.d/backup \
+   mkdir –ignore-existing /etc/yum.repos.d/backup \
    && cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ \
    && sed -i 's|metalink|#metalink|g' /etc/yum.repos.d/*.repo \
    && sed -i '/name=CentOS Stream $releasever - BaseOS/a baseurl=https://mirrors.aliyun.com/centos-stream/$stream/BaseOS/$basearch/os/' /etc/yum.repos.d/*.repo \
@@ -37,9 +37,8 @@ function main(){
             echo -e "\033[31m docker install starting \033[0m" \
             && yumSource \
             && curl -o /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
-            && yum clean all -y &&  yum update -y && yum install -y epel-release && yum makecache -y \
-            && yum -y install gcc gcc-c++ make kernel-headers-$(uname -r) kernel-devel-$(uname -r) bzip2 dkms elfutils-libelf-devel  \
-            && yum -y install docker-ce \
+            && dnf clean all -y &&  dnf update -y && dnf makecache -y  \
+            && dnf -y install gcc gcc-c++ make bzip2  docker-ce \
             && service docker start \
             && curl -L  https://mirror.ghproxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose \
             && chmod -R 777 /usr/local/bin/docker-compose \
@@ -47,7 +46,7 @@ function main(){
             && mkdir -p /etc/docker \
             && echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"]}'>> /etc/docker/daemon.json \
             && systemctl daemon-reload && systemctl restart docker && systemctl enable docker \
-            && echo -e "\033[31m docker安装完成，请重启虚拟机挂载增强和目录再执行步骤2 \033[0m" && exit
+            && echo -e "\033[31m docker安装完成，请重启虚拟机挂载增强和目录再执行步骤2或者3 \033[0m" && exit
             ;;
 
           2)
@@ -56,6 +55,23 @@ function main(){
             && cd /mnt &&  ./VBoxLinuxAdditions.run \
             && mkdir -p /root/docker  && chmod -R 775 /root/docker \
             && echo 'mount -t vboxsf docker /root/docker'>> /etc/rc.local && chmod +x /etc/rc.d/rc.local \
+            && dockerAlis \
+            && echo "alias $dcup">> /root/.bashrc \
+            && echo "alias $dcrs">> /root/.bashrc \
+            && echo "alias $dcrm">> /root/.bashrc \
+            && echo "alias $dcps">> /root/.bashrc \
+            && echo "alias $dcip">> /root/.bashrc \
+            && source /root/.bashrc \
+            && firewall-cmd --zone=public --add-port=80/tcp --add-port=3306/tcp --add-port=6379/tcp --permanent \
+            && firewall-cmd --reload \
+            && systemctl disable firewalld \
+            && echo -e "\033[31m 请重启电脑 \033[0m" && exit
+            ;;
+          3)
+            echo -e "\033[31m VMware挂载目录 \033[0m" \
+            && dnf -y install open-vm-tools \
+            && mkdir -p /root/docker  && chmod -R 775 /root/docker \
+            && echo '.host:/docker /root/docker fuse.vmhgfs-fuse allow_other,defaults 0 0'>>  /etc/fstab \
             && dockerAlis \
             && echo "alias $dcup">> /root/.bashrc \
             && echo "alias $dcrs">> /root/.bashrc \
