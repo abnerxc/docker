@@ -73,7 +73,7 @@ alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSetti
 ```
 
 # VMware虚拟机nat地址映射
-- VMwarex打开nat设置，选择NAT模式，修改子网IP:10.0.0.0
+- 软件顶部编辑->虚拟网络编辑器->打开nat设置，选择NAT模式，修改子网IP:10.0.0.0
 - 端口转发添加：网关ip 10.0.0.2
 - 映射：10.0.0.128，端口22
 
