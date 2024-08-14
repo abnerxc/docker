@@ -16,7 +16,7 @@ function dockerAlis() {
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
-function yumSource(){
+function aliSource(){
     mkdir –ignore-existing /etc/yum.repos.d/backup \
     && cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ \
     && sed -i 's|metalink|#metalink|g' /etc/yum.repos.d/*.repo \
@@ -36,7 +36,7 @@ function main(){
         case $number in
           1)
             echo -e "\033[31m docker install starting \033[0m" \
-            && yumSource \
+            && aliSource \
             && curl -o /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
             && dnf clean all -y &&  dnf update -y && dnf makecache -y  \
             && dnf -y install gcc gcc-c++ make bzip2  docker-ce \
