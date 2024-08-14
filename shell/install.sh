@@ -17,19 +17,12 @@ function dockerAlis() {
 }
 
 function yumSource(){
-   # 配置
-   # 注意：“# baseurl” 中间有个空格（AlmaLinux 专有）
-   sed -e 's|^mirrorlist=|#mirrorlist=|g' \
-       -e 's|^# baseurl=https://repo.almalinux.org|baseurl=https://mirrors.aliyun.com|g' \
-       -i.bak \
-       /etc/yum.repos.d/almalinux*.repo
-
-   # 恢复 (sysin)
-#   sed -e 's|^#mirrorlist=|mirrorlist=|g' \
-#       -e 's|^baseurl=https://mirrors.aliyun.com|# baseurl=https://repo.almalinux.org|g' \
-#       -i.bak \
-#       /etc/yum.repos.d/almalinux*.repo
-
+    mkdir –ignore-existing /etc/yum.repos.d/backup \
+    && cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ \
+    && sed -i 's|metalink|#metalink|g' /etc/yum.repos.d/*.repo \
+    && sed -i '/name=CentOS Stream $releasever - BaseOS/a baseurl=https://mirrors.aliyun.com/centos-stream/$stream/BaseOS/$basearch/os/' /etc/yum.repos.d/*.repo \
+    && sed -i '/name=CentOS Stream $releasever - AppStream/a baseurl=https://mirrors.aliyun.com/centos-stream/$stream/AppStream/$basearch/os/' /etc/yum.repos.d/*.repo \
+    && sed -i '/name=CentOS Stream $releasever - Extras packages/a baseurl=https://mirrors.aliyun.com/centos-stream/SIGs/$stream/extras/$basearch/extras-common/' /etc/yum.repos.d/*.repo
 }
 
 function main(){
@@ -43,6 +36,7 @@ function main(){
         case $number in
           1)
             echo -e "\033[31m docker install starting \033[0m" \
+            && yumSource \
             && curl -o /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
             && dnf clean all -y &&  dnf update -y && dnf makecache -y  \
             && dnf -y install gcc gcc-c++ make bzip2  docker-ce \
