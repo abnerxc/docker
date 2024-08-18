@@ -41,7 +41,7 @@ function main(){
             && dnf clean all -y &&  dnf update -y && dnf makecache -y  \
             && dnf -y install gcc gcc-c++ make bzip2  docker-ce \
             && service docker start \
-            && curl -L  https://mirror.ghproxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose \
+            && curl -L https://gh-proxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose \
             && chmod -R 777 /usr/local/bin/docker-compose \
             && gpasswd -a $USER docker \
             && mkdir -p /etc/docker \

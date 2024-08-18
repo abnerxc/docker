@@ -72,14 +72,24 @@ alias jhm-ps='docker-compose -f /mnt/e/work/docker/jhm.yml ps'
 alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"'"' $(docker ps -aq)'
 ```
 
+# win传linux文件shell字符处理 
+sed -i 's/\r$//' install.sh
+
+# docker代理
+~/.docker/config.json
+```json
+{
+  "proxies": {
+    "default": {
+      "httpProxy": "http://127.0.0.1:7890",
+      "httpsProxy": "http://127.0.0.1:7890",
+      "noProxy": "*.test.example.com,.example.org,127.0.0.0/8"
+    }
+  }
+}
+```
+
 # VMware虚拟机nat地址映射
 - 软件顶部编辑->虚拟网络编辑器->打开nat设置，选择NAT模式，修改子网IP:10.0.0.0
 - 端口转发添加：网关ip 10.0.0.2
 - 映射：10.0.0.128，端口22
-
-
-sed -i 's/\r$//' install.sh
-
-ssh root@127.0.0.1
-scp /Users/abner/work/docker/shell/android_ubuntu.sh /Users/abner/work/docker/android.yml root@127.0.0.1:/root
-adb install /Users/abner/Downloads/apk/应用宝.apk
