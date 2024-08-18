@@ -17,7 +17,7 @@ function dockerAlis() {
 }
 
 function aliSource(){
-    mkdir –ignore-existing /etc/yum.repos.d/backup \
+    mkdir /etc/yum.repos.d/backup \
     && cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ \
     && sed -i 's|metalink|#metalink|g' /etc/yum.repos.d/*.repo \
     && sed -i '/name=CentOS Stream $releasever - BaseOS/a baseurl=https://mirrors.aliyun.com/centos-stream/$stream/BaseOS/$basearch/os/' /etc/yum.repos.d/*.repo \
