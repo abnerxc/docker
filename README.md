@@ -81,15 +81,10 @@ sed -i 's/\r$//' install.sh
 {
   "proxies": {
     "default": {
-      "httpProxy": "http://127.0.0.1:7890",
-      "httpsProxy": "http://127.0.0.1:7890",
-      "noProxy": "*.test.example.com,.example.org,127.0.0.0/8"
+      "httpProxy": "http://192.168.208.1:7890",
+      "httpsProxy": "http://192.168.208.1:7890",
+      "noProxy": "127.0.0.0/8"
     }
   }
 }
 ```
-
-# VMware虚拟机nat地址映射
-- 软件顶部编辑->虚拟网络编辑器->打开nat设置，选择NAT模式，修改子网IP:10.0.0.0
-- 端口转发添加：网关ip 10.0.0.2
-- 映射：10.0.0.128，端口22

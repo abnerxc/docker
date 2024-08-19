@@ -72,7 +72,6 @@ function main(){
             echo -e "\033[31m VMware挂载目录 \033[0m" \
             && dnf -y install open-vm-tools \
             && mkdir -p /root/docker  && chmod -R 775 /root/docker \
-            && echo '.host:/docker /root/docker fuse.vmhgfs-fuse allow_other,defaults 0 0'>>  /etc/fstab \
             && dockerAlis \
             && echo "alias $dcup">> /root/.bashrc \
             && echo "alias $dcrs">> /root/.bashrc \
