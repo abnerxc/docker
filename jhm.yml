@@ -51,55 +51,43 @@ services:
 
   mysql-master:
    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:mysql-8.0
+   container_name: mysql_master
+   user: 1000:1000 #1000-root用户
+   privileged: true
    ports:
-     - "3306:3306"
+     - "3307:3306"
    volumes:
-     - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
+     - ./conf/mysql/master/my.cnf:/etc/mysql/my.cnf:ro
      - ./log/mysql/:/var/log/mysql/:rw
      - ./data/mysql/master/data/:/var/lib/mysql/:rw
      - ./data/mysql/master/mysql-files/:/var/lib/mysql-files:rw
-   command: >
-     --server-id=1
-     --default-authentication-plugin=mysql_native_password
-     --innodb-flush-method=O_DSYNC
-     --innodb-use-native-aio=0
-     --log_bin=ON
-   container_name: mysql_master
-   privileged: true
-   user: 1000:50
    environment:
-     MYSQL_ROOT_PASSWORD: 123456
-     MYSQL_REPLICATION_MODE: master
-     MYSQL_REPLICATION_USER: abner  #主从同步的用户
-     MYSQL_REPLICATION_PASSWORD: abner
+     TZ: Asia/Shanghai   #调整时区
+     MYSQL_ROOT_PASSWORD: root        #设置登陆密码
+     MASTER_SYNC_USER: "sync_admin"   #设置脚本中定义的用于同步的账号
+     MASTER_SYNC_PASSWORD: "123456"   #设置脚本中定义的用于同步的密码
    networks:
      mynet:
        ipv4_address: 172.18.0.102
 
   mysql-slave:
    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:mysql-8.0
+   container_name: mysql_slave
+   user: 1000:1000 #1000-root用户
+   privileged: true
    ports:
-     - "3307:3306"
+     - "3308:3306"
    volumes:
-     - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
+     - ./conf/mysql/slave/my.cnf:/etc/mysql/my.cnf:ro
      - ./log/mysql/:/var/log/mysql/:rw
      - ./data/mysql/slave/data/:/var/lib/mysql/:rw
      - ./data/mysql/slave/mysql-files/:/var/lib/mysql-files:rw
-   command:
-     --server-id=2
-     --read-only=1
-     --default-authentication-plugin=mysql_native_password
-     --innodb-flush-method=O_DSYNC
-     --innodb-use-native-aio=0
-     --log_bin=ON
-   container_name: mysql_slave
-   privileged: true
-   user: 1000:50
    environment:
-     MYSQL_ROOT_PASSWORD: 123456
-     MYSQL_REPLICATION_MODE: slave
-     MYSQL_REPLICATION_USER: abner
-     MYSQL_REPLICATION_PASSWORD: abner
+     TZ: Asia/Shanghai
+     MYSQL_ROOT_PASSWORD: root
+     SLAVE_SYNC_USER: "sync_admin"
+     SLAVE_SYNC_PASSWORD: "123456"
+     MASTER_HOST: "172.18.0.102"
    depends_on:
      - mysql-master
    networks:
