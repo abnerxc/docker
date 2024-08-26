@@ -115,19 +115,38 @@ services:
       mynet:
         ipv4_address: 172.18.0.82
 
-#  vuecli:
-#   image: registry.cn-guangzhou.aliyuncs.com/xuchen/node:1.0
-#   tty: true
-#   ports:
-#     - '8081:8081'
-#     - '4000:4000'
-#   volumes:
-#     - '/Users/abner/work/gopro/govue/front:/app/front'
-#     - '/Users/abner/work/blog:/app/blog'
-#     - '/Users/abner/work/nopro:/app/nopro'
-#     - '/Users/abner/.ssh:/root/.ssh'
-#   container_name: vuecli
-#   networks:
-#     mynet:
-#       ipv4_address: 172.18.0.10
+  nacos01:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/server:nacos-1.4.8
+    ports:
+      - "8848:8848"
+    container_name: nacos01
+    restart: always
+    volumes:
+      - ./log/nacos/logs:/nacos/logs
+      - ./config/application.properties:/nacos/conf/application.properties
+#      - ./config/cluster.conf:/nacos/conf/cluster.conf
+    environment:
+      MODE: cluster
+      NACOS_SERVERS: "172.18.0.131:8848,172.18.0.132:8848"
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.131
+
+  nacos02:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/server:nacos-1.4.8
+    ports:
+      - "8849:8848"
+    container_name: nacos02
+    restart: always
+    volumes:
+      - ./log/nacos/logs:/nacos/logs
+      - ./config/application.properties:/nacos/conf/application.properties
+    #      - ./config/cluster.conf:/nacos/conf/cluster.conf
+    environment:
+      MODE: cluster
+      NACOS_SERVERS: "172.18.0.131:8848,172.18.0.132:8848"
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.131
+
 
