@@ -18,11 +18,11 @@ RUN wget -O /tmp/nacos-server-${NACOS_VERSION}.tar.gz https://github.com/alibaba
 # 修改默认启动脚本，使其适应Docker环境
 RUN sed -i 's|-Djava.ext.dirs=/usr/lib/jvm/java-8-openjdk/jre/lib/ext:/usr/lib/jvm/java-8-openjdk/jre/lib/ext:\$JAVA_EXT_DIRS|-Djava.ext.dirs=/usr/lib/jvm/java-8-openjdk/jre/lib/ext:/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk/jre/classes/\$JAVA_EXT_DIRS|g' ${NACOS_HOME}/bin/startup.sh
 
+# 检查cluster.conf文件是否存在，如果存在则删除
+RUN if [ -f ${NACOS_HOME}/conf/cluster.conf ]; then rm${NACOS_HOME}/conf/cluster.conf; fi
+
 # 暴露Nacos端口
 EXPOSE 8848
 
 # 启动Nacos
 CMD ["/bin/sh", "-c", "${NACOS_HOME}/bin/startup.sh -m${FUNCTION_MODE} -p ${JVM_XMS} -P${JVM_XMX}"]
-
-# 删除默认的cluster.conf文件，因为我们将使用外部挂载来配置
-RUN rm ${NACOS_HOME}/conf/cluster.conf
