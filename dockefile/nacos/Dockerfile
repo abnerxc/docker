@@ -1,6 +1,5 @@
 # 使用Alpine Linux作为基础镜像
-#FROM openjdk:8-jdk-alpine
-FROM registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:openjdk-8-jdk-alpine
+FROM openjdk:8-jdk-alpine
 
 # 设置环境变量
 ENV NACOS_VERSION=2.2.0
