@@ -1,29 +1,27 @@
-# 使用Alpine Linux作为基础镜像
+# Use Alpine Linux as the base image
 FROM openjdk:8-jdk-alpine
 
-# 设置环境变量和集群
-ENV NACOS_VERSION=1.4.8
-ENV NACOS_HOME=/nacos
-ENV MODE=cluster
-ENV NACOS_SERVERS="nacos-server1:8848,nacos-server2:8848,nacos-server3:8848"
-ENV JVM_XMS=512m
-ENV JVM_XMX=512m
-ENV JVM_XMN=256m
+# Set Nacos version as an environment variable
+ENV NACOS_VERSION=2.2.0
 
-# 下载Nacos
-RUN wget -O /tmp/nacos-server-${NACOS_VERSION}.tar.gz https://github.com/alibaba/nacos/releases/download/${NACOS_VERSION}/nacos-server-${NACOS_VERSION}.tar.gz \
-    && mkdir -p ${NACOS_HOME} \
-    && tar -xzf /tmp/nacos-server-${NACOS_VERSION}.tar.gz -C${NACOS_HOME} --strip-components=1 \
-    && rm -f /tmp/nacos-server-${NACOS_VERSION}.tar.gz
+# Install required dependencies
+RUN apk add --no-cache bash curl tar
 
-# 修改默认启动脚本，使其适应Docker环境
-RUN sed -i 's|-Djava.ext.dirs=/usr/lib/jvm/java-8-openjdk/jre/lib/ext:/usr/lib/jvm/java-8-openjdk/jre/lib/ext:\$JAVA_EXT_DIRS|-Djava.ext.dirs=/usr/lib/jvm/java-8-openjdk/jre/lib/ext:/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk/jre/classes/\$JAVA_EXT_DIRS|g' ${NACOS_HOME}/bin/startup.sh
+# Download and extract Nacos
+RUN mkdir -p /opt/nacos \
+    && curl -L https://github.com/alibaba/nacos/releases/download/${NACOS_VERSION}/nacos-server-${NACOS_VERSION}.tar.gz | tar -zx -C /opt/nacos --strip-components=1
 
-# 检查cluster.conf文件是否存在，如果存在则删除
-RUN if [ -f ${NACOS_HOME}/conf/cluster.conf ]; then rm${NACOS_HOME}/conf/cluster.conf; fi
+# Create the necessary directories for external configuration
+RUN mkdir -p /opt/nacos/conf/custom
 
-# 暴露Nacos端口
-EXPOSE 8848
+# Expose ports
+EXPOSE 8848 9848 9849
 
-# 启动Nacos
-CMD ["/bin/sh", "-c", "${NACOS_HOME}/bin/startup.sh -m${FUNCTION_MODE} -p ${JVM_XMS} -P${JVM_XMX} -Dnacos.member.list=${NACOS_SERVERS}"]
+# Define mount points
+VOLUME /opt/nacos/conf/custom
+
+# Set working directory
+WORKDIR /opt/nacos
+
+# Start Nacos server in cluster mode
+CMD ["sh", "-c", "bash /opt/nacos/bin/startup.sh --spring.config.additional-location=file:/opt/nacos/conf/custom/application.properties --cluster.conf=file:/opt/nacos/conf/custom/cluster.conf"]
