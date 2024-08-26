@@ -56,8 +56,8 @@ services:
    volumes:
      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
      - ./log/mysql/:/var/log/mysql/:rw
-     - ./data/mysql/data/:/var/lib/mysql/:rw
-     - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
+     - ./data/mysql/master/data/:/var/lib/mysql/:rw
+     - ./data/mysql/master/mysql-files/:/var/lib/mysql-files:rw
    command: >
      --server-id=1
      --default-authentication-plugin=mysql_native_password
@@ -66,6 +66,7 @@ services:
      --log_bin=ON
    container_name: mysql_master
    privileged: true
+   user: 1000:50
    environment:
      MYSQL_ROOT_PASSWORD: 123456
      MYSQL_REPLICATION_MODE: master
@@ -82,8 +83,8 @@ services:
    volumes:
      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro
      - ./log/mysql/:/var/log/mysql/:rw
-     - ./data/mysql/data/:/var/lib/mysql/:rw
-     - ./data/mysql/mysql-files/:/var/lib/mysql-files:rw
+     - ./data/mysql/slave/data/:/var/lib/mysql/:rw
+     - ./data/mysql/slave/mysql-files/:/var/lib/mysql-files:rw
    command:
      --server-id=2
      --read-only=1
@@ -93,6 +94,7 @@ services:
      --log_bin=ON
    container_name: mysql_slave
    privileged: true
+   user: 1000:50
    environment:
      MYSQL_ROOT_PASSWORD: 123456
      MYSQL_REPLICATION_MODE: slave
