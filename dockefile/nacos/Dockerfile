@@ -5,7 +5,6 @@ FROM openjdk:8-jdk-alpine
 ENV NACOS_VERSION=1.4.1
 ENV NACOS_HOME=/nacos
 ENV FUNCTION_MODE=cluster
-#默认集群配置
 ENV NACOS_SERVERS="nacos-server1:8848,nacos-server2:8848,nacos-server3:8848"
 ENV JVM_XMS=512m
 ENV JVM_XMX=512m
