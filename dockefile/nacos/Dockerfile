@@ -1,23 +1,27 @@
-# Use Alpine Linux as the base image
-#FROM openjdk:8-jdk-alpine
-FROM dockerhub.icu/library/openjdk:8-jdk-alpine
+# 使用Alpine Linux作为基础镜像
+FROM openjdk:8-jdk-alpine
 
-# Set Nacos version as an environment variable
+# 设置环境变量
 ENV NACOS_VERSION=2.2.0
+ENV NACOS_HOME=/nacos
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
 
-# Install required dependencies
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && apk add --no-cache bash curl tar && \
-    mkdir -p /opt/nacos &&  curl -L https://github.com/alibaba/nacos/releases/download/${NACOS_VERSION}/nacos-server-${NACOS_VERSION}.tar.gz | tar -zx -C /opt/nacos --strip-components=1 && \
-    mkdir -p /opt/nacos/conf/custom
+# 创建Nacos目录
+RUN mkdir -p $NACOS_HOME
 
-# Expose ports
-EXPOSE 8848 9848 9849
+# 下载Nacos服务器
+RUN wget -O /tmp/nacos-server.tar.gz https://github.com/alibaba/nacos/releases/download/${NACOS_VERSION}/nacos-server-${NACOS_VERSION}.tar.gz \
+    && tar -xzf /tmp/nacos-server.tar.gz -C $NACOS_HOME --strip-components=1 \
+    && rm -f /tmp/nacos-server.tar.gz
 
-# Define mount points
-VOLUME /opt/nacos/conf/custom
+# 复制启动脚本
+COPY startup.sh $NACOS_HOME/bin/
 
-# Set working directory
-WORKDIR /opt/nacos
+# 暴露Nacos服务端口
+EXPOSE 8848
 
-# Start Nacos server in cluster mode
-CMD ["sh", "-c", "/opt/nacos/bin/startup.sh --spring.config.additional-location=file:/opt/nacos/conf/custom/application.properties --cluster.conf=file:/opt/nacos/conf/custom/cluster.conf"]
+# 设置工作目录
+WORKDIR $NACOS_HOME
+
+# 启动Nacos服务
+CMD ["bin/startup.sh", "-m", "cluster"]
