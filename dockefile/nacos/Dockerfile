@@ -24,4 +24,4 @@ VOLUME /opt/nacos/conf/custom
 WORKDIR /opt/nacos
 
 # Start Nacos server in cluster mode
-CMD ["sh", "-c", "bash /opt/nacos/bin/startup.sh --spring.config.additional-location=file:/opt/nacos/conf/custom/application.properties --cluster.conf=file:/opt/nacos/conf/custom/cluster.conf"]
+CMD ["sh", "-c", "/opt/nacos/bin/startup.sh --spring.config.additional-location=file:/opt/nacos/conf/custom/application.properties --cluster.conf=file:/opt/nacos/conf/custom/cluster.conf"]
