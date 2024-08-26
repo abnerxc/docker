@@ -1,10 +1,11 @@
 # 使用Alpine Linux作为基础镜像
 FROM openjdk:8-jdk-alpine
 
-# 设置环境变量
-ENV NACOS_VERSION=1.4.1
+# 设置环境变量和集群
+ENV NACOS_VERSION=1.4.8
 ENV NACOS_HOME=/nacos
-ENV FUNCTION_MODE=cluster
+ENV MODE=cluster
+ENV NACOS_SERVERS="nacos-server1:8848,nacos-server2:8848,nacos-server3:8848"
 ENV JVM_XMS=512m
 ENV JVM_XMX=512m
 ENV JVM_XMN=256m
@@ -25,4 +26,4 @@ RUN if [ -f ${NACOS_HOME}/conf/cluster.conf ]; then rm${NACOS_HOME}/conf/cluster
 EXPOSE 8848
 
 # 启动Nacos
-CMD ["/bin/sh", "-c", "${NACOS_HOME}/bin/startup.sh -m${FUNCTION_MODE} -p ${JVM_XMS} -P${JVM_XMX}"]
+CMD ["/bin/sh", "-c", "${NACOS_HOME}/bin/startup.sh -m${FUNCTION_MODE} -p ${JVM_XMS} -P${JVM_XMX} -Dnacos.member.list=${NACOS_SERVERS}"]
