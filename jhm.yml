@@ -52,7 +52,7 @@ services:
   mysql-master:
    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:mysql-8.0
    container_name: mysql_master
-   user: 1000:1000 #1000-root用户
+   user: 1000:50 #uid-1000root用户，gid=50,
    privileged: true
    ports:
      - "3307:3306"
@@ -73,7 +73,7 @@ services:
   mysql-slave:
    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:mysql-8.0
    container_name: mysql_slave
-   user: 1000:1000 #1000-root用户
+   user: 1000:50 #uid-1000root用户，gid=50,
    privileged: true
    ports:
      - "3308:3306"
