@@ -9,7 +9,7 @@ networks:
 
 services:
   nginx:
-    image: nginx:alpine
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:nginx-alpine
     ports:
       - "80:80"
       - "443:443"
@@ -40,7 +40,7 @@ services:
         ipv4_address: 172.18.0.2
 
   redis:
-    image: redis:alpine
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-alpine
     ports:
       - "6379:6379"
     container_name: redis
@@ -50,7 +50,7 @@ services:
         ipv4_address: 172.18.0.100
 
   mysql-master:
-   image: mysql:8.0
+   image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:mysql-8.0
    ports:
      - "3306:3306"
    volumes:
@@ -76,7 +76,7 @@ services:
        ipv4_address: 172.18.0.102
 
   mysql-slave:
-   image: mysql:8.0
+   image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:mysql-8.0
    ports:
      - "3307:3306"
    volumes:

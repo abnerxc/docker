@@ -76,6 +76,8 @@ alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSetti
 sed -i 's/\r$//' install.sh
 
 # docker代理
+1、参考https://github.com/cmliu/CF-Workers-docker.io
+2、本地自建
 ~/.docker/config.json
 ```json
 {
