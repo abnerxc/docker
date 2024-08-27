@@ -9,7 +9,7 @@ networks:
 
 services:
   nginx:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:nginx-alpine
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:nginx-1.27.1
     ports:
       - "80:80"
       - "443:443"
@@ -40,7 +40,7 @@ services:
         ipv4_address: 172.18.0.2
 
   redis:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-alpine
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
     ports:
       - "6379:6379"
     container_name: redis
@@ -115,36 +115,51 @@ services:
 #      mynet:
 #        ipv4_address: 172.18.0.82
 
+  # nacos地址使用：https://hub.docker.com/r/nacos/nacos-server
   nacos01:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/server:nacos-2.2.0
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:nacos-2.4.1
     ports:
       - "8848:8848"
     container_name: nacos01
     restart: always
-    volumes:
-      - ./log/nacos/logs:/nacos/logs
-      - ./conf/nacos/application.properties:/nacos/conf/application.properties
-#      - ./config/cluster.conf:/nacos/conf/cluster.conf
     environment:
-      MODE: cluster
-      NACOS_SERVERS: "172.18.0.131:8848,172.18.0.132:8848"
+      MODE: cluster #cluster/standalone 集群/独立
+      NACOS_SERVERS: "172.18.0.131:8848,172.18.0.132:8848"  #集群地址
+      #PREFER_HOST_MODE  #是否支持主机名
+      #NACOS_APPLICATION_PORT  #默认端口号
+      #NACOS_APPLICATION_PORT  #默认端口号
+      #SPRING_DATASOURCE_PLATFORM  #独立支持mysql
+      MYSQL_SERVICE_HOST: 172.18.0.102
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_DB_NAME: nacos
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: root
+      #MYSQL_DATABASE_NUM:
+      #MYSQL_SERVICE_DB_PARAM:
     networks:
       mynet:
         ipv4_address: 172.18.0.131
 
   nacos02:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/server:nacos-2.2.0
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:nacos-2.4.1
     ports:
       - "8849:8848"
     container_name: nacos02
     restart: always
-    volumes:
-      - ./log/nacos/logs:/nacos/logs
-      - ./conf/nacos/application.properties:/nacos/conf/application.properties
-    #      - ./config/cluster.conf:/nacos/conf/cluster.conf
     environment:
-      MODE: cluster
-      NACOS_SERVERS: "172.18.0.131:8848,172.18.0.132:8848"
+      MODE: cluster #cluster/standalone 集群/独立
+      NACOS_SERVERS: "172.18.0.131:8848,172.18.0.132:8848"  #集群地址
+      #PREFER_HOST_MODE  #是否支持主机名
+      #NACOS_APPLICATION_PORT  #默认端口号
+      #NACOS_APPLICATION_PORT  #默认端口号
+      #SPRING_DATASOURCE_PLATFORM  #独立支持mysql
+      MYSQL_SERVICE_HOST: 172.18.0.102
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_DB_NAME: nacos
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: root
+      #MYSQL_DATABASE_NUM:
+      #MYSQL_SERVICE_DB_PARAM:
     networks:
       mynet:
         ipv4_address: 172.18.0.132
