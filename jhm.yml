@@ -136,6 +136,8 @@ services:
       MYSQL_SERVICE_PASSWORD: root
       #MYSQL_DATABASE_NUM:
       #MYSQL_SERVICE_DB_PARAM:
+    depends_on:
+      - mysql-master
     networks:
       mynet:
         ipv4_address: 172.18.0.131
@@ -160,6 +162,8 @@ services:
       MYSQL_SERVICE_PASSWORD: root
       #MYSQL_DATABASE_NUM:
       #MYSQL_SERVICE_DB_PARAM:
+    depends_on:
+      - mysql-master
     networks:
       mynet:
         ipv4_address: 172.18.0.132
