@@ -20,4 +20,4 @@ EXPOSE 8848
 WORKDIR $NACOS_HOME
 
 # 启动Nacos服务
-CMD ["/nacos/bin/startup.sh", "-m", "cluster"]
+CMD ["sh","/nacos/bin/startup.sh"]
