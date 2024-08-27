@@ -94,26 +94,26 @@ services:
      mynet:
        ipv4_address: 172.18.0.103
 
-#  php82:
-#    image: registry.cn-guangzhou.aliyuncs.com/xuchen/php:8.2
-#    expose:
-#      - 9000
-#    volumes:
-#      - ./www/:/var/www/html/:rw
-#      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
-#      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-#      - ./log/php-fpm/:/var/log/php-fpm/
-#    container_name: php82
-#    privileged: true
-#    extra_hosts:
-#      - "hddev.kerlala.com:172.18.0.2"
-#      - "jxjkhddev.kerlala.com:172.18.0.2"
-#      - "jxjkhdcrmdev.kerlala.com:172.18.0.2"
-#      - "mockdev.kerlala.com:172.18.0.2"
-#      - "casdev.kerlala.com:172.18.0.2"
-#    networks:
-#      mynet:
-#        ipv4_address: 172.18.0.82
+  php82:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/server:php-8.2
+    expose:
+      - 9000
+    volumes:
+      - ./www/:/var/www/html/:rw
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./log/php-fpm/:/var/log/php-fpm/
+    container_name: php82
+    privileged: true
+    extra_hosts:
+      - "hddev.kerlala.com:172.18.0.2"
+      - "jxjkhddev.kerlala.com:172.18.0.2"
+      - "jxjkhdcrmdev.kerlala.com:172.18.0.2"
+      - "mockdev.kerlala.com:172.18.0.2"
+      - "casdev.kerlala.com:172.18.0.2"
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.82
 
   # nacos地址使用：https://hub.docker.com/r/nacos/nacos-server
   nacos01:
