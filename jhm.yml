@@ -39,15 +39,79 @@ services:
       mynet:
         ipv4_address: 172.18.0.2
 
-  redis:
+#  redis:
+#    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
+#    ports:
+#      - "6379:6379"
+#    container_name: redis
+#    command: redis-server --requirepass 123456
+#    networks:
+#      mynet:
+#        ipv4_address: 172.18.0.10
+
+
+  # 集群创建 redis-cli --cluster create  172.18.0.11:6381  172.18.0.12:6382 172.18.0.13:6383 172.18.0.14:6384 172.18.0.15:6385 172.18.0.16:6386 --cluster-replicas 1 -a 123456
+  redis-1:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
     ports:
-      - "6379:6379"
-    container_name: redis
-    command: redis-server --requirepass 123456
+      - "6381:6381"
+    container_name: redis-1
+    command: redis-server --port 6381 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
     networks:
       mynet:
-        ipv4_address: 172.18.0.100
+        ipv4_address: 172.18.0.11
+
+  redis-2:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
+    ports:
+      - "6382:6382"
+    container_name: redis-2
+    command: redis-server --port 6382 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.12
+
+  redis-3:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
+    ports:
+      - "6383:6383"
+    container_name: redis-3
+    command: redis-server --port 6383 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.13
+
+  redis-4:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
+    ports:
+      - "6384:6384"
+    container_name: redis-4
+    command: redis-server --port 6384 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.14
+
+  redis-5:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
+    ports:
+      - "6385:6385"
+    container_name: redis-5
+    command: redis-server --port 6385 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.15
+
+  redis-6:
+    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
+    ports:
+      - "6386:6386"
+    container_name: redis-6
+    command: redis-server --port 6386 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.16
+
+
 
   mysql-master:
    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:mysql-8.0
