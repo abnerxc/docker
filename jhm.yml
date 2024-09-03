@@ -58,10 +58,10 @@ services:
      - "3307:3306"
    volumes:
      - ./conf/mysql/master/my.cnf:/etc/mysql/my.cnf:ro
+     - ./conf/mysql/master/create_sync_user.sql:/docker-entrypoint-initdb.d/create_sync_user.sql
      - ./log/mysql/:/var/log/mysql/:rw
      - ./data/mysql/master/data/:/var/lib/mysql/:rw
      - ./data/mysql/master/mysql-files/:/var/lib/mysql-files:rw
-     - ./conf/mysql/master/create_sync_user.sql:/docker-entrypoint-initdb.d/create_sync_user.sql
    environment:
       MYSQL_ROOT_PASSWORD: "123456"
       MASTER_SYNC_USER: "sync_admin" #设置脚本中定义的用于同步的账号
@@ -87,10 +87,10 @@ services:
      - "3308:3306"
    volumes:
      - ./conf/mysql/slave/my.cnf:/etc/mysql/my.cnf:ro
+     - ./conf/mysql/slave/start_slave.sql:/docker-entrypoint-initdb.d/start_slave.sql
      - ./log/mysql/:/var/log/mysql/:rw
      - ./data/mysql/slave/data/:/var/lib/mysql/:rw
      - ./data/mysql/slave/mysql-files/:/var/lib/mysql-files:rw
-     - ./conf/mysql/slave/start_slave.sql:/docker-entrypoint-initdb.d/start_slave.sql
    environment:
       MYSQL_ROOT_PASSWORD: "123456"
       SLAVE_SYNC_USER: "sync_admin" #用于同步的账号，由master创建
