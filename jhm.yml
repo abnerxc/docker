@@ -50,13 +50,14 @@ services:
 #        ipv4_address: 172.18.0.10
 
 
-  # 集群创建 redis-cli --cluster create  172.18.0.11:6381  172.18.0.12:6382 172.18.0.13:6383 172.18.0.14:6384 172.18.0.15:6385 172.18.0.16:6386 --cluster-replicas 1 -a 123456
+  # 集群创建 docker exec -it redis-1 redis-cli -a 123456 --cluster create 172.18.0.11:6379 172.18.0.12:6379 172.18.0.13:6379 172.18.0.14:6379 172.18.0.15:6379 172.18.0.16:6379 --cluster-replicas 1
   redis-1:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
     ports:
-      - "6381:6381"
+      - "6381:6379"
+      - "16381:16379"
     container_name: redis-1
-    command: redis-server --port 6381 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    command: redis-server --requirepass 123456 --appendonly yes --cluster-enabled yes --cluster-config-file nodes-6381.conf --cluster-node-timeout 5000 --port 6379
     networks:
       mynet:
         ipv4_address: 172.18.0.11
@@ -64,9 +65,10 @@ services:
   redis-2:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
     ports:
-      - "6382:6382"
+      - "6382:6379"
+      - "16382:16379"
     container_name: redis-2
-    command: redis-server --port 6382 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    command: redis-server --requirepass 123456 --appendonly yes --cluster-enabled yes --cluster-config-file nodes-6381.conf --cluster-node-timeout 5000 --port 6379
     networks:
       mynet:
         ipv4_address: 172.18.0.12
@@ -74,9 +76,10 @@ services:
   redis-3:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
     ports:
-      - "6383:6383"
+      - "6383:6379"
+      - "16383:16379"
     container_name: redis-3
-    command: redis-server --port 6383 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    command: redis-server --requirepass 123456 --appendonly yes --cluster-enabled yes --cluster-config-file nodes-6381.conf --cluster-node-timeout 5000 --port 6379
     networks:
       mynet:
         ipv4_address: 172.18.0.13
@@ -84,9 +87,10 @@ services:
   redis-4:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
     ports:
-      - "6384:6384"
+      - "6384:6379"
+      - "16384:16379"
     container_name: redis-4
-    command: redis-server --port 6384 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    command: redis-server --requirepass 123456 --appendonly yes --cluster-enabled yes --cluster-config-file nodes-6381.conf --cluster-node-timeout 5000 --port 6379
     networks:
       mynet:
         ipv4_address: 172.18.0.14
@@ -94,9 +98,10 @@ services:
   redis-5:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
     ports:
-      - "6385:6385"
+      - "6385:6379"
+      - "16385:16379"
     container_name: redis-5
-    command: redis-server --port 6385 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    command: redis-server --requirepass 123456 --appendonly yes --cluster-enabled yes --cluster-config-file nodes-6381.conf --cluster-node-timeout 5000 --port 6379
     networks:
       mynet:
         ipv4_address: 172.18.0.15
@@ -104,9 +109,10 @@ services:
   redis-6:
     image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:redis-7.4.0
     ports:
-      - "6386:6386"
+      - "6386:6379"
+      - "16386:16379"
     container_name: redis-6
-    command: redis-server --port 6386 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --requirepass 123456
+    command: redis-server --requirepass 123456 --appendonly yes --cluster-enabled yes --cluster-config-file nodes-6381.conf --cluster-node-timeout 5000 --port 6379
     networks:
       mynet:
         ipv4_address: 172.18.0.16
@@ -192,57 +198,57 @@ services:
       mynet:
         ipv4_address: 172.18.0.82
 
-  # nacos地址使用：https://hub.docker.com/r/nacos/nacos-server
-  nacos01:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:nacos-2.4.1
-    ports:
-      - "8848:8848"
-    container_name: nacos01
-    restart: always
-    environment:
-      MODE: cluster #cluster/standalone 集群/独立
-      NACOS_SERVERS: "172.18.0.131:8848,172.18.0.132:8848"  #集群地址
-      #PREFER_HOST_MODE  #是否支持主机名
-      #NACOS_APPLICATION_PORT  #默认端口号
-      #NACOS_APPLICATION_PORT  #默认端口号
-      #SPRING_DATASOURCE_PLATFORM  #独立支持mysql
-      MYSQL_SERVICE_HOST: 172.18.0.102
-      MYSQL_SERVICE_PORT: 3306
-      MYSQL_SERVICE_DB_NAME: nacos
-      MYSQL_SERVICE_USER: root
-      MYSQL_SERVICE_PASSWORD: root
-      #MYSQL_DATABASE_NUM:
-      #MYSQL_SERVICE_DB_PARAM:
-    depends_on:
-      - mysql-master
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.131
-
-  nacos02:
-    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:nacos-2.4.1
-    ports:
-      - "8849:8848"
-    container_name: nacos02
-    restart: always
-    environment:
-      MODE: cluster #cluster/standalone 集群/独立
-      NACOS_SERVERS: "172.18.0.131:8848,172.18.0.132:8848"  #集群地址
-      #PREFER_HOST_MODE  #是否支持主机名
-      #NACOS_APPLICATION_PORT  #默认端口号
-      #NACOS_APPLICATION_PORT  #默认端口号
-      #SPRING_DATASOURCE_PLATFORM  #独立支持mysql
-      MYSQL_SERVICE_HOST: 172.18.0.102
-      MYSQL_SERVICE_PORT: 3306
-      MYSQL_SERVICE_DB_NAME: nacos
-      MYSQL_SERVICE_USER: root
-      MYSQL_SERVICE_PASSWORD: root
-      #MYSQL_DATABASE_NUM:
-      #MYSQL_SERVICE_DB_PARAM:
-    depends_on:
-      - mysql-master
-    networks:
-      mynet:
-        ipv4_address: 172.18.0.132
+#  # nacos地址使用：https://hub.docker.com/r/nacos/nacos-server
+#  nacos01:
+#    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:nacos-2.4.1
+#    ports:
+#      - "8848:8848"
+#    container_name: nacos01
+#    restart: always
+#    environment:
+#      MODE: cluster #cluster/standalone 集群/独立
+#      NACOS_SERVERS: "172.18.0.131:8848,172.18.0.132:8848"  #集群地址
+#      #PREFER_HOST_MODE  #是否支持主机名
+#      #NACOS_APPLICATION_PORT  #默认端口号
+#      #NACOS_APPLICATION_PORT  #默认端口号
+#      #SPRING_DATASOURCE_PLATFORM  #独立支持mysql
+#      MYSQL_SERVICE_HOST: 172.18.0.102
+#      MYSQL_SERVICE_PORT: 3306
+#      MYSQL_SERVICE_DB_NAME: nacos
+#      MYSQL_SERVICE_USER: root
+#      MYSQL_SERVICE_PASSWORD: root
+#      #MYSQL_DATABASE_NUM:
+#      #MYSQL_SERVICE_DB_PARAM:
+#    depends_on:
+#      - mysql-master
+#    networks:
+#      mynet:
+#        ipv4_address: 172.18.0.131
+#
+#  nacos02:
+#    image: registry.cn-guangzhou.aliyuncs.com/xuchen/proxy:nacos-2.4.1
+#    ports:
+#      - "8849:8848"
+#    container_name: nacos02
+#    restart: always
+#    environment:
+#      MODE: cluster #cluster/standalone 集群/独立
+#      NACOS_SERVERS: "172.18.0.131:8848,172.18.0.132:8848"  #集群地址
+#      #PREFER_HOST_MODE  #是否支持主机名
+#      #NACOS_APPLICATION_PORT  #默认端口号
+#      #NACOS_APPLICATION_PORT  #默认端口号
+#      #SPRING_DATASOURCE_PLATFORM  #独立支持mysql
+#      MYSQL_SERVICE_HOST: 172.18.0.102
+#      MYSQL_SERVICE_PORT: 3306
+#      MYSQL_SERVICE_DB_NAME: nacos
+#      MYSQL_SERVICE_USER: root
+#      MYSQL_SERVICE_PASSWORD: root
+#      #MYSQL_DATABASE_NUM:
+#      #MYSQL_SERVICE_DB_PARAM:
+#    depends_on:
+#      - mysql-master
+#    networks:
+#      mynet:
+#        ipv4_address: 172.18.0.132
 
 
