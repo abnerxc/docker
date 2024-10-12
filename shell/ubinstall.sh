@@ -77,7 +77,7 @@ function main(){
             && echo "alias $dcip" | sudo tee -a ~/.bashrc \
             && source ~/.bashrc \
             && sudo echo '.host:/ ~ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab \
-            && sudo apt-get -y ufw && sudo ufw disable \
+            && sudo apt-get install ufw && sudo ufw disable \
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;
           3)
@@ -92,7 +92,7 @@ function main(){
             && echo "alias $dcip" | sudo tee -a ~/.bashrc \
             && source ~/.bashrc \
             && sudo echo '.host:/ /data/ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab \
-            && sudo apt-get -y ufw && sudo ufw disable \
+            && sudo apt-get install ufw && sudo ufw disable \
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;
 
