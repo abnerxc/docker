@@ -17,28 +17,38 @@ function dockerAlis() {
 }
 
 function upSource() {
-    # 创建备份目录
+    # 备份目录
     if [ ! -d "/etc/yum.repos.d/backup" ]; then
         mkdir -p /etc/yum.repos.d/backup
     fi
-    # 备份原始的.repo文件
-    cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/
+
+    # 备份原始文件
+    mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/
+
     # 替换CentOS Stream 9的源为清华大学源
-    for repo_file in /etc/yum.repos.d/*.repo; do
-        # 替换BaseOS源
-        sed -i -e '/baseurl=/d' -e '/metalink=/d' -e '/#baseurl=/d' "$repo_file"
-        sed -i "/\[baseos\]/a baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9-stream/BaseOS/x86_64/os/" "$repo_file"
+    cat > /etc/yum.repos.d/base.repo << EOF
+[baseos]
+name=CentOS Linux Stream - BaseOS
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9/BaseOS/\$basearch/os/
+#mirrorlist=https://mirrorlist.centos.org/?release=9&arch=\$basearch&repo=BaseOS
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
 
-        # 替换AppStream源
-        sed -i "/\[appstream\]/a baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9-stream/AppStream/x86_64/os/" "$repo_file"
+[appstream]
+name=CentOS Linux Stream - AppStream
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9/AppStream/\$basearch/os/
+#mirrorlist=https://mirrorlist.centos.org/?release=9&arch=\$basearch&repo=AppStream
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+EOF
 
-        # 替换Extras源
-        sed -i "/\[extras\]/a baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9-stream/extras/x86_64/os/" "$repo_file"
-    done
-    # 清理缓存并生成新的缓存
+    # 清楚缓存
     dnf clean all
     dnf makecache
 }
+
 
 function main(){
     while [ True ];do
