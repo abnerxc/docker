@@ -32,18 +32,11 @@ function upSource(){
     fi
     # 备份原始的.repo文件
     cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/
-    # 替换CentOS Stream 9的源为清华大学源
-    for repo_file in /etc/yum.repos.d/*.repo; do
-        # 替换BaseOS源
-        sed -i -e '/baseurl=/d' -e '/metalink=/d' -e '/#baseurl=/d' "$repo_file"
-        sed -i "/\[baseos\]/a baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9-stream/BaseOS/x86_64/os/" "$repo_file"
-
-        # 替换AppStream源
-        sed -i "/\[appstream\]/a baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9-stream/AppStream/x86_64/os/" "$repo_file"
-
-        # 替换Extras源
-        sed -i "/\[extras\]/a baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9-stream/extras/x86_64/os/" "$repo_file"
-    done
+    # 交大源
+    sed -e 's|^mirrorlist=|#mirrorlist=|g' \
+        -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.sjtug.sjtu.edu.cn/rocky|g' \
+        -i.bak \
+        /etc/yum.repos.d/[Rr]ocky*.repo
     # 清理缓存并生成新的缓存
     dnf clean all
     dnf makecache
