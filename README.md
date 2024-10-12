@@ -94,3 +94,7 @@ sed -i 's/\r$//' install.sh && chmod +x install.sh
 # 文件拷贝
 scp root@192.168.78.11:/etc/yum.repos.d/*.repo .
 scp install.sh root@192.168.78.11:/root
+
+# ubuntu，sudo免密码
+sudo vim /etc/sudoers
+abner  ALL=(ALL:ALL) NOPASSWD:ALL
