@@ -81,8 +81,6 @@ function main(){
             && echo "alias $dcps">> /root/.bashrc \
             && echo "alias $dcip">> /root/.bashrc \
             && source /root/.bashrc \
-            && firewall-cmd --zone=public --add-port=80/tcp --add-port=3306/tcp --add-port=6379/tcp --permanent \
-            && firewall-cmd --reload \
             && systemctl disable firewalld \
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;
@@ -98,8 +96,6 @@ function main(){
             && echo "alias $dcip">> /root/.bashrc \
             && echo "alias dcgz='vmhgfs-fuse .host:/docker /root/docker -o allow_other'">> /root/.bashrc \
             && source /root/.bashrc \
-            && firewall-cmd --zone=public --add-port=80/tcp --add-port=3306/tcp --add-port=6379/tcp --permanent \
-            && firewall-cmd --reload \
             && systemctl disable firewalld \
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;
