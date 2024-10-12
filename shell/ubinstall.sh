@@ -9,10 +9,10 @@
 
 function dockerAlis() {
     dps="\$(docker ps -aq)"
-    dcup="jhm='docker-compose -f /root/docker/jhm.yml up -d --remove-orphans'"
-    dcrs="jhm-rs='docker-compose -f /root/docker/jhm.yml restart'"
-    dcrm="jhm-rm='docker-compose -f /root/docker/jhm.yml stop && docker-compose -f /root/docker/jhm.yml rm'"
-    dcps="jhm-ps='docker-compose -f /root/docker/jhm.yml ps'"
+    dcup="jhm='docker-compose -f ~/docker/jhm.yml up -d --remove-orphans'"
+    dcrs="jhm-rs='docker-compose -f ~/docker/jhm.yml restart'"
+    dcrm="jhm-rm='docker-compose -f ~/docker/jhm.yml stop && docker-compose -f ~/docker/jhm.yml rm'"
+    dcps="jhm-ps='docker-compose -f ~/docker/jhm.yml ps'"
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
@@ -49,17 +49,17 @@ function main(){
             echo -e "\033[31m docker install starting \033[0m" \
             && upSource \
             && sudo apt-get update \
-            && curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add - \
+            && sudo curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add - \
             && sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable" \
             && sudo apt-get -y update \
             && sudo apt-get -y install docker-ce \
-            && service docker start \
-            && curl -L https://gh-proxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose \
-            && chmod -R 777 /usr/local/bin/docker-compose \
-            && gpasswd -a $USER docker \
-            && mkdir -p /etc/docker \
-            && echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"]}'>> /etc/docker/daemon.json \
-            && systemctl daemon-reload && systemctl restart docker && systemctl enable docker \
+            && sudo service docker start \
+            && sudo curl -L https://gh-proxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose \
+            && sudo chmod -R 777 /usr/local/bin/docker-compose \
+            && sudo gpasswd -a $USER docker \
+            && sudo mkdir -p /etc/docker \
+            && sudo echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"]}' | sudo tee -a /etc/docker/daemon.json \
+            && sudo systemctl daemon-reload && sudo systemctl restart docker && sudo systemctl enable docker \
             && echo -e "\033[31m docker安装完成，请重启虚拟机挂载增强和目录再执行步骤2或者3 \033[0m" && exit
             ;;
 
@@ -67,15 +67,16 @@ function main(){
             echo -e "\033[31m virtual box增强工具 install starting \033[0m" \
             && mount /dev/cdrom /mnt \
             && cd /mnt &&  ./VBoxLinuxAdditions.run \
-            && mkdir -p /root/docker  && chmod -R 775 /root/docker \
-            && echo 'mount -t vboxsf docker /root/docker'>> /etc/rc.local && chmod +x /etc/rc.d/rc.local \
+            && mkdir -p ~/docker  && chmod -R 775 ~/docker \
+            && echo 'mount -t vboxsf docker ~/docker'>> /etc/rc.local && chmod +x /etc/rc.d/rc.local \
             && dockerAlis \
-            && echo "alias $dcup">> /root/.bashrc \
-            && echo "alias $dcrs">> /root/.bashrc \
-            && echo "alias $dcrm">> /root/.bashrc \
-            && echo "alias $dcps">> /root/.bashrc \
-            && echo "alias $dcip">> /root/.bashrc \
-            && source /root/.bashrc \
+            && echo "alias $dcup">> ~/.bashrc \
+            && echo "alias $dcrs">> ~/.bashrc \
+            && echo "alias $dcrm">> ~/.bashrc \
+            && echo "alias $dcps">> ~/.bashrc \
+            && echo "alias $dcip">> ~/.bashrc \
+            && source ~/.bashrc \
+            && sudo echo '.host:/ ~ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab \
             && firewall-cmd --zone=public --add-port=80/tcp --add-port=3306/tcp --add-port=6379/tcp --permanent \
             && firewall-cmd --reload \
             && systemctl disable firewalld \
@@ -83,18 +84,19 @@ function main(){
             ;;
           3)
             echo -e "\033[31m VMware挂载目录 \033[0m" \
-            && sudo agt-get -y install open-vm-tools \
-            && mkdir -p /root/docker  && chmod -R 775 /root/docker \
+            && sudo apt-get -y install open-vm-tools \
+            && sudo mkdir -p ~/docker  && sudo chmod -R 777 ~/docker \
             && dockerAlis \
-            && echo "alias $dcup">> /root/.bashrc \
-            && echo "alias $dcrs">> /root/.bashrc \
-            && echo "alias $dcrm">> /root/.bashrc \
-            && echo "alias $dcps">> /root/.bashrc \
-            && echo "alias $dcip">> /root/.bashrc \
-            && echo "alias dcgz='vmhgfs-fuse .host:/docker /root/docker -o allow_other'">> /root/.bashrc \
-            && source /root/.bashrc \
+            && echo "alias $dcup">> ~/.bashrc \
+            && echo "alias $dcrs">> ~/.bashrc \
+            && echo "alias $dcrm">> ~/.bashrc \
+            && echo "alias $dcps">> ~/.bashrc \
+            && echo "alias $dcip">> ~/.bashrc \
+            && source ~/.bashrc \
+            && sudo echo '.host:/ ~ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab \
             && firewall-cmd --zone=public --add-port=80/tcp --add-port=3306/tcp --add-port=6379/tcp --permanent \
             && firewall-cmd --reload \
+            && systemctl disable firewalld \
             && systemctl disable firewalld \
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;

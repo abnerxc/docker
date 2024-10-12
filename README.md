@@ -95,6 +95,19 @@ sed -i 's/\r$//' install.sh && chmod +x install.sh
 scp root@192.168.78.11:/etc/yum.repos.d/*.repo .
 scp install.sh root@192.168.78.11:/root
 
-# ubuntu，sudo免密码
+# ubuntu
+sudo免密码
+```shell
 sudo vim /etc/sudoers
 abner  ALL=(ALL:ALL) NOPASSWD:ALL
+```
+
+ubuntu挂载
+```shell
+#手动挂载
+sudo vmhgfs-fuse .host:/ ~ -o allow_other -o uid=1000
+#自动挂载
+vim /etc/fstab 最后追加
+.host:/ ~ fuse.vmhgfs-fuse allow_other,defaults 0 0
+```
+
