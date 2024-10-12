@@ -16,39 +16,38 @@ function dockerAlis() {
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
-function upSource() {
-    # 备份目录
+#function upSource(){
+#    rm -rf /etc/yum.repos.d/backup &&  mkdir /etc/yum.repos.d/backup \
+#    && cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ \
+#    && sed -i 's|metalink|#metalink|g' /etc/yum.repos.d/*.repo \
+#    && sed -i '/name=CentOS Stream $releasever - BaseOS/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/$stream/BaseOS/$basearch/os/' /etc/yum.repos.d/*.repo \
+#    && sed -i '/name=CentOS Stream $releasever - AppStream/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/$stream/AppStream/$basearch/os/' /etc/yum.repos.d/*.repo \
+#    && sed -i '/name=CentOS Stream $releasever - Extras packages/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/SIGs/$stream/extras/$basearch/extras-common/' /etc/yum.repos.d/*.repo
+#}
+
+function upSource(){
+    # 创建备份目录
     if [ ! -d "/etc/yum.repos.d/backup" ]; then
         mkdir -p /etc/yum.repos.d/backup
     fi
-
-    # 备份原始文件
-    mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/
-
+    # 备份原始的.repo文件
+    cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/
     # 替换CentOS Stream 9的源为清华大学源
-    cat > /etc/yum.repos.d/base.repo << EOF
-[baseos]
-name=CentOS Linux Stream - BaseOS
-baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9/BaseOS/\$basearch/os/
-#mirrorlist=https://mirrorlist.centos.org/?release=9&arch=\$basearch&repo=BaseOS
-enabled=1
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+    for repo_file in /etc/yum.repos.d/*.repo; do
+        # 替换BaseOS源
+        sed -i -e '/baseurl=/d' -e '/metalink=/d' -e '/#baseurl=/d' "$repo_file"
+        sed -i "/\[baseos\]/a baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9-stream/BaseOS/x86_64/os/" "$repo_file"
 
-[appstream]
-name=CentOS Linux Stream - AppStream
-baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9/AppStream/\$basearch/os/
-#mirrorlist=https://mirrorlist.centos.org/?release=9&arch=\$basearch&repo=AppStream
-enabled=1
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
-EOF
+        # 替换AppStream源
+        sed -i "/\[appstream\]/a baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9-stream/AppStream/x86_64/os/" "$repo_file"
 
-    # 清楚缓存
+        # 替换Extras源
+        sed -i "/\[extras\]/a baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/9-stream/extras/x86_64/os/" "$repo_file"
+    done
+    # 清理缓存并生成新的缓存
     dnf clean all
     dnf makecache
 }
-
 
 function main(){
     while [ True ];do
