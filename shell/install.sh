@@ -37,7 +37,8 @@ function main(){
           1)
             echo -e "\033[31m docker install starting \033[0m" \
             && upSource \
-            && curl -o /etc/yum.repos.d/docker-ce.repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo \
+            && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
+            && sed -i 's+https://download.docker.com+https://mirrors.tuna.tsinghua.edu.cn/docker-ce+' /etc/yum.repos.d/docker-ce.repo \
             && dnf clean all -y &&  dnf update -y && dnf makecache -y  \
             && dnf -y install gcc gcc-c++ make bzip2  docker-ce \
             && service docker start \
