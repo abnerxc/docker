@@ -38,7 +38,7 @@ function upSource(){
 
 function main(){
     while [ True ];do
-        echo -e "\033[33m ubuntu docker安装步骤: \033[0m"
+        echo -e "\033[33m ubuntu22.04 docker安装步骤: \033[0m"
         echo -e "\033[33m （1键）docker服务安装 \033[0m"
         echo -e "\033[33m （2键）virtual box挂载安装，请保证安装增加工具和挂载目录已经添加 \033[0m"
         echo -e "\033[33m （3键）VMware挂载目录 \033[0m"
@@ -77,7 +77,7 @@ function main(){
             && echo "alias $dcip" | sudo tee -a ~/.bashrc \
             && source ~/.bashrc \
             && sudo echo '.host:/ ~ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab \
-            && systemctl disable firewalld \
+            && sudo apt-get -y ufw && sudo ufw disable \
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;
           3)
@@ -92,7 +92,7 @@ function main(){
             && echo "alias $dcip" | sudo tee -a ~/.bashrc \
             && source ~/.bashrc \
             && sudo echo '.host:/ /data/ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab \
-            && systemctl disable firewalld \
+            && sudo apt-get -y ufw && sudo ufw disable \
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;
 
