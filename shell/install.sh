@@ -41,7 +41,7 @@ function main(){
         case $number in
           1)
             echo -e "\033[31m docker install starting \033[0m" \
-            && upSource \
+#            && upSource \
             && dnf install yum-utils && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
             && sed -i 's+https://download.docker.com+https://mirrors.tuna.tsinghua.edu.cn/docker-ce+' /etc/yum.repos.d/docker-ce.repo \
             && dnf clean all -y &&  dnf update -y && dnf makecache -y  \
