@@ -16,13 +16,18 @@ function dockerAlis() {
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
+#function upSource(){
+#    rm -rf /etc/yum.repos.d/backup &&  mkdir /etc/yum.repos.d/backup \
+#    && cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ \
+#    && sed -i 's|metalink|#metalink|g' /etc/yum.repos.d/*.repo \
+#    && sed -i '/name=CentOS Stream $releasever - BaseOS/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/$stream/BaseOS/$basearch/os/' /etc/yum.repos.d/*.repo \
+#    && sed -i '/name=CentOS Stream $releasever - AppStream/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/$stream/AppStream/$basearch/os/' /etc/yum.repos.d/*.repo \
+#    && sed -i '/name=CentOS Stream $releasever - Extras packages/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/SIGs/$stream/extras/$basearch/extras-common/' /etc/yum.repos.d/*.repo
+#}
+
 function upSource(){
-    rm -rf /etc/yum.repos.d/backup &&  mkdir /etc/yum.repos.d/backup \
-    && cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ \
-    && sed -i 's|metalink|#metalink|g' /etc/yum.repos.d/*.repo \
-    && sed -i '/name=CentOS Stream $releasever - BaseOS/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/$stream/BaseOS/$basearch/os/' /etc/yum.repos.d/*.repo \
-    && sed -i '/name=CentOS Stream $releasever - AppStream/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/$stream/AppStream/$basearch/os/' /etc/yum.repos.d/*.repo \
-    && sed -i '/name=CentOS Stream $releasever - Extras packages/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/SIGs/$stream/extras/$basearch/extras-common/' /etc/yum.repos.d/*.repo
+    sudo sed -e 's|^mirrorlist=|#mirrorlist=|' -e 's|^#baseurl=http://mirror.centos.org|baseurl=https://mirrors.tuna.tsinghua.edu.cn|' -i.bak /etc/yum.repos.d/centos-*.repo \
+    && dnf clean all && dnf makecache
 }
 
 function main(){
@@ -37,7 +42,7 @@ function main(){
           1)
             echo -e "\033[31m docker install starting \033[0m" \
             && upSource \
-            && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
+            && dnf install yum-utils && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
             && sed -i 's+https://download.docker.com+https://mirrors.tuna.tsinghua.edu.cn/docker-ce+' /etc/yum.repos.d/docker-ce.repo \
             && dnf clean all -y &&  dnf update -y && dnf makecache -y  \
             && dnf -y install gcc gcc-c++ make bzip2  docker-ce \
