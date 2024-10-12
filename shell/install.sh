@@ -75,11 +75,11 @@ function main(){
             && mkdir -p /root/docker  && chmod -R 775 /root/docker \
             && echo 'mount -t vboxsf docker /root/docker'>> /etc/rc.local && chmod +x /etc/rc.d/rc.local \
             && dockerAlis \
-            && echo "alias $dcup">> /root/.bashrc \
-            && echo "alias $dcrs">> /root/.bashrc \
-            && echo "alias $dcrm">> /root/.bashrc \
-            && echo "alias $dcps">> /root/.bashrc \
-            && echo "alias $dcip">> /root/.bashrc \
+            && echo "alias $dcup" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcrs" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcrm" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcps" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcip" | sudo tee -a ~/.bashrc \
             && source /root/.bashrc \
             && systemctl disable firewalld \
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
@@ -89,11 +89,11 @@ function main(){
             && dnf -y install open-vm-tools \
             && mkdir -p /root/docker  && chmod -R 775 /root/docker \
             && dockerAlis \
-            && echo "alias $dcup">> /root/.bashrc \
-            && echo "alias $dcrs">> /root/.bashrc \
-            && echo "alias $dcrm">> /root/.bashrc \
-            && echo "alias $dcps">> /root/.bashrc \
-            && echo "alias $dcip">> /root/.bashrc \
+            && echo "alias $dcup" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcrs" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcrm" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcps" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcip" | sudo tee -a ~/.bashrc \
             && echo "alias dcgz='vmhgfs-fuse .host:/docker /root/docker -o allow_other'">> /root/.bashrc \
             && source /root/.bashrc \
             && systemctl disable firewalld \

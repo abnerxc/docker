@@ -70,11 +70,11 @@ function main(){
             && mkdir -p /data/docker  && chmod -R 775 /data/docker \
             && echo 'mount -t vboxsf docker /data/docker'>> /etc/rc.local && chmod +x /etc/rc.d/rc.local \
             && dockerAlis \
-            && echo "alias $dcup">> ~/.bashrc \
-            && echo "alias $dcrs">> ~/.bashrc \
-            && echo "alias $dcrm">> ~/.bashrc \
-            && echo "alias $dcps">> ~/.bashrc \
-            && echo "alias $dcip">> ~/.bashrc \
+            && echo "alias $dcup" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcrs" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcrm" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcps" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcip" | sudo tee -a ~/.bashrc \
             && source ~/.bashrc \
             && sudo echo '.host:/ ~ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab \
             && systemctl disable firewalld \
@@ -85,11 +85,11 @@ function main(){
             && sudo apt-get -y install open-vm-tools \
             && sudo mkdir -p /data/docker  && sudo chmod -R 777 /data/docker \
             && dockerAlis \
-            && echo "alias $dcup">> ~/.bashrc \
-            && echo "alias $dcrs">> ~/.bashrc \
-            && echo "alias $dcrm">> ~/.bashrc \
-            && echo "alias $dcps">> ~/.bashrc \
-            && echo "alias $dcip">> ~/.bashrc \
+            && echo "alias $dcup" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcrs" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcrm" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcps" | sudo tee -a ~/.bashrc \
+            && echo "alias $dcip" | sudo tee -a ~/.bashrc \
             && source ~/.bashrc \
             && sudo echo '.host:/ /data/ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab \
             && systemctl disable firewalld \
