@@ -9,10 +9,10 @@
 
 function dockerAlis() {
     dps="\$(docker ps -aq)"
-    dcup="jhm='docker-compose -f ~/docker/jhm.yml up -d --remove-orphans'"
-    dcrs="jhm-rs='docker-compose -f ~/docker/jhm.yml restart'"
-    dcrm="jhm-rm='docker-compose -f ~/docker/jhm.yml stop && docker-compose -f ~/docker/jhm.yml rm'"
-    dcps="jhm-ps='docker-compose -f ~/docker/jhm.yml ps'"
+    dcup="jhm='docker-compose -f /data/docker/jhm.yml up -d --remove-orphans'"
+    dcrs="jhm-rs='docker-compose -f /data/docker/jhm.yml restart'"
+    dcrm="jhm-rm='docker-compose -f /data/docker/jhm.yml stop && docker-compose -f /data/docker/jhm.yml rm'"
+    dcps="jhm-ps='docker-compose -f /data/docker/jhm.yml ps'"
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
@@ -67,8 +67,8 @@ function main(){
             echo -e "\033[31m virtual box增强工具 install starting \033[0m" \
             && mount /dev/cdrom /mnt \
             && cd /mnt &&  ./VBoxLinuxAdditions.run \
-            && mkdir -p ~/docker  && chmod -R 775 ~/docker \
-            && echo 'mount -t vboxsf docker ~/docker'>> /etc/rc.local && chmod +x /etc/rc.d/rc.local \
+            && mkdir -p /data/docker  && chmod -R 775 /data/docker \
+            && echo 'mount -t vboxsf docker /data/docker'>> /etc/rc.local && chmod +x /etc/rc.d/rc.local \
             && dockerAlis \
             && echo "alias $dcup">> ~/.bashrc \
             && echo "alias $dcrs">> ~/.bashrc \
@@ -85,7 +85,7 @@ function main(){
           3)
             echo -e "\033[31m VMware挂载目录 \033[0m" \
             && sudo apt-get -y install open-vm-tools \
-            && sudo mkdir -p ~/docker  && sudo chmod -R 777 ~/docker \
+            && sudo mkdir -p /data/docker  && sudo chmod -R 777 /data/docker \
             && dockerAlis \
             && echo "alias $dcup">> ~/.bashrc \
             && echo "alias $dcrs">> ~/.bashrc \
@@ -93,7 +93,7 @@ function main(){
             && echo "alias $dcps">> ~/.bashrc \
             && echo "alias $dcip">> ~/.bashrc \
             && source ~/.bashrc \
-            && sudo echo '.host:/ ~ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab \
+            && sudo echo '.host:/ /data/ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab \
             && firewall-cmd --zone=public --add-port=80/tcp --add-port=3306/tcp --add-port=6379/tcp --permanent \
             && firewall-cmd --reload \
             && systemctl disable firewalld \
