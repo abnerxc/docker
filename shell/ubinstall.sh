@@ -101,11 +101,11 @@ function main(){
             && echo -e "\033[31m 请重启电脑 \033[0m" && exit
             ;;
 
-         "q"|"quit")
+          "q"|"quit")
             exit
             ;;
 
-         *)
+          *)
             echo "Input error!!"
              ;;
 
