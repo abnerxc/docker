@@ -65,10 +65,10 @@ function main(){
 
           2)
             echo -e "\033[31m virtual box增强工具 install starting \033[0m" \
-            && mount /dev/cdrom /mnt \
+            && sudo mount /dev/cdrom /mnt \
             && cd /mnt &&  ./VBoxLinuxAdditions.run \
-            && mkdir -p /data/docker  && chmod -R 775 /data/docker \
-            && echo 'mount -t vboxsf docker /data/docker'>> /etc/rc.local && chmod +x /etc/rc.d/rc.local \
+            && sudo mkdir -p /data/docker  && sudo chmod -R 775 /data/docker \
+            && sudo echo 'mount -t vboxsf docker /data/docker' | sudo tee -a /etc/rc.local && sudo chmod +x /etc/rc.d/rc.local \
             && dockerAlis \
             && echo "alias $dcup" | sudo tee -a ~/.bashrc \
             && echo "alias $dcrs" | sudo tee -a ~/.bashrc \
