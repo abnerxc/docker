@@ -16,15 +16,6 @@ function dockerAlis() {
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
-#function upSource(){
-#    rm -rf /etc/yum.repos.d/backup &&  mkdir /etc/yum.repos.d/backup \
-#    && cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ \
-#    && sed -i 's|metalink|#metalink|g' /etc/yum.repos.d/*.repo \
-#    && sed -i '/name=CentOS Stream $releasever - BaseOS/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/$stream/BaseOS/$basearch/os/' /etc/yum.repos.d/*.repo \
-#    && sed -i '/name=CentOS Stream $releasever - AppStream/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/$stream/AppStream/$basearch/os/' /etc/yum.repos.d/*.repo \
-#    && sed -i '/name=CentOS Stream $releasever - Extras packages/a baseurl=https://mirrors.ustc.edu.cn/centos-stream/SIGs/$stream/extras/$basearch/extras-common/' /etc/yum.repos.d/*.repo
-#}
-
 function upSource(){
   sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak \
   && echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -sc) main restricted universe multiverse" | sudo tee /etc/apt/sources.list \
