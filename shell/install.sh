@@ -1,11 +1,19 @@
 #!/bin/bash
 
 #无用
-#function getVersionNum(){
-#    version=`cat /proc/version`
-#    cut=${version%%(*}
-#    dd=${cut:14}
-#}
+function installGolang(){
+    #go的安装
+    sudo wget https://dl.google.com/go/go1.23.2.linux-amd64.tar.gz
+    sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
+    sudo echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a ~/.bashrc
+    source ~/.bashrc
+    #执行go的扩展安装
+    go env -w GO111MODULE=on
+    go env -w GOPROXY=https://goproxy.cn,direct
+    go install github.com/go-delve/delve/cmd/dlv@latest
+    sudo echo 'export PATH=$PATH:/home/abner/go/bin' | sudo tee -a ~/.bashrc
+    source ~/.bashrc
+}
 
 function dockerAlis() {
     dps="\$(docker ps -aq)"
@@ -89,11 +97,7 @@ function main(){
             ;;
           4)
             echo -e "\033[31m 开发软件安装033[0m"
-            #go的安装
-            sudo wget https://dl.google.com/go/go1.23.2.linux-amd64.tar.gz
-            sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
-            sudo echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a ~/.bashrc
-            source ~/.bashrc
+            installGolang
             ;;
 
           "q"|"quit")
