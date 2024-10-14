@@ -44,7 +44,7 @@ function main(){
              sudo curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
              sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
              sudo apt-get -y update
-             sudo apt-get -y install docker-ce
+             sudo apt-get -y install docker-ce vim
              sudo service docker start
              sudo curl -L https://gh-proxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
              sudo chmod -R 777 /usr/local/bin/docker-compose
@@ -94,6 +94,8 @@ function main(){
             sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
             sudo echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a ~/.bashrc
             source ~/.bashrc
+            go env -w GO111MODULE=on
+            go env -w GOPROXY=https://goproxy.cn,direct
             ;;
 
           "q"|"quit")
