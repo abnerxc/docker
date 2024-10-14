@@ -18,10 +18,10 @@ function installSoft(){
 
 function dockerAlis() {
     dps="\$(docker ps -aq)"
-    dcup="jhm='docker-compose -f /data/docker/jhm.yml up -d --remove-orphans'"
-    dcrs="jhm-rs='docker-compose -f /data/docker/jhm.yml restart'"
-    dcrm="jhm-rm='docker-compose -f /data/docker/jhm.yml stop  docker-compose -f /data/docker/jhm.yml rm'"
-    dcps="jhm-ps='docker-compose -f /data/docker/jhm.yml ps'"
+    dcup="jhm='docker-compose -f /mnt/f/work/docker/jhm.yml up -d --remove-orphans'"
+    dcrs="jhm-rs='docker-compose -f /mnt/f/work/docker/jhm.yml restart'"
+    dcrm="jhm-rm='docker-compose -f /mnt/f/work/docker/jhm.yml stop  docker-compose -f /mnt/f/work/docker/jhm.yml rm'"
+    dcps="jhm-ps='docker-compose -f /mnt/f/work/docker/jhm.yml ps'"
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
@@ -40,8 +40,7 @@ function main(){
     while [ True ];do
         echo -e "ubuntu22.04 docker安装步骤:"
         echo -e "（1键）docker服务安装"
-        echo -e "（2键）VMware挂载目录"
-        echo -e "（4键）安装默认软件"
+        echo -e "（2键）其他安装"
         echo -e "（q键）退出"
         read -p '选择安装: ' number
         case $number in
@@ -63,7 +62,7 @@ function main(){
              echo -e "docker安装完成，请重启虚拟机挂载增强和目录再执行步骤2或者3"  exit
             ;;
           2)
-            echo -e "\033[31m 其他安装"
+            echo -e "其他安装"
              dockerAlis
              echo "alias $dcup" | sudo tee -a ~/.bashrc
              echo "alias $dcrs" | sudo tee -a ~/.bashrc
@@ -71,7 +70,6 @@ function main(){
              echo "alias $dcps" | sudo tee -a ~/.bashrc
              echo "alias $dcip" | sudo tee -a ~/.bashrc
              source ~/.bashrc
-             sudo apt-get install ufw  sudo ufw disable
              echo -e "请重启电脑"  exit
             ;;
           3)
