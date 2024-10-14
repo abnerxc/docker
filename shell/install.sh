@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#无用
+#安装软件
 function installGolang(){
     #go的安装
     sudo wget https://dl.google.com/go/go1.23.2.linux-amd64.tar.gz
@@ -11,8 +11,7 @@ function installGolang(){
     go env -w GO111MODULE=on
     go env -w GOPROXY=https://goproxy.cn,direct
     go install github.com/go-delve/delve/cmd/dlv@latest
-    sudo echo 'export PATH=$PATH:/home/abner/go/bin' | sudo tee -a ~/.bashrc
-    source ~/.bashrc
+    sudo ln -s $GOPATH/bin/dlv /usr/local/bin/dlv
 }
 
 function dockerAlis() {
