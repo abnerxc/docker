@@ -94,8 +94,6 @@ function main(){
             sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
             sudo echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a ~/.bashrc
             source ~/.bashrc
-            go env -w GO111MODULE=on
-            go env -w GOPROXY=https://goproxy.cn,direct
             ;;
 
           "q"|"quit")
