@@ -3,8 +3,8 @@
 #安装软件
 function installSoft(){
     #go的安装
-    sudo wget https://dl.google.com/go/go1.23.2.linux-amd64.tar.gz
-    sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
+    sudo wget -P /tmp https://dl.google.com/go/go1.23.2.linux-amd64.tar.gz
+    sudo tar -C /usr/local -xzf /tmp/go1.23.2.linux-amd64.tar.gz
     sudo echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a ~/.bashrc
     source ~/.bashrc
     #执行go的扩展安装
