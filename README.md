@@ -101,7 +101,6 @@ sudo免密码
 sudo vim /etc/sudoers
 abner  ALL=(ALL:ALL) NOPASSWD:ALL
 ```
-
 ubuntu挂载
 ```shell
 #手动挂载
@@ -111,3 +110,9 @@ vim /etc/fstab 最后追加
 .host:/ ~ fuse.vmhgfs-fuse allow_other,defaults 0 0
 ```
 
+# wsl2 迁移安装
+```shell
+wsl --export Ubuntu-22.04 "g:\wmos\Ubuntu-22.04.tar"
+wsl --unregister Ubuntu-22.04
+wsl --import Ubuntu-22.04 "g:\wmos" "g:\wmos\Ubuntu-22.04.tar" --version 2
+```
