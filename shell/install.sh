@@ -89,18 +89,11 @@ function main(){
             ;;
           4)
             echo -e "\033[31m 开发软件安装033[0m"
-             sudo apt-get -y install open-vm-tools
-             sudo mkdir -p /data/docker   sudo chmod -R 777 /data/docker
-             dockerAlis
-             echo "alias $dcup" | sudo tee -a ~/.bashrc
-             echo "alias $dcrs" | sudo tee -a ~/.bashrc
-             echo "alias $dcrm" | sudo tee -a ~/.bashrc
-             echo "alias $dcps" | sudo tee -a ~/.bashrc
-             echo "alias $dcip" | sudo tee -a ~/.bashrc
-             source ~/.bashrc
-             sudo echo '.host:/ /data/ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab
-             sudo apt-get install ufw  sudo ufw disable
-             echo -e "\033[31m 请重启电脑033[0m"  exit
+            #go的安装
+            sudo wget https://dl.google.com/go/go1.23.2.linux-amd64.tar.gz
+            sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
+            sudo echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a ~/.bashrc
+            source ~/.bashrc
             ;;
 
           "q"|"quit")
