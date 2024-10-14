@@ -9,10 +9,10 @@
 
 function dockerAlis() {
     dps="\$(docker ps -aq)"
-    dcup="jhm='docker-compose -f /data/docker/jhm.yml up -d --remove-orphans'"
-    dcrs="jhm-rs='docker-compose -f /data/docker/jhm.yml restart'"
-    dcrm="jhm-rm='docker-compose -f /data/docker/jhm.yml stop  docker-compose -f /data/docker/jhm.yml rm'"
-    dcps="jhm-ps='docker-compose -f /data/docker/jhm.yml ps'"
+    dcup="jhm='docker-compose -f /home/docker/jhm.yml up -d --remove-orphans'"
+    dcrs="jhm-rs='docker-compose -f /home/docker/jhm.yml restart'"
+    dcrm="jhm-rm='docker-compose -f /home/docker/jhm.yml stop  docker-compose -f /home/docker/jhm.yml rm'"
+    dcps="jhm-ps='docker-compose -f /home/docker/jhm.yml ps'"
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
@@ -59,8 +59,8 @@ function main(){
             echo -e "\033[31m virtual box增强工具 install starting033[0m"
              sudo mount /dev/cdrom /mnt
              cd /mnt   ./VBoxLinuxAdditions.run
-             sudo mkdir -p /data/docker   sudo chmod -R 775 /data/docker
-             sudo echo 'mount -t vboxsf docker /data/docker' | sudo tee -a /etc/rc.local  sudo chmod +x /etc/rc.d/rc.local
+             sudo mkdir -p /home/docker   sudo chmod -R 775 /home/docker
+             sudo echo 'mount -t vboxsf docker /home/docker' | sudo tee -a /etc/rc.local  sudo chmod +x /etc/rc.d/rc.local
              dockerAlis
              echo "alias $dcup" | sudo tee -a ~/.bashrc
              echo "alias $dcrs" | sudo tee -a ~/.bashrc
@@ -75,7 +75,7 @@ function main(){
           3)
             echo -e "\033[31m VMware挂载目录033[0m"
              sudo apt-get -y install open-vm-tools
-             sudo mkdir -p /data/docker   sudo chmod -R 777 /data/docker
+             sudo mkdir -p /home/docker   sudo chmod -R 777 /home/docker
              dockerAlis
              echo "alias $dcup" | sudo tee -a ~/.bashrc
              echo "alias $dcrs" | sudo tee -a ~/.bashrc
