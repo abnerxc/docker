@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #安装软件
-function installGolang(){
+function installSoft(){
     #go的安装
     sudo wget https://dl.google.com/go/go1.23.2.linux-amd64.tar.gz
     sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
@@ -12,6 +12,8 @@ function installGolang(){
     go env -w GOPROXY=https://goproxy.cn,direct
     go install github.com/go-delve/delve/cmd/dlv@latest
     sudo ln -s $GOPATH/bin/dlv /usr/local/bin/dlv
+    #安装adb
+    sudo apt-get install android-tools-adb
 }
 
 function dockerAlis() {
@@ -96,7 +98,7 @@ function main(){
             ;;
           4)
             echo -e "\033[31m 开发软件安装033[0m"
-            installGolang
+            installSoft
             ;;
 
           "q"|"quit")
