@@ -40,7 +40,7 @@ function main(){
     while [ True ];do
         echo -e "ubuntu22.04 docker安装步骤:"
         echo -e "（1键）docker服务安装"
-        echo -e "（2键）其他安装"
+        echo -e "（2键）安装软件"
         echo -e "（q键）退出"
         read -p '选择安装: ' number
         case $number in
@@ -59,10 +59,6 @@ function main(){
              sudo mkdir -p /etc/docker
              sudo echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"]}' | sudo tee -a /etc/docker/daemon.json
              sudo systemctl daemon-reload  sudo systemctl restart docker  sudo systemctl enable docker
-             echo -e "docker安装完成，请重启虚拟机挂载增强和目录再执行步骤2或者3"  exit
-            ;;
-          2)
-            echo -e "其他安装"
              dockerAlis
              echo "alias $dcup" | sudo tee -a ~/.bashrc
              echo "alias $dcrs" | sudo tee -a ~/.bashrc
@@ -70,11 +66,11 @@ function main(){
              echo "alias $dcps" | sudo tee -a ~/.bashrc
              echo "alias $dcip" | sudo tee -a ~/.bashrc
              source ~/.bashrc
-             echo -e "请重启电脑"  exit
             ;;
-          3)
+          2)
             echo -e "开发软件安装"
             installSoft
+            echo -e "重启命令行"  exit
             ;;
 
           "q"|"quit")
