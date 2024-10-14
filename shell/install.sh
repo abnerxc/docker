@@ -9,10 +9,10 @@
 
 function dockerAlis() {
     dps="\$(docker ps -aq)"
-    dcup="jhm='docker-compose -f /home/data/docker/jhm.yml up -d --remove-orphans'"
-    dcrs="jhm-rs='docker-compose -f /home/data/docker/jhm.yml restart'"
-    dcrm="jhm-rm='docker-compose -f /home/data/docker/jhm.yml stop  docker-compose -f /home/data/docker/jhm.yml rm'"
-    dcps="jhm-ps='docker-compose -f /home/data/docker/jhm.yml ps'"
+    dcup="jhm='docker-compose -f /data/docker/jhm.yml up -d --remove-orphans'"
+    dcrs="jhm-rs='docker-compose -f /data/docker/jhm.yml restart'"
+    dcrm="jhm-rm='docker-compose -f /data/docker/jhm.yml stop  docker-compose -f /data/docker/jhm.yml rm'"
+    dcps="jhm-ps='docker-compose -f /data/docker/jhm.yml ps'"
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
 
@@ -60,7 +60,7 @@ function main(){
              sudo mount /dev/cdrom /mnt
              cd /mnt   ./VBoxLinuxAdditions.run
              mkdir -p /home/docker &&  sudo chmod -R 775 /home/docker
-             sudo echo 'mount -t vboxsf docker /home/data' | sudo tee -a /etc/rc.local  sudo chmod +x /etc/rc.d/rc.local
+             sudo echo 'mount -t vboxsf docker /data' | sudo tee -a /etc/rc.local  sudo chmod +x /etc/rc.d/rc.local
              dockerAlis
              echo "alias $dcup" | sudo tee -a ~/.bashrc
              echo "alias $dcrs" | sudo tee -a ~/.bashrc
@@ -75,7 +75,7 @@ function main(){
           3)
             echo -e "\033[31m VMware挂载目录033[0m"
              sudo apt-get -y install open-vm-tools
-             mkdir -p /home/data && sudo chmod -R 777 /home/data
+             mkdir -p /data && sudo chmod -R 777 /data
              dockerAlis
              echo "alias $dcup" | sudo tee -a ~/.bashrc
              echo "alias $dcrs" | sudo tee -a ~/.bashrc
@@ -83,7 +83,7 @@ function main(){
              echo "alias $dcps" | sudo tee -a ~/.bashrc
              echo "alias $dcip" | sudo tee -a ~/.bashrc
              source ~/.bashrc
-             echo '.host:/ /home/data/ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab
+             echo '.host:/ /data/ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab
              sudo apt-get install ufw  sudo ufw disable
              echo -e "\033[31m 请重启电脑033[0m"  exit
             ;;
