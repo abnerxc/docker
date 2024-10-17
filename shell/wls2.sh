@@ -20,7 +20,7 @@ function dockerAlis() {
     dps="\$(docker ps -aq)"
     dcup="jhm='docker-compose -f /mnt/f/work/docker/jhm.yml up -d --remove-orphans'"
     dcrs="jhm-rs='docker-compose -f /mnt/f/work/docker/jhm.yml restart'"
-    dcrm="jhm-rm='docker-compose -f /mnt/f/work/docker/jhm.yml stop  docker-compose -f /mnt/f/work/docker/jhm.yml rm'"
+    dcrm="jhm-rm='docker-compose -f /mnt/f/work/docker/jhm.yml stop  && docker-compose -f /mnt/f/work/docker/jhm.yml rm'"
     dcps="jhm-ps='docker-compose -f /mnt/f/work/docker/jhm.yml ps'"
     dcip="docker-ips='docker inspect --format='\"'\"'{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'\"'\"' $dps'"
 }
