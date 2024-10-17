@@ -73,7 +73,7 @@ alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSetti
 ```
 
 # win传linux文件shell字符处理 
-sed -i 's/\r$//' install.sh && chmod +x install.sh
+`sed -i 's/\r$//' install.sh && chmod +x install.sh`
 
 # docker代理
 1、参考https://github.com/cmliu/CF-Workers-docker.io
@@ -92,8 +92,10 @@ sed -i 's/\r$//' install.sh && chmod +x install.sh
 ```
 
 # 文件拷贝
+```shell
 scp root@192.168.78.11:/etc/yum.repos.d/*.repo .
 scp install.sh root@192.168.78.11:/root
+```
 
 # ubuntu
 sudo免密码
