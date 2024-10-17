@@ -118,7 +118,7 @@ vim /etc/fstab 最后追加
 导出: wsl --export Ubuntu-22.04 G:\wmos\Ubuntu-22.04.tar
 ```
 
-# wsl2 安装AMD显卡
+# wsl2 安装AMD显卡（未完）
 ```shell
 mkdir ~/download
 wget -P ~/download https://repo.radeon.com/amdgpu-install/6.2.3/ubuntu/jammy/amdgpu-install_6.2.60203-1_all.deb
