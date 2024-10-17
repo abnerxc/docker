@@ -112,7 +112,16 @@ vim /etc/fstab 最后追加
 
 # wsl2 迁移安装
 ```shell
-wsl --export Ubuntu-22.04 "g:\wmos\Ubuntu-22.04.tar"
-wsl --unregister Ubuntu-22.04
-wsl --import Ubuntu-22.04 "g:\wmos" "g:\wmos\Ubuntu-22.04.tar" --version 2
+查看: wsl --list --verbose
+删除: wsl --unregister Ubuntu-22.04
+导入: wsl --import Ubuntu-22.04 G:\wmos\Ubuntu-22.04 G:\wmos\Ubuntu-22.04.tar
+导出: wsl --export Ubuntu-22.04 G:\wmos\Ubuntu-22.04.tar
+```
+
+# wsl2 安装AMD显卡
+```shell
+mkdir ~/download
+wget -P ~/download https://repo.radeon.com/amdgpu-install/6.2.3/ubuntu/jammy/amdgpu-install_6.2.60203-1_all.deb
+sudo dpkg -i ~/download/amdgpu-install_6.2.60203-1_all.deb
+sudo amdgpu-install --usecase=rocm,hip,graphics --opencl=rocr
 ```

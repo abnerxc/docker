@@ -34,6 +34,7 @@ function upSource(){
   echo "deb http://mirrors.aliyun.com/ubuntu/ $(lsb_release -sc)-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
   echo "deb-src http://mirrors.aliyun.com/ubuntu/ $(lsb_release -sc)-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
   sudo apt update
+  sudo apt upgrade
 }
 
 function main(){
@@ -48,11 +49,9 @@ function main(){
         case $number in
           1)
             echo -e "\033[31m docker install starting033[0m"
-             upSource
-             sudo apt-get update
              sudo curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
              sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
-             sudo apt-get -y update
+             upSource
              sudo apt-get -y install docker-ce vim
              sudo service docker start
              sudo curl -L https://gh-proxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
