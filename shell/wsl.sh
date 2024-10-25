@@ -17,6 +17,7 @@ function installSoft(){
     sudo ln -s $GOPATH/bin/dlv /usr/local/bin/dlv
     #安装adb
     sudo apt-get install android-tools-adb
+    #git ssh
 }
 
 function dockerAlis() {
@@ -54,7 +55,7 @@ function main(){
              sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
              upSource
              sudo apt-get -y update
-             sudo apt-get -y install docker-ce vim
+             sudo apt-get -y install docker-ce vim git
              sudo service docker start
              sudo curl -L https://gh-proxy.com/https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
              sudo chmod -R 777 /usr/local/bin/docker-compose
