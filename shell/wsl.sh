@@ -18,7 +18,7 @@ function installSoft(){
     #安装adb
     sudo apt-get install android-tools-adb
     #git ssh
-    ssh-keygen -t rsa -C "abner510@126.com"
+    #ssh-keygen -t rsa -C "abner510@126.com"
 }
 
 function dockerAlis() {
