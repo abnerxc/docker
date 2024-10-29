@@ -10,14 +10,17 @@ function installSoft(){
     sudo tar -C /usr/local -xzf /tmp/go1.23.2.linux-amd64.tar.gz
     sudo echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a ~/.bashrc
     source ~/.bashrc
-    #python 一般自带python环境
-    sudo apt-get install python3-pip
-    #pip3 install   ddddocr   -i   https://pypi.tuna.tsinghua.edu.cn/simple
     #执行go的扩展安装
-    go env -w GO111MODULE=on
-    go env -w GOPROXY=https://goproxy.cn,direct
-    go install github.com/go-delve/delve/cmd/dlv@latest
+    /usr/local/go/bin/go env -w GO111MODULE=on
+    /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct
+    /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest
     sudo ln -s $GOPATH/bin/dlv /usr/local/bin/dlv
+    #python Miniconda
+    sudo mkdir -p ~/miniconda3
+    sudo wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+    sudo bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+    sudo rm ~/miniconda3/miniconda.sh
+    pip3 install   ddddocr   -i   https://pypi.tuna.tsinghua.edu.cn/simple
     #安装adb
     sudo apt-get install android-tools-adb
     #git ssh
