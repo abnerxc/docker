@@ -20,11 +20,11 @@ function installSoft(){
     sudo wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
     sudo bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
     sudo rm ~/miniconda3/miniconda.sh
-    pip3 install   ddddocr   -i   https://pypi.tuna.tsinghua.edu.cn/simple
+    #pip3 install   ddddocr   -i   https://pypi.tuna.tsinghua.edu.cn/simple
     #安装adb
     sudo apt-get install android-tools-adb
     #git ssh
-    #ssh-keygen -t rsa -C "abner510@126.com"
+    ssh-keygen -t rsa -C "abner510@126.com"
 }
 
 function dockerAlis() {
