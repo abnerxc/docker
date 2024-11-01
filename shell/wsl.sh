@@ -12,15 +12,10 @@ function installSoft(){
     /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct
     /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest
     sudo ln -s $GOPATH/bin/dlv /usr/local/bin/dlv
-    #python Miniconda
-    miniconda
-    
-
-
-
-    #pip3 install   ddddocr   -i   https://pypi.tuna.tsinghua.edu.cn/simple
     #安装adb
     sudo apt-get install android-tools-adb
+    #python Miniconda
+    miniconda
 }
 
 #pythong的conda环境安装
@@ -39,6 +34,7 @@ function miniconda() {
     ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/bioconda/
     ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/menpo/
     ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/
+    #pip3 install   ddddocr   -i   https://pypi.tuna.tsinghua.edu.cn/simple
 }
 
 # 默认ssh-key，如果id_rsa.pub和id_rsa文件存在则不生成，否则创建文件id_rsa.pub和id_rsa，并写入秘钥
