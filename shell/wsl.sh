@@ -25,15 +25,14 @@ function miniconda() {
     sudo bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
     sudo rm ~/miniconda3/miniconda.sh
     ~/miniconda3/bin/conda init bash
-
-    #中科大源
-    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/main/
-    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/free/
-    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/conda-forge/
-    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/msys2/
-    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/bioconda/
-    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/menpo/
-    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/
+    #清华源
+    ~/miniconda3/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/msys2/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/menpo/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
     #显示检索路径，每次安装包时会将包源路径显示出来
     ~/miniconda3/bin/conda config --set show_channel_urls yes
     ~/miniconda3/bin/conda config --set always_yes True
