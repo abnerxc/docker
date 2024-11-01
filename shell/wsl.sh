@@ -13,14 +13,32 @@ function installSoft(){
     /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest
     sudo ln -s $GOPATH/bin/dlv /usr/local/bin/dlv
     #python Miniconda
-    sudo mkdir -p ~/miniconda3
-    sudo wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
-    sudo bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-    sudo rm ~/miniconda3/miniconda.sh
-    ~/miniconda3/bin/conda init bash
+    miniconda
+    
+
+
+
     #pip3 install   ddddocr   -i   https://pypi.tuna.tsinghua.edu.cn/simple
     #安装adb
     sudo apt-get install android-tools-adb
+}
+
+#pythong的conda环境安装
+function miniconda() {
+    sudo mkdir -p ~/miniconda3
+    sudo wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+    sudo bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+    sudo rm ~/miniconda3/miniconda.sh
+    ~/miniconda3/bin/conda init bash
+    ~/miniconda3/bin/conda config --set auto_activate_base false
+    #中科大源
+    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/main/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/free/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/conda-forge/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/msys2/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/bioconda/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/menpo/
+    ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/
 }
 
 # 默认ssh-key，如果id_rsa.pub和id_rsa文件存在则不生成，否则创建文件id_rsa.pub和id_rsa，并写入秘钥
