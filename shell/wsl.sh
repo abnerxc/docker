@@ -25,7 +25,7 @@ function miniconda() {
     sudo bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
     sudo rm ~/miniconda3/miniconda.sh
     ~/miniconda3/bin/conda init bash
-    ~/miniconda3/bin/conda config --set auto_activate_base false
+
     #中科大源
     ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/main/
     ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/pkgs/free/
@@ -34,6 +34,15 @@ function miniconda() {
     ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/bioconda/
     ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/menpo/
     ~/miniconda3/bin/conda config --add channels https://mirrors.ustc.edu.cn/anaconda/cloud/
+    #显示检索路径，每次安装包时会将包源路径显示出来
+    ~/miniconda3/bin/conda config --set show_channel_urls yes
+    ~/miniconda3/bin/conda config --set always_yes True
+    #执行以下命令清除索引缓存，保证用的是镜像站提供的索引
+    ~/miniconda3/bin/conda clean -i
+    # 显示所有镜像通道路径命令
+    ~/miniconda3/bin/conda config --show channels
+    #不显示base环境
+    ~/miniconda3/bin/conda config --set auto_activate_base false
     #pip3 install   ddddocr   -i   https://pypi.tuna.tsinghua.edu.cn/simple
 }
 
