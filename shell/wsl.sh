@@ -42,6 +42,8 @@ function miniconda() {
     ~/miniconda3/bin/conda config --show channels
     #不显示base环境
     ~/miniconda3/bin/conda config --set auto_activate_base false
+    # 指定环境安装目录
+    ~/miniconda3/bin/conda config --add envs_dirs /data/.conda/envs
     #pip3 install   ddddocr   -i   https://pypi.tuna.tsinghua.edu.cn/simple
 }
 
