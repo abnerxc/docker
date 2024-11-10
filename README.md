@@ -115,9 +115,9 @@ vim /etc/fstab 最后追加
 # wsl2 迁移安装
 ```shell
 查看: wsl --list --verbose
-删除: wsl --unregister Ubuntu-22.04
-导入: wsl --import Ubuntu-22.04 G:\wmos\Ubuntu-22.04 G:\wmos\Ubuntu-22.04.tar
-导出: wsl --export Ubuntu-22.04 G:\wmos\Ubuntu-22.04.tar
+删除: wsl --unregister Ubuntu-24.04
+导入: wsl --import Ubuntu-24.04 G:\wmos\Ubuntu-24.04 G:\wmos\Ubuntu-24.04.tar
+导出: wsl --export Ubuntu-24.04 G:\wmos\Ubuntu-24.04.tar
 ```
 
 # wsl2 安装AMD显卡（未完）
