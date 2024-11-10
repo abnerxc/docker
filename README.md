@@ -120,10 +120,3 @@ vim /etc/fstab 最后追加
 导出: wsl --export Ubuntu-24.04 G:\wmos\Ubuntu-24.04.tar
 ```
 
-# wsl2 安装AMD显卡（未完）
-```shell
-mkdir ~/download
-wget -P ~/download https://repo.radeon.com/amdgpu-install/6.2.3/ubuntu/jammy/amdgpu-install_6.2.60203-1_all.deb
-sudo dpkg -i ~/download/amdgpu-install_6.2.60203-1_all.deb
-sudo amdgpu-install --usecase=rocm,hip,graphics --opencl=rocr
-```
