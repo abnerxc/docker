@@ -19,7 +19,7 @@ function opencvInstall(){
   mkdir ~/opencv
   mkdir ~/opencv-4.10.0/build && cd ~/opencv-4.10.0/build
   cmake .. \
-      -DCMAKE_INSTALL_PREFIX="/root/opencv" \
+      -DCMAKE_INSTALL_PREFIX="~/opencv" \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=OFF \
       -DWITH_IPP=OFF \
