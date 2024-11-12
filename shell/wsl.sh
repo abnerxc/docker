@@ -3,19 +3,19 @@
 #安装软件
 function installSoft(){
 
-    #安装adb
+#    #安装adb
     sudo apt-get install android-tools-adb
     goInstall
-    #python Miniconda
     minicondaInstall
-    #opencv
     opencvInstall
 }
 
+#opencv安装
 function opencvInstall(){
   sudo apt-get install cmake
   sudo apt-get install build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg.dev libtiff5.dev libswscale-dev
-  wget https://codeload.github.com/opencv/opencv/tar.gz/refs/tags/4.10.0 -O ~/opencv-4.10.0.tar.gz
+  wget -O ~/opencv-4.10.0.tar.gz https://github.geekery.cn/https://codeload.github.com/opencv/opencv/tar.gz/refs/tags/4.10.0
+  tar -xf ~/opencv-4.10.0.tar.gz -C ~
   mkdir ~/opencv
   mkdir ~/opencv-4.10.0/build && cd ~/opencv-4.10.0/build
   cmake .. \
