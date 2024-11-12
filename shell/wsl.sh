@@ -7,38 +7,8 @@ function installSoft(){
     sudo apt-get install android-tools-adb
     goInstall
     minicondaInstall
-    opencvInstall
 }
 
-#opencv安装
-function opencvInstall(){
-  sudo apt-get install cmake
-  sudo apt-get install build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg.dev libtiff5.dev libswscale-dev
-  wget -O ~/opencv-4.10.0.tar.gz https://github.geekery.cn/https://codeload.github.com/opencv/opencv/tar.gz/refs/tags/4.10.0
-  tar -xf ~/opencv-4.10.0.tar.gz -C ~
-  mkdir ~/opencv
-  mkdir ~/opencv-4.10.0/build && cd ~/opencv-4.10.0/build
-  cmake .. \
-      -DCMAKE_INSTALL_PREFIX="~/opencv" \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=OFF \
-      -DWITH_IPP=OFF \
-      -DBUILD_IPP_IW=OFF \
-      -DWITH_LAPACK=OFF \
-      -DWITH_EIGEN=OFF \
-      -DCMAKE_INSTALL_LIBDIR=lib64 \
-      -DWITH_ZLIB=ON \
-      -DBUILD_ZLIB=ON \
-      -DWITH_JPEG=ON \
-      -DBUILD_JPEG=ON \
-      -DWITH_PNG=ON \
-      -DBUILD_PNG=ON \
-      -DWITH_TIFF=ON \
-      -DBUILD_TIFF=ON
-
-  sudo make -j$(nproc)
-  sudo make install
-}
 
 #PaddlePaddle安装
 function paddlePaddleInstall(){
