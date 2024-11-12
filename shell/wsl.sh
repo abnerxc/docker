@@ -2,24 +2,59 @@
 
 #安装软件
 function installSoft(){
-    #go的安装
-    sudo wget -P /tmp https://dl.google.com/go/go1.23.2.linux-amd64.tar.gz
-    sudo tar -C /usr/local -xzf /tmp/go1.23.2.linux-amd64.tar.gz
-    sudo echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a ~/.bashrc
-    source ~/.bashrc
-    #执行go的扩展安装
-    /usr/local/go/bin/go env -w GO111MODULE=on
-    /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct
-    /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest
-    sudo ln -s $GOPATH/bin/dlv /usr/local/bin/dlv
+
     #安装adb
     sudo apt-get install android-tools-adb
+    goInstall
     #python Miniconda
-    miniconda
+    minicondaInstall
+    #opencv
+    opencvInstall
+}
+
+function opencvInstall(){
+  sudo apt-get install cmake
+  sudo apt-get install build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg.dev libtiff5.dev libswscale-dev
+  wget https://codeload.github.com/opencv/opencv/tar.gz/refs/tags/4.10.0 -O ~/opencv-4.10.0.tar.gz
+  mkdir ~/opencv
+  mkdir ~/opencv-4.10.0/build && cd ~/opencv-4.10.0/build
+  cmake .. \
+      -DCMAKE_INSTALL_PREFIX="/root/opencv" \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_SHARED_LIBS=OFF \
+      -DWITH_IPP=OFF \
+      -DBUILD_IPP_IW=OFF \
+      -DWITH_LAPACK=OFF \
+      -DWITH_EIGEN=OFF \
+      -DCMAKE_INSTALL_LIBDIR=lib64 \
+      -DWITH_ZLIB=ON \
+      -DBUILD_ZLIB=ON \
+      -DWITH_JPEG=ON \
+      -DBUILD_JPEG=ON \
+      -DWITH_PNG=ON \
+      -DBUILD_PNG=ON \
+      -DWITH_TIFF=ON \
+      -DBUILD_TIFF=ON
+
+  sudo make -j$(nproc)
+  sudo make install
+}
+
+#go安装
+function goInstall(){
+      sudo wget -P /tmp https://dl.google.com/go/go1.23.2.linux-amd64.tar.gz
+      sudo tar -C /usr/local -xzf /tmp/go1.23.2.linux-amd64.tar.gz
+      sudo echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a ~/.bashrc
+      source ~/.bashrc
+      #执行go的扩展安装
+      /usr/local/go/bin/go env -w GO111MODULE=on
+      /usr/local/go/bin/go env -w GOPROXY=https://goproxy.cn,direct
+      /usr/local/go/bin/go install github.com/go-delve/delve/cmd/dlv@latest
+      sudo ln -s $GOPATH/bin/dlv /usr/local/bin/dlv
 }
 
 #pythong的conda环境安装
-function miniconda() {
+function minicondaInstall() {
     sudo mkdir -p ~/miniconda3
     sudo wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
     sudo bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
