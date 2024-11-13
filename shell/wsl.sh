@@ -10,27 +10,6 @@ function installSoft(){
 }
 
 
-#PaddlePaddle安装
-function paddlePaddleInstall(){
-  #Paddle预测库
-  git clone https://gitee.com/paddlepaddle/Paddle.git -b develop PaddlePaddle
-  rm -rf ~/PaddlePaddle/build
-  mkdir ~/PaddlePaddle/build
-  cd ~/PaddlePaddle/build
-  cmake  .. \
-      -DWITH_CONTRIB=OFF \
-      -DWITH_MKL=ON \
-      -DWITH_MKLDNN=ON  \
-      -DWITH_TESTING=OFF \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DWITH_INFERENCE_API_TEST=OFF \
-      -DON_INFER=ON \
-      -DWITH_PYTHON=ON
-
-  sudo make -j$(nproc)
-  sudo make inference_lib_dist
-}
-
 #go安装
 function goInstall(){
       sudo wget -P /tmp https://dl.google.com/go/go1.23.2.linux-amd64.tar.gz
