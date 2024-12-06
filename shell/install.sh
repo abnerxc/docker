@@ -92,7 +92,8 @@ function main(){
              echo "alias $dcip" | sudo tee -a ~/.bashrc
              source ~/.bashrc
              echo '.host:/ /data/ fuse.vmhgfs-fuse allow_other,defaults 0 0' | sudo tee -a /etc/fstab
-             sudo apt-get install ufw  sudo ufw disable
+             sudo apt-get install ufw
+             sudo ufw disable
              echo -e "\033[31m 请重启电脑033[0m"  exit
             ;;
           4)
