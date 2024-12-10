@@ -74,6 +74,7 @@ alias docker-ips='docker inspect --format='"'"'{{.Name}} - {{range .NetworkSetti
 
 # win传linux文件shell字符处理 
 `sed -i 's/\r$//' install.sh && chmod +x install.sh`
+`sed -i 's/\r$//' wsl.sh && chmod +x wsl.sh`
 
 # docker代理
 1、参考https://github.com/cmliu/CF-Workers-docker.io
