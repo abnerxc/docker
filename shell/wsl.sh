@@ -48,7 +48,7 @@ function minicondaInstall() {
     #不显示base环境
     ~/miniconda3/bin/conda config --set auto_activate_base false
     # 指定环境安装目录
-    #~/miniconda3/bin/conda config --add envs_dirs /data/.conda/envs
+    ~/miniconda3/bin/conda create --name myenv python=3.12
     #pip3 install   ddddocr   -i   https://pypi.tuna.tsinghua.edu.cn/simple
 }
 
