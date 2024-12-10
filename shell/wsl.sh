@@ -13,7 +13,7 @@ function installSoft(){
 #go安装
 function goInstall(){
       sudo wget -P /tmp https://mirrors.aliyun.com/golang/go1.23.4.linux-amd64.tar.gz
-      sudo tar -C /usr/local -xzf /tmp/go1.23.2.linux-amd64.tar.gz
+      sudo tar -C /usr/local -xzf /tmp/go1.23.4.linux-amd64.tar.gz
       sudo echo 'export PATH=$PATH:/usr/local/go/bin' | sudo tee -a ~/.bashrc
       source ~/.bashrc
       #执行go的扩展安装
