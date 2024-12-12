@@ -50,6 +50,7 @@ function main(){
           1)
             echo -e "\033[31m docker install starting033[0m"
              sudo curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+             sudo apt-get install lsb-release software-properties-common
              sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
              upSource
              sudo apt-get -y install docker-ce vim
