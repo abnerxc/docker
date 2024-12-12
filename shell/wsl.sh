@@ -163,7 +163,7 @@ function main(){
              sudo gpasswd -a $USER docker
              sudo mkdir -p /etc/docker
              sudo echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"]}' | sudo tee -a /etc/docker/daemon.json
-             sudo systemctl daemon-reload  sudo systemctl restart docker  sudo systemctl enable docker
+             sudo systemctl daemon-reload &&   sudo systemctl restart docker &&  sudo systemctl enable docker
              dockerAlis
              echo "alias $dcup" | sudo tee -a ~/.bashrc
              echo "alias $dcrs" | sudo tee -a ~/.bashrc

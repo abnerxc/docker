@@ -60,7 +60,7 @@ function main(){
              sudo gpasswd -a $USER docker
              sudo mkdir -p /etc/docker
              sudo echo '{"registry-mirrors":["https://l714mp7z.mirror.aliyuncs.com"]}' | sudo tee -a /etc/docker/daemon.json
-             sudo systemctl daemon-reload  sudo systemctl restart docker  sudo systemctl enable docker
+             sudo systemctl daemon-reload &&   sudo systemctl restart docker &&  sudo systemctl enable docker
              echo -e "\033[31m docker安装完成，请重启虚拟机挂载增强和目录再执行步骤2或者3033[0m"  exit
             ;;
 
